@@ -1,0 +1,38 @@
+Name = 'lion_head.toml'
+Type = 'Material'
+UUID = '654875a2-0e26-443f-8e93-d9f4057a3684'
+
+['dependencies.path']
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/Lion_Head_4k/textures/lion_head_diff_4k.jpg'
+AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
+Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_metallic.png'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/Lion_Head_4k/textures/lion_head_diff_4k.jpg'
+Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
+
+['dependencies.uuid']
+Albedo = 'bd99f12f-c1db-4bf5-a95a-53e88e2d2b35'
+AmbientOcclusion = 'c2c77ba5-0a86-40d9-b5a2-d2a6af407e2b'
+Metallic = '79d1430e-5605-442f-95f9-62b0b8696d62'
+Normal = 'bd99f12f-c1db-4bf5-a95a-53e88e2d2b35'
+Roughness = '8e7d1d72-46bc-4bec-8bb0-fb019a15d5fd'
+
+['properties.albedo']
+value = [ 1.0, 1.0, 1.0, 1.0 ]
+
+['properties.ambient_occlusion']
+channel = 'R'
+value = 1.0
+
+['properties.global']
+scale = [ 1.0, 1.0 ]
+
+['properties.metallic']
+channel = 'R'
+value = 1.0
+
+['properties.normal']
+value = 1.0
+
+['properties.roughness']
+channel = 'R'
+value = 1.0

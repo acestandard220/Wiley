@@ -1,0 +1,38 @@
+Name = '08_-_Default.toml'
+Type = 'Material'
+UUID = '75d461be-77a5-4ad3-b73e-1f49a516e9e6'
+
+['dependencies.path']
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/Gun/Textures/Cerberus_A.tga'
+AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
+Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_metallic.png'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/Gun/Textures/Cerberus_N.tga'
+Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/Gun/Textures/Cerberus_R.tga'
+
+['dependencies.uuid']
+Albedo = '1c43c6bb-8759-4665-bde1-9b06f4ecc8a3'
+AmbientOcclusion = '954a4208-18de-4987-9b7b-091bfd570130'
+Metallic = '4ff37ee1-2aeb-4298-8af1-f0babeeadf6e'
+Normal = '5c475c1f-0d21-4cdf-bee4-d217d2ea0c46'
+Roughness = '9478f742-978e-4a4e-98f5-92213f1cbb0a'
+
+['properties.albedo']
+value = [ 1.0, 1.0, 1.0, 1.0 ]
+
+['properties.ambient_occlusion']
+channel = 'R'
+value = 1.0
+
+['properties.global']
+scale = [ 1.0, 1.0 ]
+
+['properties.metallic']
+channel = 'R'
+value = 1.0
+
+['properties.normal']
+value = 1.0
+
+['properties.roughness']
+channel = 'R'
+value = 1.0

@@ -1,0 +1,38 @@
+Name = 'roof.toml'
+Type = 'Material'
+UUID = 'eeb632f1-fa37-42a2-bae1-402199b3f5eb'
+
+['dependencies.path']
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_roof_diff.tga'
+AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
+Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_metallic.png'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_roof_ddn.tga'
+Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
+
+['dependencies.uuid']
+Albedo = '88e52d0c-8889-42e0-aab9-4a24a1299c60'
+AmbientOcclusion = '443c3376-43fb-45fa-ac7b-c8254e6e3fe1'
+Metallic = '9fe7c8ff-a6e7-4837-882d-99ac1a2a98be'
+Normal = '68bc41e1-ec68-43c2-bd47-538365c7db08'
+Roughness = '429045a2-9012-4811-8b0b-834064d64f89'
+
+['properties.albedo']
+value = [ 1.0, 1.0, 1.0, 1.0 ]
+
+['properties.ambient_occlusion']
+channel = 'R'
+value = 1.0
+
+['properties.global']
+scale = [ 1.0, 1.0 ]
+
+['properties.metallic']
+channel = 'R'
+value = 1.0
+
+['properties.normal']
+value = 1.0
+
+['properties.roughness']
+channel = 'R'
+value = 1.0

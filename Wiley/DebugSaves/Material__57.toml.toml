@@ -1,0 +1,38 @@
+Name = 'Material__57.toml'
+Type = 'Material'
+UUID = 'a82650d4-a48b-4f8b-aa27-91aea3d8a22c'
+
+['dependencies.path']
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/vase_plant.tga'
+AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
+Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_metallic.png'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_normal.png'
+Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
+
+['dependencies.uuid']
+Albedo = '99e3c086-3a37-4c65-8c39-6857eb5008e4'
+AmbientOcclusion = '443c3376-43fb-45fa-ac7b-c8254e6e3fe1'
+Metallic = '9fe7c8ff-a6e7-4837-882d-99ac1a2a98be'
+Normal = '7240865f-8bc1-467e-b757-95d0f62d5ef6'
+Roughness = '429045a2-9012-4811-8b0b-834064d64f89'
+
+['properties.albedo']
+value = [ 1.0, 1.0, 1.0, 1.0 ]
+
+['properties.ambient_occlusion']
+channel = 'R'
+value = 1.0
+
+['properties.global']
+scale = [ 1.0, 1.0 ]
+
+['properties.metallic']
+channel = 'R'
+value = 1.0
+
+['properties.normal']
+value = 1.0
+
+['properties.roughness']
+channel = 'R'
+value = 1.0

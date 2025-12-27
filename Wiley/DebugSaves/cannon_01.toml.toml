@@ -1,0 +1,38 @@
+Name = 'cannon_01.toml'
+Type = 'Material'
+UUID = '8e1e5e52-066a-4d3d-a936-019dfb722372'
+
+['dependencies.path']
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/cannon_01_4k/textures/cannon_01_diff_4k.jpg'
+AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
+Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_metallic.png'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/cannon_01_4k/textures/cannon_01_nor_gl_4k.jpg'
+Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/cannon_01_4k/textures/cannon_01_rough_4k.jpg'
+
+['dependencies.uuid']
+Albedo = '1a84268d-19f3-4a12-8d8b-e8cdc90a6bbc'
+AmbientOcclusion = '440d05ac-9fd0-4326-8963-05ccf47245f0'
+Metallic = '0ec1be4e-7500-4a04-9f77-ac4e79f8f194'
+Normal = '90d89884-476b-4def-9a27-d18ed1d9f05e'
+Roughness = '8bf58f3d-a3ab-46f7-9dce-1f60718138fd'
+
+['properties.albedo']
+value = [ 1.0, 1.0, 1.0, 1.0 ]
+
+['properties.ambient_occlusion']
+channel = 'R'
+value = 1.0
+
+['properties.global']
+scale = [ 1.0, 1.0 ]
+
+['properties.metallic']
+channel = 'R'
+value = 1.0
+
+['properties.normal']
+value = 1.0
+
+['properties.roughness']
+channel = 'R'
+value = 1.0

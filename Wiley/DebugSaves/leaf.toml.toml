@@ -1,0 +1,38 @@
+Name = 'leaf.toml'
+Type = 'Material'
+UUID = '8a68d88f-d56c-43f9-a13a-e9750d6a571f'
+
+['dependencies.path']
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_thorn_diff.tga'
+AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
+Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_metallic.png'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_thorn_ddn.tga'
+Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
+
+['dependencies.uuid']
+Albedo = '0b347bea-09f2-41dc-a8a3-ea6b7f1cd181'
+AmbientOcclusion = '443c3376-43fb-45fa-ac7b-c8254e6e3fe1'
+Metallic = '9fe7c8ff-a6e7-4837-882d-99ac1a2a98be'
+Normal = '3855d970-32ee-4f1d-8166-c4d6e51b5afb'
+Roughness = '429045a2-9012-4811-8b0b-834064d64f89'
+
+['properties.albedo']
+value = [ 1.0, 1.0, 1.0, 1.0 ]
+
+['properties.ambient_occlusion']
+channel = 'R'
+value = 1.0
+
+['properties.global']
+scale = [ 1.0, 1.0 ]
+
+['properties.metallic']
+channel = 'R'
+value = 1.0
+
+['properties.normal']
+value = 1.0
+
+['properties.roughness']
+channel = 'R'
+value = 1.0

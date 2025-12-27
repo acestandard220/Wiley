@@ -1,0 +1,530 @@
+# Blender 4.4.3 MTL File: 'None'
+# www.blender.org
+
+newmtl M_Arch_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Arch_Inst_0_BaseColor.dds
+map_Ks Textures/M_Arch_Inst_0_Specular.dds
+map_d Textures/M_Arch_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Arch_Inst_0_Normal.dds
+
+newmtl M_Arch_Inst_2
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Arch_Inst_2_0_BaseColor.dds
+map_Ks Textures/M_Arch_Inst_2_0_Specular.dds
+map_d Textures/M_Arch_Inst_2_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Arch_Inst_2_0_Normal.dds
+
+newmtl M_Arch_Inst_Red
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Arch_Inst_Red_0_BaseColor.dds
+map_Ks Textures/M_Arch_Inst_Red_0_Specular.dds
+map_d Textures/M_Arch_Inst_Red_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Arch_Inst_Red_0_Normal.dds
+
+newmtl M_Arch_Inst_Red_2
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Arch_Inst_Red_2_0_BaseColor.dds
+map_Ks Textures/M_Arch_Inst_Red_2_0_Specular.dds
+map_d Textures/M_Arch_Inst_Red_2_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Arch_Inst_Red_2_0_Normal.dds
+
+newmtl M_BottomTrim_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_BottomTrim_Inst_0_BaseColor.dds
+map_Ks Textures/M_BottomTrim_Inst_0_Specular.dds
+map_d Textures/M_BottomTrim_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_BottomTrim_Inst_0_Normal.dds
+
+newmtl M_BottomTrim_Inst_Black
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_BottomTrim_Inst_Black_0_BaseColor.dds
+map_Ks Textures/M_BottomTrim_Inst_Black_0_Specular.dds
+map_d Textures/M_BottomTrim_Inst_Black_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_BottomTrim_Inst_Black_0_Normal.dds
+
+newmtl M_BottomTrim_Inst_UTile4
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_BottomTrim_Inst_UTile4_0_BaseColor.dds
+map_Ks Textures/M_BottomTrim_Inst_UTile4_0_Specular.dds
+map_d Textures/M_BottomTrim_Inst_UTile4_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_BottomTrim_Inst_UTile4_0_Normal.dds
+
+newmtl M_Dome_2
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Dome_2_0_BaseColor.dds
+map_Ks Textures/M_Dome_2_0_Specular.dds
+map_d Textures/M_Dome_2_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Dome_2_0_Normal.dds
+
+newmtl M_Dome_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Dome_Inst_0_BaseColor.dds
+map_Ks Textures/M_Dome_Inst_0_Specular.dds
+map_d Textures/M_Dome_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Dome_Inst_0_Normal.dds
+
+newmtl M_FirePit_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_FirePit_Inst_0_BaseColor.dds
+map_Ks Textures/M_FirePit_Inst_0_Specular.dds
+map_Ke Textures/M_FirePit_Inst_0_Emissive.dds
+map_d Textures/M_FirePit_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_FirePit_Inst_0_Normal.dds
+
+newmtl M_FirePit_Inst_Glow
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_FirePit_Inst_Glow_0_BaseColor.dds
+map_Ks Textures/M_FirePit_Inst_Glow_0_Specular.dds
+map_Ke Textures/M_FirePit_Inst_Glow_0_Emissive.dds
+map_d Textures/M_FirePit_Inst_Glow_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_FirePit_Inst_Glow_0_Normal.dds
+
+newmtl M_FirePit_Inst_nofire
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_FirePit_Inst_nofire_0_BaseColor.dds
+map_Ks Textures/M_FirePit_Inst_nofire_0_Specular.dds
+map_d Textures/M_FirePit_Inst_nofire_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_FirePit_Inst_nofire_0_Normal.dds
+
+newmtl M_FloorTiles1_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_FloorTiles1_Inst_0_BaseColor.dds
+map_Ks Textures/M_FloorTiles1_Inst_0_Specular.dds
+map_d Textures/M_FloorTiles1_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_FloorTiles1_Inst_0_Normal.dds
+
+newmtl M_FloorTiles1_Inst_Blue
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_FloorTiles1_Inst_Blue_0_BaseColor.dds
+map_Ks Textures/M_FloorTiles1_Inst_Blue_0_Specular.dds
+map_d Textures/M_FloorTiles1_Inst_Blue_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_FloorTiles1_Inst_Blue_0_Normal.dds
+
+newmtl M_FloorTiles1_Inst_Inst2
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_FloorTiles1_Inst_Inst2_0_BaseColor.dds
+map_Ks Textures/M_FloorTiles1_Inst_Inst2_0_Specular.dds
+map_d Textures/M_FloorTiles1_Inst_Inst2_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_FloorTiles1_Inst_Inst2_0_Normal.dds
+
+newmtl M_FloorTiles2_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_FloorTiles2_Inst_0_BaseColor.dds
+map_Ks Textures/M_FloorTiles2_Inst_0_Specular.dds
+map_d Textures/M_FloorTiles2_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_FloorTiles2_Inst_0_Normal.dds
+
+newmtl M_FloorTiles2_Inst_Inst_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_FloorTiles2_Inst_Inst_Inst_0_BaseColor.dds
+map_Ks Textures/M_FloorTiles2_Inst_Inst_Inst_0_Specular.dds
+map_d Textures/M_FloorTiles2_Inst_Inst_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_FloorTiles2_Inst_Inst_Inst_0_Normal.dds
+
+newmtl M_FloorTiles2_Inst_REd
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_FloorTiles2_Inst_REd_0_BaseColor.dds
+map_Ks Textures/M_FloorTiles2_Inst_REd_0_Specular.dds
+map_d Textures/M_FloorTiles2_Inst_REd_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_FloorTiles2_Inst_REd_0_Normal.dds
+
+newmtl M_Pillar_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Pillar_Inst_0_BaseColor.dds
+map_Ks Textures/M_Pillar_Inst_0_Specular.dds
+map_d Textures/M_Pillar_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Pillar_Inst_0_Normal.dds
+
+newmtl M_Pillar_Inst_Colored
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Pillar_Inst_Colored_0_BaseColor.dds
+map_Ks Textures/M_Pillar_Inst_Colored_0_Specular.dds
+map_d Textures/M_Pillar_Inst_Colored_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Pillar_Inst_Colored_0_Normal.dds
+
+newmtl M_Railing_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Railing_Inst_0_BaseColor.dds
+map_Ks Textures/M_Railing_Inst_0_Specular.dds
+map_d Textures/M_Railing_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Railing_Inst_0_Normal.dds
+
+newmtl M_Rocks_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Rocks_Inst_2_BaseColor.dds
+map_Ks Textures/M_Rocks_Inst_2_Specular.dds
+map_d Textures/M_Rocks_Inst_2_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Rocks_Inst_2_Normal.dds
+
+newmtl M_Rocks_Inst.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Rocks_Inst_1_BaseColor.dds
+map_Ks Textures/M_Rocks_Inst_1_Specular.dds
+map_d Textures/M_Rocks_Inst_1_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Rocks_Inst_1_Normal.dds
+
+newmtl M_Rocks_Inst.002
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Rocks_Inst_0_BaseColor.dds
+map_Ks Textures/M_Rocks_Inst_0_Specular.dds
+map_d Textures/M_Rocks_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Rocks_Inst_0_Normal.dds
+
+newmtl M_Shield_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Shield_Inst_0_BaseColor.dds
+map_Ks Textures/M_Shield_Inst_0_Specular.dds
+map_d Textures/M_Shield_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Shield_Inst_0_Normal.dds
+
+newmtl M_Soul_Rocks2_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Soul_Rocks2_Inst_12_BaseColor.dds
+map_Ks Textures/M_Soul_Rocks2_Inst_12_Specular.dds
+map_d Textures/M_Soul_Rocks2_Inst_12_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Soul_Rocks2_Inst_12_Normal.dds
+
+newmtl M_Soul_Rocks2_Inst.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Soul_Rocks2_Inst_11_BaseColor.dds
+map_Ks Textures/M_Soul_Rocks2_Inst_11_Specular.dds
+map_d Textures/M_Soul_Rocks2_Inst_11_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Soul_Rocks2_Inst_11_Normal.dds
+
+newmtl M_Soul_Rocks2_Inst.002
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Soul_Rocks2_Inst_10_BaseColor.dds
+map_Ks Textures/M_Soul_Rocks2_Inst_10_Specular.dds
+map_d Textures/M_Soul_Rocks2_Inst_10_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Soul_Rocks2_Inst_10_Normal.dds
+
+newmtl M_Soul_Rocks2_Inst.003
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Soul_Rocks2_Inst_9_BaseColor.dds
+map_Ks Textures/M_Soul_Rocks2_Inst_9_Specular.dds
+map_d Textures/M_Soul_Rocks2_Inst_9_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Soul_Rocks2_Inst_9_Normal.dds
+
+newmtl M_Soul_Rocks2_Inst.004
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Soul_Rocks2_Inst_8_BaseColor.dds
+map_Ks Textures/M_Soul_Rocks2_Inst_8_Specular.dds
+map_d Textures/M_Soul_Rocks2_Inst_8_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Soul_Rocks2_Inst_8_Normal.dds
+
+newmtl M_Soul_Rocks2_Inst.005
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Soul_Rocks2_Inst_7_BaseColor.dds
+map_Ks Textures/M_Soul_Rocks2_Inst_7_Specular.dds
+map_d Textures/M_Soul_Rocks2_Inst_7_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Soul_Rocks2_Inst_7_Normal.dds
+
+newmtl M_Soul_Rocks2_Inst.006
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Soul_Rocks2_Inst_6_BaseColor.dds
+map_Ks Textures/M_Soul_Rocks2_Inst_6_Specular.dds
+map_d Textures/M_Soul_Rocks2_Inst_6_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Soul_Rocks2_Inst_6_Normal.dds
+
+newmtl M_Soul_Rocks2_Inst.007
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Soul_Rocks2_Inst_5_BaseColor.dds
+map_Ks Textures/M_Soul_Rocks2_Inst_5_Specular.dds
+map_d Textures/M_Soul_Rocks2_Inst_5_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Soul_Rocks2_Inst_5_Normal.dds
+
+newmtl M_Soul_Rocks2_Inst.008
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Soul_Rocks2_Inst_4_BaseColor.dds
+map_Ks Textures/M_Soul_Rocks2_Inst_4_Specular.dds
+map_d Textures/M_Soul_Rocks2_Inst_4_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Soul_Rocks2_Inst_4_Normal.dds
+
+newmtl M_Soul_Rocks2_Inst.009
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Soul_Rocks2_Inst_3_BaseColor.dds
+map_Ks Textures/M_Soul_Rocks2_Inst_3_Specular.dds
+map_d Textures/M_Soul_Rocks2_Inst_3_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Soul_Rocks2_Inst_3_Normal.dds
+
+newmtl M_Soul_Rocks2_Inst.010
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Soul_Rocks2_Inst_2_BaseColor.dds
+map_Ks Textures/M_Soul_Rocks2_Inst_2_Specular.dds
+map_d Textures/M_Soul_Rocks2_Inst_2_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Soul_Rocks2_Inst_2_Normal.dds
+
+newmtl M_Soul_Rocks2_Inst.011
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Soul_Rocks2_Inst_1_BaseColor.dds
+map_Ks Textures/M_Soul_Rocks2_Inst_1_Specular.dds
+map_d Textures/M_Soul_Rocks2_Inst_1_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Soul_Rocks2_Inst_1_Normal.dds
+
+newmtl M_Soul_Rocks2_Inst.012
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Soul_Rocks2_Inst_0_BaseColor.dds
+map_Ks Textures/M_Soul_Rocks2_Inst_0_Specular.dds
+map_d Textures/M_Soul_Rocks2_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Soul_Rocks2_Inst_0_Normal.dds
+
+newmtl M_Stairs_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Stairs_Inst_0_BaseColor.dds
+map_Ks Textures/M_Stairs_Inst_0_Specular.dds
+map_d Textures/M_Stairs_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Stairs_Inst_0_Normal.dds
+
+newmtl M_Statue_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Statue_Inst_0_BaseColor.dds
+map_Ks Textures/M_Statue_Inst_0_Specular.dds
+map_d Textures/M_Statue_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Statue_Inst_0_Normal.dds
+
+newmtl M_StoneBrickWall_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_StoneBrickWall_Inst_0_BaseColor.dds
+map_Ks Textures/M_StoneBrickWall_Inst_0_Specular.dds
+map_d Textures/M_StoneBrickWall_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_StoneBrickWall_Inst_0_Normal.dds
+
+newmtl M_StoneCeiling_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_StoneCeiling_Inst_0_BaseColor.dds
+map_Ks Textures/M_StoneCeiling_Inst_0_Specular.dds
+map_d Textures/M_StoneCeiling_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_StoneCeiling_Inst_0_Normal.dds
+
+newmtl M_TreeTrunk01_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_TreeTrunk01_Inst_0_BaseColor.dds
+map_Ks Textures/M_TreeTrunk01_Inst_0_Specular.dds
+map_d Textures/M_TreeTrunk01_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_TreeTrunk01_Inst_0_Normal.dds
+
+newmtl M_Tree_Branches.DoubleSided
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Tree_Branches_0_BaseColor.dds
+map_Ks Textures/M_Tree_Branches_0_Specular.dds
+map_d Textures/M_Tree_Branches_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Tree_Branches_0_Normal.dds
+
+newmtl M_Tree_Branches_Inst.DoubleSided
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Tree_Branches_Inst_0_BaseColor.dds
+map_Ks Textures/M_Tree_Branches_Inst_0_Specular.dds
+map_Ke Textures/M_Tree_Branches_Inst_0_Emissive.dds
+map_d Textures/M_Tree_Branches_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Tree_Branches_Inst_0_Normal.dds
+
+newmtl M_Trim_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Trim_Inst_0_BaseColor.dds
+map_Ks Textures/M_Trim_Inst_0_Specular.dds
+map_d Textures/M_Trim_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Trim_Inst_0_Normal.dds
+
+newmtl M_Trim_Inst_Inst
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/M_Trim_Inst_Inst_0_BaseColor.dds
+map_Ks Textures/M_Trim_Inst_Inst_0_Specular.dds
+map_d Textures/M_Trim_Inst_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/M_Trim_Inst_Inst_0_Normal.dds
+
+newmtl Soul_Tree011M_Inst.DoubleSided
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ni 1.500000
+illum 3
+map_Kd Textures/Soul_Tree011M_Inst_0_BaseColor.dds
+map_Ks Textures/Soul_Tree011M_Inst_0_Specular.dds
+map_Ke Textures/Soul_Tree011M_Inst_0_Emissive.dds
+map_d Textures/Soul_Tree011M_Inst_0_BaseColor.dds
+map_Bump -bm 1.000000 Textures/Soul_Tree011M_Inst_0_Normal.dds

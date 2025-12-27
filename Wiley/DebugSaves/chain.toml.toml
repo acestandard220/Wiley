@@ -1,0 +1,38 @@
+Name = 'chain.toml'
+Type = 'Material'
+UUID = '243cba5f-f3eb-44be-9c9f-66528e793faf'
+
+['dependencies.path']
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/chain_texture.tga'
+AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
+Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_metallic.png'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/chain_texture_ddn.tga'
+Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
+
+['dependencies.uuid']
+Albedo = '4e000f9f-eb0c-4a88-9e95-e621792c6618'
+AmbientOcclusion = '443c3376-43fb-45fa-ac7b-c8254e6e3fe1'
+Metallic = '9fe7c8ff-a6e7-4837-882d-99ac1a2a98be'
+Normal = '84bb2aeb-163f-4b66-866b-a75ea138fde9'
+Roughness = '429045a2-9012-4811-8b0b-834064d64f89'
+
+['properties.albedo']
+value = [ 1.0, 1.0, 1.0, 1.0 ]
+
+['properties.ambient_occlusion']
+channel = 'R'
+value = 1.0
+
+['properties.global']
+scale = [ 1.0, 1.0 ]
+
+['properties.metallic']
+channel = 'R'
+value = 1.0
+
+['properties.normal']
+value = 1.0
+
+['properties.roughness']
+channel = 'R'
+value = 1.0

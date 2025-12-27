@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{1b1d0880-3baa-47c8-9912-2084cbde1c0b}</ProjectGuid>
+    <RootNamespace>Wiley</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>false</EnableASAN>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>false</EnableASAN>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRTDBG_MAP_ALLOC;TRACY_ENABLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>P:\DevTools\DX12 Helper;$(ProjectDir)ext\OpTick\src;$(ProjectDir)ext\ImGui;$(ProjectDir)ext;$(ProjectDir)ext\sol</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)ext/dxlibs;$(ProjectDir)ext/Assimp</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc145-mt.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>TRACY_ENABLE;_CRT_SECURE_NO_WARNINGS;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>P:\DevTools\DX12 Helper;$(ProjectDir)ext\OpTick\src;$(ProjectDir)ext\ImGui;$(ProjectDir)ext;$(ProjectDir)ext\sol</AdditionalIncludeDirectories>
+      <Optimization>MaxSpeed</Optimization>
+      <TreatSpecificWarningsAsErrors>%(TreatSpecificWarningsAsErrors)</TreatSpecificWarningsAsErrors>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)ext/dxlibs;$(ProjectDir)ext/Assimp</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc145-mt.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Core\Allocator.cpp" />
+    <ClCompile Include="Core\Timer.cpp" />
+    <ClCompile Include="Core\UUID.cpp" />
+    <ClCompile Include="Core\FileSpace.cpp" />
+    <ClCompile Include="Editor\ImGuiExtension\Themes.cpp" />
+    <ClCompile Include="Editor\Panels\Inspector.cpp" />
+    <ClCompile Include="Editor\Panels\Viewport.cpp" />
+    <ClCompile Include="ext\DX12 Helper\DDSTextureLoader.cpp" />
+    <ClCompile Include="ext\ImGui\imgui.cpp" />
+    <ClCompile Include="ext\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="ext\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="ext\ImGui\imgui_impl_dx12.cpp" />
+    <ClCompile Include="ext\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="ext\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="ext\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Editor\Panels\Panel.cpp" />
+    <ClCompile Include="Editor\Panels\Hierarchy.cpp" />
+    <ClCompile Include="Resource\Loaders\EnvironmentMapLoader.cpp" />
+    <ClCompile Include="RHI\CubeMap.cpp" />
+    <ClCompile Include="Editor\Editor.cpp" />
+    <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="ext\DX12 Helper\MathHelper.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\allocator.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\clusterizer.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\indexanalyzer.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\indexcodec.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\indexgenerator.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\overdrawoptimizer.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\partition.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\quantization.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\rasterizer.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\simplifier.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\spatialorder.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\stripifier.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\vcacheoptimizer.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\vertexcodec.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\vertexfilter.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\meshoptimizer\src\vfetchoptimizer.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\OpTick\src\optick_capi.cpp" />
+    <ClCompile Include="ext\OpTick\src\optick_core.cpp" />
+    <ClCompile Include="ext\OpTick\src\optick_gpu.cpp" />
+    <ClCompile Include="ext\OpTick\src\optick_gpu.d3d12.cpp" />
+    <ClCompile Include="ext\OpTick\src\optick_message.cpp" />
+    <ClCompile Include="ext\OpTick\src\optick_miniz.cpp" />
+    <ClCompile Include="ext\OpTick\src\optick_serialization.cpp" />
+    <ClCompile Include="ext\OpTick\src\optick_server.cpp" />
+    <ClCompile Include="ext\sol\lapi.c" />
+    <ClCompile Include="ext\sol\lauxlib.c" />
+    <ClCompile Include="ext\sol\lbaselib.c" />
+    <ClCompile Include="ext\sol\lcode.c" />
+    <ClCompile Include="ext\sol\lcorolib.c" />
+    <ClCompile Include="ext\sol\lctype.c" />
+    <ClCompile Include="ext\sol\ldblib.c" />
+    <ClCompile Include="ext\sol\ldebug.c" />
+    <ClCompile Include="ext\sol\ldo.c" />
+    <ClCompile Include="ext\sol\ldump.c" />
+    <ClCompile Include="ext\sol\lfunc.c" />
+    <ClCompile Include="ext\sol\lgc.c" />
+    <ClCompile Include="ext\sol\linit.c" />
+    <ClCompile Include="ext\sol\liolib.c" />
+    <ClCompile Include="ext\sol\llex.c" />
+    <ClCompile Include="ext\sol\lmathlib.c" />
+    <ClCompile Include="ext\sol\lmem.c" />
+    <ClCompile Include="ext\sol\loadlib.c" />
+    <ClCompile Include="ext\sol\lobject.c" />
+    <ClCompile Include="ext\sol\lopcodes.c" />
+    <ClCompile Include="ext\sol\loslib.c" />
+    <ClCompile Include="ext\sol\lparser.c" />
+    <ClCompile Include="ext\sol\lstate.c" />
+    <ClCompile Include="ext\sol\lstring.c" />
+    <ClCompile Include="ext\sol\lstrlib.c" />
+    <ClCompile Include="ext\sol\ltable.c" />
+    <ClCompile Include="ext\sol\ltablib.c" />
+    <ClCompile Include="ext\sol\ltm.c" />
+    <ClCompile Include="ext\sol\lua\lapi.c" />
+    <ClCompile Include="ext\sol\lua\lauxlib.c" />
+    <ClCompile Include="ext\sol\lua\lbaselib.c" />
+    <ClCompile Include="ext\sol\lua\lcode.c" />
+    <ClCompile Include="ext\sol\lua\lcorolib.c" />
+    <ClCompile Include="ext\sol\lua\lctype.c" />
+    <ClCompile Include="ext\sol\lua\ldblib.c" />
+    <ClCompile Include="ext\sol\lua\ldebug.c" />
+    <ClCompile Include="ext\sol\lua\ldo.c" />
+    <ClCompile Include="ext\sol\lua\ldump.c" />
+    <ClCompile Include="ext\sol\lua\lfunc.c" />
+    <ClCompile Include="ext\sol\lua\lgc.c" />
+    <ClCompile Include="ext\sol\lua\linit.c" />
+    <ClCompile Include="ext\sol\lua\liolib.c" />
+    <ClCompile Include="ext\sol\lua\llex.c" />
+    <ClCompile Include="ext\sol\lua\lmathlib.c" />
+    <ClCompile Include="ext\sol\lua\lmem.c" />
+    <ClCompile Include="ext\sol\lua\loadlib.c" />
+    <ClCompile Include="ext\sol\lua\lobject.c" />
+    <ClCompile Include="ext\sol\lua\lopcodes.c" />
+    <ClCompile Include="ext\sol\lua\loslib.c" />
+    <ClCompile Include="ext\sol\lua\lparser.c" />
+    <ClCompile Include="ext\sol\lua\lstate.c" />
+    <ClCompile Include="ext\sol\lua\lstring.c" />
+    <ClCompile Include="ext\sol\lua\lstrlib.c" />
+    <ClCompile Include="ext\sol\lua\ltable.c" />
+    <ClCompile Include="ext\sol\lua\ltablib.c" />
+    <ClCompile Include="ext\sol\lua\ltm.c" />
+    <ClCompile Include="ext\sol\lua\luac.c" />
+    <ClCompile Include="ext\sol\lua\lundump.c" />
+    <ClCompile Include="ext\sol\lua\lutf8lib.c" />
+    <ClCompile Include="ext\sol\lua\lvm.c" />
+    <ClCompile Include="ext\sol\lua\lzio.c" />
+    <ClCompile Include="ext\sol\lundump.c" />
+    <ClCompile Include="ext\sol\lutf8lib.c" />
+    <ClCompile Include="ext\sol\lvm.c" />
+    <ClCompile Include="ext\sol\lzio.c" />
+    <ClCompile Include="ext\stb.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\tiny_obj_loader.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\Tracy\client\TracyKCore.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\Tracy\client\TracyOverride.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\Tracy\client\TracySysPower.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\Tracy\common\TracyStackFrames.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\Tracy\common\tracy_lz4hc.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TurnOffAllWarnings</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="ext\Tracy\libbacktrace\alloc.cpp" />
+    <ClCompile Include="ext\Tracy\libbacktrace\sort.cpp" />
+    <ClCompile Include="ext\Tracy\libbacktrace\state.cpp" />
+    <ClCompile Include="ext\Tracy\TracyClient.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Level1</WarningLevel>
+    </ClCompile>
+    <ClCompile Include="Renderer\DebugRenderer.cpp" />
+    <ClCompile Include="Renderer\Passes\ComputeSceneDrawPass.cpp" />
+    <ClCompile Include="Renderer\Passes\DepthPrePass.cpp" />
+    <ClCompile Include="Renderer\Passes\GeometryPass.cpp" />
+    <ClCompile Include="Renderer\Passes\LightCullPass.cpp" />
+    <ClCompile Include="Renderer\Passes\LightingPass.cpp" />
+    <ClCompile Include="Renderer\Passes\PipelineStates.cpp" />
+    <ClCompile Include="Renderer\Passes\SceneCopyPass.cpp" />
+    <ClCompile Include="Resource\Loaders\ImageTextureLoader.cpp" />
+    <ClCompile Include="Resource\Loaders\MeshLoader.cpp" />
+    <ClCompile Include="Resource\Loaders\MaterialLoader.cpp" />
+    <ClCompile Include="Resource\Loaders\mtl_parser.cpp" />
+    <ClCompile Include="Resource\ResourceCache.cpp" />
+    <ClCompile Include="Resource\ResourceLoader.cpp" />
+    <ClCompile Include="RHI\IndirectCommandBuffer.cpp" />
+    <ClCompile Include="RHI\ComputePipeline.cpp" />
+    <ClCompile Include="Resource\Geometry.cpp" />
+    <ClCompile Include="Core\ScriptEngine.cpp" />
+    <ClCompile Include="Core\Input.cpp" />
+    <ClCompile Include="Renderer\RenderScript.cpp" />
+    <ClCompile Include="Scene\Camera.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
+    <ClCompile Include="Renderer\FrameGraph.cpp" />
+    <ClCompile Include="Renderer\RenderPasses.cpp" />
+    <ClCompile Include="RHI\RenderContext.cpp" />
+    <ClCompile Include="RHI\GraphicsPipeline.cpp" />
+    <ClCompile Include="RHI\DescriptorHeap.cpp" />
+    <ClCompile Include="RHI\CommandList.cpp" />
+    <ClCompile Include="RHI\Fence.cpp" />
+    <ClCompile Include="RHI\CommandQueue.cpp" />
+    <ClCompile Include="RHI\Device.cpp" />
+    <ClCompile Include="RHI\SwapChain.cpp" />
+    <ClCompile Include="RHI\Texture.cpp" />
+    <ClCompile Include="RHI\ShaderByteCode.cpp" />
+    <ClCompile Include="RHI\RootSignature.cpp" />
+    <ClCompile Include="RHI\Buffer.cpp" />
+    <ClCompile Include="RHI\Sampler.cpp" />
+    <ClCompile Include="Core\Utils.cpp" />
+    <ClCompile Include="Core\ThreadPool.cpp" />
+    <ClCompile Include="Scene\Systems\MeshFilterSystem.cpp" />
+    <ClCompile Include="Scene\Systems\TransformSystem.cpp" />
+    <ClCompile Include="Wiley.cpp" />
+    <ClCompile Include="Core\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\Allocator.h" />
+    <ClInclude Include="Core\Delegate.h" />
+    <ClInclude Include="Core\MathConstants.h" />
+    <ClInclude Include="Core\MathTypes.h" />
+    <ClInclude Include="Core\MemoryLeakDetector.h" />
+    <ClInclude Include="Core\Timer.h" />
+    <ClInclude Include="Core\TracyWrapper.h" />
+    <ClInclude Include="Core\UUID.h" />
+    <ClInclude Include="Core\FileSpace.h" />
+    <ClInclude Include="Editor\ImGuiExtension\Themes.h" />
+    <ClInclude Include="Editor\Panels\Inspector.h" />
+    <ClInclude Include="Editor\Panels\Viewport.h" />
+    <ClInclude Include="ext\ImGui\imconfig.h" />
+    <ClInclude Include="ext\ImGui\imgui.h" />
+    <ClInclude Include="ext\ImGui\imgui_impl_dx12.h" />
+    <ClInclude Include="ext\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="ext\ImGui\imgui_internal.h" />
+    <ClInclude Include="ext\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="ext\ImGui\imstb_textedit.h" />
+    <ClInclude Include="ext\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Editor\Panels\Panel.h" />
+    <ClInclude Include="Editor\Panels\Hierarchy.h" />
+    <ClInclude Include="Resource\EnvironmentMap.h" />
+    <ClInclude Include="RHI\CubeMap.h" />
+    <ClInclude Include="Editor\Editor.h" />
+    <ClInclude Include="Engine\Engine.h" />
+    <ClInclude Include="ext\cgltf.h" />
+    <ClInclude Include="ext\DX12 Helper\d3dx12.h" />
+    <ClInclude Include="ext\DX12 Helper\d3dx12_barriers.h" />
+    <ClInclude Include="ext\DX12 Helper\d3dx12_check_feature_support.h" />
+    <ClInclude Include="ext\DX12 Helper\d3dx12_core.h" />
+    <ClInclude Include="ext\DX12 Helper\d3dx12_default.h" />
+    <ClInclude Include="ext\DX12 Helper\d3dx12_pipeline_state_stream.h" />
+    <ClInclude Include="ext\DX12 Helper\d3dx12_property_format_table.h" />
+    <ClInclude Include="ext\DX12 Helper\d3dx12_render_pass.h" />
+    <ClInclude Include="ext\DX12 Helper\d3dx12_resource_helpers.h" />
+    <ClInclude Include="ext\DX12 Helper\d3dx12_root_signature.h" />
+    <ClInclude Include="ext\DX12 Helper\d3dx12_state_object.h" />
+    <ClInclude Include="ext\DX12 Helper\DDSTextureLoader.h" />
+    <ClInclude Include="ext\DX12 Helper\DXSampleHelper.h" />
+    <ClInclude Include="ext\DX12 Helper\MathHelper.h" />
+    <ClInclude Include="ext\entt.hpp" />
+    <ClInclude Include="ext\meshoptimizer\extern\cgltf.h" />
+    <ClInclude Include="ext\meshoptimizer\extern\fast_obj.h" />
+    <ClInclude Include="ext\meshoptimizer\extern\sdefl.h" />
+    <ClInclude Include="ext\meshoptimizer\src\meshoptimizer.h" />
+    <ClInclude Include="ext\OpTick\src\optick.config.h" />
+    <ClInclude Include="ext\OpTick\src\optick.h" />
+    <ClInclude Include="ext\OpTick\src\optick_capi.h" />
+    <ClInclude Include="ext\OpTick\src\optick_common.h" />
+    <ClInclude Include="ext\OpTick\src\optick_core.freebsd.h" />
+    <ClInclude Include="ext\OpTick\src\optick_core.h" />
+    <ClInclude Include="ext\OpTick\src\optick_core.linux.h" />
+    <ClInclude Include="ext\OpTick\src\optick_core.macos.h" />
+    <ClInclude Include="ext\OpTick\src\optick_core.platform.h" />
+    <ClInclude Include="ext\OpTick\src\optick_core.win.h" />
+    <ClInclude Include="ext\OpTick\src\optick_gpu.h" />
+    <ClInclude Include="ext\OpTick\src\optick_memory.h" />
+    <ClInclude Include="ext\OpTick\src\optick_message.h" />
+    <ClInclude Include="ext\OpTick\src\optick_miniz.h" />
+    <ClInclude Include="ext\OpTick\src\optick_serialization.h" />
+    <ClInclude Include="ext\OpTick\src\optick_server.h" />
+    <ClInclude Include="ext\sol.hpp" />
+    <ClInclude Include="ext\sol\abort.hpp" />
+    <ClInclude Include="ext\sol\assert.hpp" />
+    <ClInclude Include="ext\sol\as_args.hpp" />
+    <ClInclude Include="ext\sol\as_returns.hpp" />
+    <ClInclude Include="ext\sol\base_traits.hpp" />
+    <ClInclude Include="ext\sol\bind_traits.hpp" />
+    <ClInclude Include="ext\sol\bytecode.hpp" />
+    <ClInclude Include="ext\sol\call.hpp" />
+    <ClInclude Include="ext\sol\compatibility.hpp" />
+    <ClInclude Include="ext\sol\compatibility\compat-5.3.c.h" />
+    <ClInclude Include="ext\sol\compatibility\compat-5.3.h" />
+    <ClInclude Include="ext\sol\compatibility\compat-5.4.h" />
+    <ClInclude Include="ext\sol\compatibility\lua_version.hpp" />
+    <ClInclude Include="ext\sol\config.hpp" />
+    <ClInclude Include="ext\sol\coroutine.hpp" />
+    <ClInclude Include="ext\sol\debug.hpp" />
+    <ClInclude Include="ext\sol\demangle.hpp" />
+    <ClInclude Include="ext\sol\deprecate.hpp" />
+    <ClInclude Include="ext\sol\detail\build_version.hpp" />
+    <ClInclude Include="ext\sol\dump_handler.hpp" />
+    <ClInclude Include="ext\sol\ebco.hpp" />
+    <ClInclude Include="ext\sol\environment.hpp" />
+    <ClInclude Include="ext\sol\epilogue.hpp" />
+    <ClInclude Include="ext\sol\error.hpp" />
+    <ClInclude Include="ext\sol\error_handler.hpp" />
+    <ClInclude Include="ext\sol\forward.hpp" />
+    <ClInclude Include="ext\sol\forward_as.hpp" />
+    <ClInclude Include="ext\sol\forward_detail.hpp" />
+    <ClInclude Include="ext\sol\function.hpp" />
+    <ClInclude Include="ext\sol\function_result.hpp" />
+    <ClInclude Include="ext\sol\function_types.hpp" />
+    <ClInclude Include="ext\sol\function_types_core.hpp" />
+    <ClInclude Include="ext\sol\function_types_overloaded.hpp" />
+    <ClInclude Include="ext\sol\function_types_stateful.hpp" />
+    <ClInclude Include="ext\sol\function_types_stateless.hpp" />
+    <ClInclude Include="ext\sol\function_types_templated.hpp" />
+    <ClInclude Include="ext\sol\inheritance.hpp" />
+    <ClInclude Include="ext\sol\in_place.hpp" />
+    <ClInclude Include="ext\sol\lapi.h" />
+    <ClInclude Include="ext\sol\lauxlib.h" />
+    <ClInclude Include="ext\sol\lcode.h" />
+    <ClInclude Include="ext\sol\lctype.h" />
+    <ClInclude Include="ext\sol\ldebug.h" />
+    <ClInclude Include="ext\sol\ldo.h" />
+    <ClInclude Include="ext\sol\lfunc.h" />
+    <ClInclude Include="ext\sol\lgc.h" />
+    <ClInclude Include="ext\sol\ljumptab.h" />
+    <ClInclude Include="ext\sol\llex.h" />
+    <ClInclude Include="ext\sol\llimits.h" />
+    <ClInclude Include="ext\sol\lmem.h" />
+    <ClInclude Include="ext\sol\load_result.hpp" />
+    <ClInclude Include="ext\sol\lobject.h" />
+    <ClInclude Include="ext\sol\lopcodes.h" />
+    <ClInclude Include="ext\sol\lopnames.h" />
+    <ClInclude Include="ext\sol\lparser.h" />
+    <ClInclude Include="ext\sol\lprefix.h" />
+    <ClInclude Include="ext\sol\lstate.h" />
+    <ClInclude Include="ext\sol\lstring.h" />
+    <ClInclude Include="ext\sol\ltable.h" />
+    <ClInclude Include="ext\sol\ltm.h" />
+    <ClInclude Include="ext\sol\lua.h" />
+    <ClInclude Include="ext\sol\lua.hpp" />
+    <ClInclude Include="ext\sol\luaconf.h" />
+    <ClInclude Include="ext\sol\lualib.h" />
+    <ClInclude Include="ext\sol\lua\lapi.h" />
+    <ClInclude Include="ext\sol\lua\lauxlib.h" />
+    <ClInclude Include="ext\sol\lua\lcode.h" />
+    <ClInclude Include="ext\sol\lua\lctype.h" />
+    <ClInclude Include="ext\sol\lua\ldebug.h" />
+    <ClInclude Include="ext\sol\lua\ldo.h" />
+    <ClInclude Include="ext\sol\lua\lfunc.h" />
+    <ClInclude Include="ext\sol\lua\lgc.h" />
+    <ClInclude Include="ext\sol\lua\ljumptab.h" />
+    <ClInclude Include="ext\sol\lua\llex.h" />
+    <ClInclude Include="ext\sol\lua\llimits.h" />
+    <ClInclude Include="ext\sol\lua\lmem.h" />
+    <ClInclude Include="ext\sol\lua\lobject.h" />
+    <ClInclude Include="ext\sol\lua\lopcodes.h" />
+    <ClInclude Include="ext\sol\lua\lopnames.h" />
+    <ClInclude Include="ext\sol\lua\lparser.h" />
+    <ClInclude Include="ext\sol\lua\lprefix.h" />
+    <ClInclude Include="ext\sol\lua\lstate.h" />
+    <ClInclude Include="ext\sol\lua\lstring.h" />
+    <ClInclude Include="ext\sol\lua\ltable.h" />
+    <ClInclude Include="ext\sol\lua\ltm.h" />
+    <ClInclude Include="ext\sol\lua\lua.h" />
+    <ClInclude Include="ext\sol\lua\lua.hpp" />
+    <ClInclude Include="ext\sol\lua\luaconf.h" />
+    <ClInclude Include="ext\sol\lua\lualib.h" />
+    <ClInclude Include="ext\sol\lua\lundump.h" />
+    <ClInclude Include="ext\sol\lua\lvm.h" />
+    <ClInclude Include="ext\sol\lua\lzio.h" />
+    <ClInclude Include="ext\sol\lua_table.hpp" />
+    <ClInclude Include="ext\sol\lua_value.hpp" />
+    <ClInclude Include="ext\sol\lundump.h" />
+    <ClInclude Include="ext\sol\lvm.h" />
+    <ClInclude Include="ext\sol\lzio.h" />
+    <ClInclude Include="ext\sol\make_reference.hpp" />
+    <ClInclude Include="ext\sol\metatable.hpp" />
+    <ClInclude Include="ext\sol\object.hpp" />
+    <ClInclude Include="ext\sol\object_base.hpp" />
+    <ClInclude Include="ext\sol\optional.hpp" />
+    <ClInclude Include="ext\sol\optional_implementation.hpp" />
+    <ClInclude Include="ext\sol\overload.hpp" />
+    <ClInclude Include="ext\sol\packaged_coroutine.hpp" />
+    <ClInclude Include="ext\sol\pairs_iterator.hpp" />
+    <ClInclude Include="ext\sol\pointer_like.hpp" />
+    <ClInclude Include="ext\sol\policies.hpp" />
+    <ClInclude Include="ext\sol\prologue.hpp" />
+    <ClInclude Include="ext\sol\property.hpp" />
+    <ClInclude Include="ext\sol\protect.hpp" />
+    <ClInclude Include="ext\sol\protected_function.hpp" />
+    <ClInclude Include="ext\sol\protected_function_result.hpp" />
+    <ClInclude Include="ext\sol\protected_handler.hpp" />
+    <ClInclude Include="ext\sol\proxy_base.hpp" />
+    <ClInclude Include="ext\sol\raii.hpp" />
+    <ClInclude Include="ext\sol\reference.hpp" />
+    <ClInclude Include="ext\sol\resolve.hpp" />
+    <ClInclude Include="ext\sol\sol.hpp" />
+    <ClInclude Include="ext\sol\stack.hpp" />
+    <ClInclude Include="ext\sol\stack\detail\pairs.hpp" />
+    <ClInclude Include="ext\sol\stack_check.hpp" />
+    <ClInclude Include="ext\sol\stack_check_get.hpp" />
+    <ClInclude Include="ext\sol\stack_check_get_qualified.hpp" />
+    <ClInclude Include="ext\sol\stack_check_get_unqualified.hpp" />
+    <ClInclude Include="ext\sol\stack_check_qualified.hpp" />
+    <ClInclude Include="ext\sol\stack_check_unqualified.hpp" />
+    <ClInclude Include="ext\sol\stack_core.hpp" />
+    <ClInclude Include="ext\sol\stack_field.hpp" />
+    <ClInclude Include="ext\sol\stack_get.hpp" />
+    <ClInclude Include="ext\sol\stack_get_qualified.hpp" />
+    <ClInclude Include="ext\sol\stack_get_unqualified.hpp" />
+    <ClInclude Include="ext\sol\stack_guard.hpp" />
+    <ClInclude Include="ext\sol\stack_iterator.hpp" />
+    <ClInclude Include="ext\sol\stack_pop.hpp" />
+    <ClInclude Include="ext\sol\stack_probe.hpp" />
+    <ClInclude Include="ext\sol\stack_proxy.hpp" />
+    <ClInclude Include="ext\sol\stack_proxy_base.hpp" />
+    <ClInclude Include="ext\sol\stack_push.hpp" />
+    <ClInclude Include="ext\sol\stack_reference.hpp" />
+    <ClInclude Include="ext\sol\state.hpp" />
+    <ClInclude Include="ext\sol\state_handling.hpp" />
+    <ClInclude Include="ext\sol\state_view.hpp" />
+    <ClInclude Include="ext\sol\string_view.hpp" />
+    <ClInclude Include="ext\sol\table.hpp" />
+    <ClInclude Include="ext\sol\table_core.hpp" />
+    <ClInclude Include="ext\sol\table_iterator.hpp" />
+    <ClInclude Include="ext\sol\table_proxy.hpp" />
+    <ClInclude Include="ext\sol\thread.hpp" />
+    <ClInclude Include="ext\sol\tie.hpp" />
+    <ClInclude Include="ext\sol\traits.hpp" />
+    <ClInclude Include="ext\sol\trampoline.hpp" />
+    <ClInclude Include="ext\sol\tuple.hpp" />
+    <ClInclude Include="ext\sol\types.hpp" />
+    <ClInclude Include="ext\sol\unicode.hpp" />
+    <ClInclude Include="ext\sol\unique_usertype_traits.hpp" />
+    <ClInclude Include="ext\sol\unreachable.hpp" />
+    <ClInclude Include="ext\sol\unsafe_function.hpp" />
+    <ClInclude Include="ext\sol\unsafe_function_result.hpp" />
+    <ClInclude Include="ext\sol\userdata.hpp" />
+    <ClInclude Include="ext\sol\usertype.hpp" />
+    <ClInclude Include="ext\sol\usertype_container.hpp" />
+    <ClInclude Include="ext\sol\usertype_container_launch.hpp" />
+    <ClInclude Include="ext\sol\usertype_core.hpp" />
+    <ClInclude Include="ext\sol\usertype_proxy.hpp" />
+    <ClInclude Include="ext\sol\usertype_storage.hpp" />
+    <ClInclude Include="ext\sol\usertype_traits.hpp" />
+    <ClInclude Include="ext\sol\utility\is_integer.hpp" />
+    <ClInclude Include="ext\sol\utility\to_string.hpp" />
+    <ClInclude Include="ext\sol\variadic_args.hpp" />
+    <ClInclude Include="ext\sol\variadic_results.hpp" />
+    <ClInclude Include="ext\sol\version.hpp" />
+    <ClInclude Include="ext\sol\wrapper.hpp" />
+    <ClInclude Include="ext\stb_image.h" />
+    <ClInclude Include="ext\stb_image_write.h" />
+    <ClInclude Include="ext\tiny_gltf.h" />
+    <ClInclude Include="ext\tiny_obj_loader.h" />
+    <ClInclude Include="ext\toml.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracyArmCpuTable.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracyCallstack.h" />
+    <ClInclude Include="ext\Tracy\client\TracyCallstack.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracyCpuid.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracyDebug.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracyDxt1.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracyFastVector.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracyKCore.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracyLock.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracyProfiler.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracyRingBuffer.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracyScoped.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracyStringHelpers.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracySysPower.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracySysTime.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracySysTrace.hpp" />
+    <ClInclude Include="ext\Tracy\client\TracyThread.hpp" />
+    <ClInclude Include="ext\Tracy\client\tracy_concurrentqueue.h" />
+    <ClInclude Include="ext\Tracy\client\tracy_rpmalloc.hpp" />
+    <ClInclude Include="ext\Tracy\client\tracy_SPSCQueue.h" />
+    <ClInclude Include="ext\Tracy\common\TracyAlign.hpp" />
+    <ClInclude Include="ext\Tracy\common\TracyAlloc.hpp" />
+    <ClInclude Include="ext\Tracy\common\TracyApi.h" />
+    <ClInclude Include="ext\Tracy\common\TracyColor.hpp" />
+    <ClInclude Include="ext\Tracy\common\TracyForceInline.hpp" />
+    <ClInclude Include="ext\Tracy\common\TracyMutex.hpp" />
+    <ClInclude Include="ext\Tracy\common\TracyProtocol.hpp" />
+    <ClInclude Include="ext\Tracy\common\TracyQueue.hpp" />
+    <ClInclude Include="ext\Tracy\common\TracySocket.hpp" />
+    <ClInclude Include="ext\Tracy\common\TracyStackFrames.hpp" />
+    <ClInclude Include="ext\Tracy\common\TracySystem.hpp" />
+    <ClInclude Include="ext\Tracy\common\TracyUwp.hpp" />
+    <ClInclude Include="ext\Tracy\common\TracyVersion.hpp" />
+    <ClInclude Include="ext\Tracy\common\TracyYield.hpp" />
+    <ClInclude Include="ext\Tracy\common\tracy_lz4.hpp" />
+    <ClInclude Include="ext\Tracy\common\tracy_lz4hc.hpp" />
+    <ClInclude Include="ext\Tracy\libbacktrace\backtrace.hpp" />
+    <ClInclude Include="ext\Tracy\libbacktrace\config.h" />
+    <ClInclude Include="ext\Tracy\libbacktrace\filenames.hpp" />
+    <ClInclude Include="ext\Tracy\libbacktrace\internal.hpp" />
+    <ClInclude Include="ext\Tracy\tracy\Tracy.hpp" />
+    <ClInclude Include="ext\Tracy\tracy\TracyC.h" />
+    <ClInclude Include="ext\Tracy\tracy\TracyD3D11.hpp" />
+    <ClInclude Include="ext\Tracy\tracy\TracyD3D12.hpp" />
+    <ClInclude Include="ext\Tracy\tracy\TracyLua.hpp" />
+    <ClInclude Include="ext\Tracy\tracy\TracyOpenCL.hpp" />
+    <ClInclude Include="ext\Tracy\tracy\TracyOpenGL.hpp" />
+    <ClInclude Include="ext\Tracy\tracy\TracyVulkan.hpp" />
+    <ClInclude Include="Renderer\DebugRenderer.h" />
+    <ClInclude Include="Resource\ImageTexture.h" />
+    <ClInclude Include="Resource\Loaders\mtl_parser.h" />
+    <ClInclude Include="Resource\Material.h" />
+    <ClInclude Include="Resource\Resource.h" />
+    <ClInclude Include="Resource\ResourceCache.h" />
+    <ClInclude Include="Resource\ResourceLoader.h" />
+    <ClInclude Include="Scene\Camera.h" />
+    <ClInclude Include="Scene\Component.h" />
+    <ClInclude Include="Scene\Entity.h" />
+    <ClInclude Include="RHI\IndirectCommandBuffer.h" />
+    <ClInclude Include="RHI\ComputePipeline.h" />
+    <ClInclude Include="Core\defines.h" />
+    <ClInclude Include="Resource\Geometry.h" />
+    <ClInclude Include="Core\ScriptEngine.h" />
+    <ClInclude Include="Core\Input.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="Renderer\FrameGraph.h" />
+    <ClInclude Include="RHI\RenderContext.h" />
+    <ClInclude Include="RHI\GraphicsPipeline.h" />
+    <ClInclude Include="RHI\DescriptorHeap.h" />
+    <ClInclude Include="RHI\CommandList.h" />
+    <ClInclude Include="RHI\Fence.h" />
+    <ClInclude Include="RHI\CommandQueue.h" />
+    <ClInclude Include="RHI\Device.h" />
+    <ClInclude Include="RHI\Buffer.h" />
+    <ClInclude Include="RHI\InputLayout.h" />
+    <ClInclude Include="RHI\SwapChain.h" />
+    <ClInclude Include="RHI\Texture.h" />
+    <ClInclude Include="RHI\ShaderByteCode.h" />
+    <ClInclude Include="RHI\RootSignature.h" />
+    <ClInclude Include="Core\Window.h" />
+    <ClInclude Include="RHI\Sampler.h" />
+    <ClInclude Include="Core\Utils.h" />
+    <ClInclude Include="Core\ThreadPool.h" />
+    <ClInclude Include="Scene\Systems\ISystem.h" />
+    <ClInclude Include="Scene\Systems\MeshFilterSystem.h" />
+    <ClInclude Include="Scene\Systems\TransformSystem.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EM.toml" />
+    <None Include="framegraph.lua" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

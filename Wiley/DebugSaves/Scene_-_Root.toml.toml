@@ -1,0 +1,38 @@
+Name = 'Scene_-_Root.toml'
+Type = 'Material'
+UUID = '77887727-5d67-4b7c-955a-e77a396f011d'
+
+['dependencies.path']
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/Backpack/diffuse.jpg'
+AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
+Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_metallic.png'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/Backpack/diffuse.jpg'
+Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
+
+['dependencies.uuid']
+Albedo = 'b9a137df-f812-41de-af97-c1e2a42406cb'
+AmbientOcclusion = 'f6e962da-52d7-4fe3-b4f5-ee23c1c3cbbb'
+Metallic = '6ad256c6-ed5e-47d7-a6a1-a94a19bd7eaa'
+Normal = 'b9a137df-f812-41de-af97-c1e2a42406cb'
+Roughness = 'a404be17-11ce-4499-b962-e16b55a3f9ce'
+
+['properties.albedo']
+value = [ 1.0, 1.0, 1.0, 1.0 ]
+
+['properties.ambient_occlusion']
+channel = 'R'
+value = 1.0
+
+['properties.global']
+scale = [ 1.0, 1.0 ]
+
+['properties.metallic']
+channel = 'R'
+value = 1.0
+
+['properties.normal']
+value = 1.0
+
+['properties.roughness']
+channel = 'R'
+value = 1.0

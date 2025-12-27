@@ -1,0 +1,11 @@
+Name = 'EM.toml'
+Type = 'EnvironmentMap'
+UUID = '921f24b3-9515-4370-9f58-93934875a217'
+
+['dependencies.path']
+Left = 'P:/Projects/VS/Wiley/Wiley/Assets/Environment Maps/Skybox/left.jpg'
+Right = 'P:/Projects/VS/Wiley/Wiley/Assets/Environment Maps/Skybox/right.jpg'
+Top = 'P:/Projects/VS/Wiley/Wiley/Assets/Environment Maps/Skybox/top.jpg'
+Bottom = 'P:/Projects/VS/Wiley/Wiley/Assets/Environment Maps/Skybox/bottom.jpg'
+Front = 'P:/Projects/VS/Wiley/Wiley/Assets/Environment Maps/Skybox/front.jpg'
+Back = 'P:/Projects/VS/Wiley/Wiley/Assets/Environment Maps/Skybox/back.jpg'

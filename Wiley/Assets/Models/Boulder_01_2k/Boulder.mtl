@@ -1,0 +1,13 @@
+# Blender 4.4.3 MTL File: 'boulder_01_2k.blend'
+# www.blender.org
+
+newmtl boulder_01
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd textures/boulder_01_diff_2k.jpg
+map_Ns textures/boulder_01_rough_2k.exr
+map_Bump -bm 1.000000 textures/boulder_01_nor_gl_2k.exr

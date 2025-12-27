@@ -1,0 +1,38 @@
+Name = 'DefaultMaterial.toml'
+Type = 'Material'
+UUID = '322addaf-9700-43e0-8a91-f3937c3530e9'
+
+['dependencies.path']
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_diffuse.png'
+AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
+Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_metallic.png'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_normal.png'
+Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
+
+['dependencies.uuid']
+Albedo = '562f501c-d8d9-4708-984a-6f44923eca35'
+AmbientOcclusion = '07e3f81f-74ae-4668-99d4-d5ae103e475e'
+Metallic = '5f70bd9e-9c35-4bf9-8ad4-95872be3f1c8'
+Normal = '6bb22113-a985-4042-9538-5064aab4cecc'
+Roughness = '52057339-8045-4feb-b70d-c00048d14459'
+
+['properties.albedo']
+value = [ 1.0, 1.0, 1.0, 1.0 ]
+
+['properties.ambient_occlusion']
+channel = 'R'
+value = 1.0
+
+['properties.global']
+scale = [ 1.0, 1.0 ]
+
+['properties.metallic']
+channel = 'R'
+value = 1.0
+
+['properties.normal']
+value = 1.0
+
+['properties.roughness']
+channel = 'R'
+value = 1.0
