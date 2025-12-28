@@ -11,8 +11,11 @@ namespace Wiley {
 
     Resource::Ref ImageTextureLoader::LoadFromFile(filespace::filepath path, ResourceLoadDesc& loadDesc)
     {
-        std::shared_ptr<ImageTexture> imageTextureRef = std::make_shared<ImageTexture>();
+        if (path.extension().string() == ".dds") {
+            return LoadFromDDSFile(path, loadDesc);
+        }
 
+        std::shared_ptr<ImageTexture> imageTextureRef = std::make_shared<ImageTexture>();
         void* data;
         int width, height, nChannel;
 
@@ -79,6 +82,24 @@ namespace Wiley {
         imageTextureRef->textureResource->BuildSRV(descManager->descriptors[descriptorIndex]);
         imageTextureRef->srvIndex = descriptorIndex;
 
+        return imageTextureRef;
+    }
+
+    Resource::Ref ImageTextureLoader::LoadFromDDSFile(filespace::filepath path, ResourceLoadDesc& loadDesc) {
+        std::shared_ptr<ImageTexture> imageTextureRef = std::make_shared<ImageTexture>();
+
+        int width, height, nChannel, bitPerChannel;
+        imageTextureRef->textureResource = resourceCache->rctx->CreateShaderResourceTextureFromFile(path, width, height, nChannel, bitPerChannel);
+
+        imageTextureRef->width = width;
+        imageTextureRef->height = height;
+        imageTextureRef->nChannels = nChannel;
+        imageTextureRef->bitPerChannel = bitPerChannel;
+
+        auto descManager = resourceCache->GetImageTextureDescriptorManager(loadDesc.desc.imageTextureDesc.type);
+        UINT descriptorIndex = resourceCache->GetFreeImageDescriptorIndex(descManager);
+        imageTextureRef->textureResource->BuildSRV(descManager->descriptors[descriptorIndex]);
+        imageTextureRef->srvIndex = descriptorIndex;
         return imageTextureRef;
     }
 

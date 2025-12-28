@@ -1,0 +1,38 @@
+Name = 'M_Arch_Inst_Red_2.toml'
+Type = 'Material'
+UUID = 'ae488939-6a54-49a7-9a82-6b7d73bb8dd1'
+
+['dependencies.path']
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_Arch_Inst_Red_2_0_BaseColor.dds'
+AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
+Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_Arch_Inst_Red_2_0_Specular.dds'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_Arch_Inst_Red_2_0_Normal.dds'
+Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_Arch_Inst_Red_2_0_Specular.dds'
+
+['dependencies.uuid']
+Albedo = '6e394c63-0312-4ae4-9791-3b826df640fd'
+AmbientOcclusion = 'a7a69818-c628-464c-b485-f4fb1353baf5'
+Metallic = '9f083ae0-8239-4c57-8d0b-af66d6281291'
+Normal = '6aaae9d2-d3b0-4f5a-a199-58c454ecd004'
+Roughness = '9f083ae0-8239-4c57-8d0b-af66d6281291'
+
+['properties.albedo']
+value = [ 1.0, 1.0, 1.0, 1.0 ]
+
+['properties.ambient_occlusion']
+channel = 'R'
+value = 1.0
+
+['properties.global']
+scale = [ 1.0, 1.0 ]
+
+['properties.metallic']
+channel = 'R'
+value = 1.0
+
+['properties.normal']
+value = 1.0
+
+['properties.roughness']
+channel = 'R'
+value = 1.0

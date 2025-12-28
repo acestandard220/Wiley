@@ -1,20 +1,20 @@
 Name = 'M_Rocks_Inst.toml'
 Type = 'Material'
-UUID = '4eba9c10-1b2d-4f7f-9825-70e959e29880'
+UUID = '0dc92063-b40b-4804-8173-8ec7a92f7230'
 
 ['dependencies.path']
-Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_diffuse.png'
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_Rocks_Inst_2_BaseColor.dds'
 AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
-Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_metallic.png'
-Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_normal.png'
-Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
+Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_Rocks_Inst_2_Specular.dds'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_Rocks_Inst_2_Normal.dds'
+Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_Rocks_Inst_2_Specular.dds'
 
 ['dependencies.uuid']
-Albedo = '617e99dd-21b1-4a6d-b04c-efe519c600d7'
-AmbientOcclusion = '84791fee-8b73-4d30-82ef-8bc890e70450'
-Metallic = '58ce8593-8a19-424a-aece-a0cb1a50df0a'
-Normal = '8b1d97f3-0176-429b-9d43-e6b9b0e019a5'
-Roughness = '3be7aac1-96f8-4e43-a77e-f8f0f095f184'
+Albedo = '11f537f9-2a97-4c64-b4ba-b0a796753ccb'
+AmbientOcclusion = 'a7a69818-c628-464c-b485-f4fb1353baf5'
+Metallic = '6977c2be-ad25-4659-ab18-d70c93e3e33f'
+Normal = '0ab6eee2-2a60-487c-bd8c-dac7db9c7ab9'
+Roughness = '6977c2be-ad25-4659-ab18-d70c93e3e33f'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

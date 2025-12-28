@@ -61,7 +61,7 @@ namespace Wiley
 		};*/
 
 
-		if(1)
+		if(0)
 		{
 			ZoneScopedN("LoadStressTest");
 
@@ -101,13 +101,6 @@ namespace Wiley
 						else
 							AssignGlobalMaterial(sphere, grayRockMaterial->GetUUID());
 						
-						Entity light = AddLight("PointLight0", LightType::Point);
-						light.GetComponent<LightComponent>().position = {
-							x * spacing - offsetX,
-							y * spacing - offsetY,
-							z * spacing - offsetZ
-						};
-
 						_i_++;
 					}
 				}

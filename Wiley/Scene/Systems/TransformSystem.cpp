@@ -36,14 +36,12 @@ namespace Wiley
                     transform.position.z
                 );
              
-            // NOTE: Translation goes FIRST in multiplication
             DirectX::XMMATRIX model =
-                translationMatrix *   // applied last in code, moves object
-                rotationMatrix *      // applied second
-                scaleMatrix;          // applied first to vertex
+                translationMatrix *   
+                rotationMatrix *      
+                scaleMatrix;          
             
             DirectX::XMStoreFloat4x4(&transform.modelMatrix, DirectX::XMMatrixTranspose(model));
         }
-
 	}
 }

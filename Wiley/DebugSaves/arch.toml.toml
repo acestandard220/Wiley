@@ -1,6 +1,6 @@
 Name = 'arch.toml'
 Type = 'Material'
-UUID = '4873818c-a3a5-48a9-99d7-df22a61ece28'
+UUID = '7b30e7ae-91f6-48dc-95de-dd7d99425a95'
 
 ['dependencies.path']
 Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_arch_diff.tga'
@@ -10,11 +10,11 @@ Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_arc
 Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
 
 ['dependencies.uuid']
-Albedo = 'b2287214-85c2-4ea9-bccd-8bd2ab24a80b'
-AmbientOcclusion = '443c3376-43fb-45fa-ac7b-c8254e6e3fe1'
-Metallic = '9fe7c8ff-a6e7-4837-882d-99ac1a2a98be'
-Normal = '3be684ec-2cb9-4c98-8806-5a93666a7694'
-Roughness = '429045a2-9012-4811-8b0b-834064d64f89'
+Albedo = '1733b2b2-0041-43b4-9af6-06170b370ac7'
+AmbientOcclusion = '7532dd13-83da-4fbb-9a23-0ab740591f96'
+Metallic = '51f2f464-0d82-4d89-b2c2-ef646140de57'
+Normal = 'b6223028-4c8e-4727-a9b8-c21a30b35977'
+Roughness = 'e70366ec-b9c9-4016-8209-428f80253fb3'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

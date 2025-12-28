@@ -1,6 +1,6 @@
 Name = 'floor.toml'
 Type = 'Material'
-UUID = 'e30ede83-d297-4d8e-b001-ea1b9fb53433'
+UUID = '750eee47-772a-4b04-a18c-87e67c23cd0c'
 
 ['dependencies.path']
 Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_floor_a_diff.tga'
@@ -10,11 +10,11 @@ Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_flo
 Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
 
 ['dependencies.uuid']
-Albedo = '11e6be3e-f4ea-42b2-b657-411e6fecea4f'
-AmbientOcclusion = '443c3376-43fb-45fa-ac7b-c8254e6e3fe1'
-Metallic = '9fe7c8ff-a6e7-4837-882d-99ac1a2a98be'
-Normal = 'dd96b859-2e2b-4b52-9ed0-212d5c3f5b6a'
-Roughness = '429045a2-9012-4811-8b0b-834064d64f89'
+Albedo = 'b98c6134-d965-4ae0-99db-0e07a7b2d42d'
+AmbientOcclusion = '7532dd13-83da-4fbb-9a23-0ab740591f96'
+Metallic = '51f2f464-0d82-4d89-b2c2-ef646140de57'
+Normal = '5a276e54-6513-49f0-a9a8-ff61f7cf766c'
+Roughness = 'e70366ec-b9c9-4016-8209-428f80253fb3'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

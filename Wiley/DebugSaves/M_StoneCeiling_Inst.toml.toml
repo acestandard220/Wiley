@@ -1,20 +1,20 @@
 Name = 'M_StoneCeiling_Inst.toml'
 Type = 'Material'
-UUID = '9fd5951b-d3fd-410c-921a-32d2dca03eb3'
+UUID = '813b071d-bac0-48c8-8caa-03aeba2654fd'
 
 ['dependencies.path']
-Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_diffuse.png'
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_StoneCeiling_Inst_0_BaseColor.dds'
 AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
-Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_metallic.png'
-Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_normal.png'
-Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
+Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_StoneCeiling_Inst_0_Specular.dds'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_StoneCeiling_Inst_0_Normal.dds'
+Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_StoneCeiling_Inst_0_Specular.dds'
 
 ['dependencies.uuid']
-Albedo = '617e99dd-21b1-4a6d-b04c-efe519c600d7'
-AmbientOcclusion = '84791fee-8b73-4d30-82ef-8bc890e70450'
-Metallic = '58ce8593-8a19-424a-aece-a0cb1a50df0a'
-Normal = '8b1d97f3-0176-429b-9d43-e6b9b0e019a5'
-Roughness = '3be7aac1-96f8-4e43-a77e-f8f0f095f184'
+Albedo = 'ff86f64d-f795-459b-88ee-61a81a97a5d5'
+AmbientOcclusion = 'a7a69818-c628-464c-b485-f4fb1353baf5'
+Metallic = '8a6ea852-8569-4fc8-9a37-d40f91445656'
+Normal = 'dd5e4dc2-edc3-4d7d-aa07-f501c6652ce7'
+Roughness = '8a6ea852-8569-4fc8-9a37-d40f91445656'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

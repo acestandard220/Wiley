@@ -43,7 +43,7 @@ namespace RHI
 
 		//Dynamic Resource Work
 		WILEY_NODISCARD Texture::Ref CreateShaderResourceTexture(void* data, int width, int height, int nChannel, int bitPerChannel);
-		WILEY_NODISCARD Texture::Ref CreateShaderResourceTextureFromFile(const std::string& name, int width, int height, int nChannel, int bitPerChannel);
+		WILEY_NODISCARD Texture::Ref CreateShaderResourceTextureFromFile(const std::wstring& name, int& width, int& height, int& nChannel, int& bitPerChannel);
 		WILEY_NODISCARD std::vector<uint8_t> GetTextureBytes(RHI::Texture::Ref texture);
 		WILEY_NODISCARD CubeMap::Ref CreateShaderResourceCubeMap(float* data, uint32_t width, uint32_t height, int nChannel, int bitPerChannel, const std::string& name);
 		WILEY_NODISCARD CubeMap::Ref ConvoluteCubeMap(CubeMap::Ref cubmap, uint32_t convSize, const std::string& name);
@@ -125,11 +125,13 @@ namespace RHI
 		///		This command buffer is used internally by the render context's dynamic resource creation functions.
 		/// </summary>
 		CommandList::Ref dynamicResourceCommandList; 
+		CommandList::Ref dynamicResourceGfxList;
 
 		Fence::Ref gfxFence[FRAMES_IN_FLIGHT];		
 		Fence::Ref copyFence[FRAMES_IN_FLIGHT];
 		Fence::Ref computeFence;
 		Fence::Ref dynamicResourceFence;
+		Fence::Ref dynamicResourceGfxFence;
 		
 		DescriptorHeap::Heap heaps;
 

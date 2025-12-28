@@ -1,20 +1,20 @@
 Name = 'M_FloorTiles1_Inst_Inst2.toml'
 Type = 'Material'
-UUID = 'ccdc589d-a84e-49c6-b88a-9ff22b8b51dd'
+UUID = '975f6323-4df1-4d18-8f2a-1c116d3f92e5'
 
 ['dependencies.path']
-Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_diffuse.png'
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_FloorTiles1_Inst_Inst2_0_BaseColor.dds'
 AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
-Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_metallic.png'
-Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_normal.png'
-Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
+Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_FloorTiles1_Inst_Inst2_0_Specular.dds'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_FloorTiles1_Inst_Inst2_0_Normal.dds'
+Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_FloorTiles1_Inst_Inst2_0_Specular.dds'
 
 ['dependencies.uuid']
-Albedo = '617e99dd-21b1-4a6d-b04c-efe519c600d7'
-AmbientOcclusion = '84791fee-8b73-4d30-82ef-8bc890e70450'
-Metallic = '58ce8593-8a19-424a-aece-a0cb1a50df0a'
-Normal = '8b1d97f3-0176-429b-9d43-e6b9b0e019a5'
-Roughness = '3be7aac1-96f8-4e43-a77e-f8f0f095f184'
+Albedo = 'bef5ee50-7387-407b-bfdc-ff08895a47f7'
+AmbientOcclusion = 'a7a69818-c628-464c-b485-f4fb1353baf5'
+Metallic = 'c53bd5b9-a1da-44a4-9925-86984ccc306f'
+Normal = '0a1a3d5b-b2c3-48bb-9df2-bebb8c192d92'
+Roughness = 'c53bd5b9-a1da-44a4-9925-86984ccc306f'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

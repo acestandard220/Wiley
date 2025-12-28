@@ -1,20 +1,20 @@
 Name = 'M_Shield_Inst.toml'
 Type = 'Material'
-UUID = 'ecf66ab2-76cf-4f3f-a58c-d8290803c93b'
+UUID = 'eb7a00a9-e20e-497e-8d4a-39a86b6459ab'
 
 ['dependencies.path']
-Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_diffuse.png'
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_Shield_Inst_0_BaseColor.dds'
 AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
-Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_metallic.png'
-Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_normal.png'
-Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
+Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_Shield_Inst_0_Specular.dds'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_Shield_Inst_0_Normal.dds'
+Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SunTemple/Textures/M_Shield_Inst_0_Specular.dds'
 
 ['dependencies.uuid']
-Albedo = '617e99dd-21b1-4a6d-b04c-efe519c600d7'
-AmbientOcclusion = '84791fee-8b73-4d30-82ef-8bc890e70450'
-Metallic = '58ce8593-8a19-424a-aece-a0cb1a50df0a'
-Normal = '8b1d97f3-0176-429b-9d43-e6b9b0e019a5'
-Roughness = '3be7aac1-96f8-4e43-a77e-f8f0f095f184'
+Albedo = '7f45dc73-8a38-4ab2-8240-1e7a23e6daf7'
+AmbientOcclusion = 'a7a69818-c628-464c-b485-f4fb1353baf5'
+Metallic = 'fc9a1522-1734-435a-8cc8-badf6ba252f3'
+Normal = 'b758ddbe-bbd6-4d23-9503-a69f052c177b'
+Roughness = 'fc9a1522-1734-435a-8cc8-badf6ba252f3'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

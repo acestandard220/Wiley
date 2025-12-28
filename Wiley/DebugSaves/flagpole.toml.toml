@@ -1,6 +1,6 @@
 Name = 'flagpole.toml'
 Type = 'Material'
-UUID = 'a27d4530-4d24-400e-8626-ba6e1579e833'
+UUID = '1ae04bcc-994a-489a-af71-1138704f0ec2'
 
 ['dependencies.path']
 Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_flagpole_diff.tga'
@@ -10,11 +10,11 @@ Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_fla
 Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
 
 ['dependencies.uuid']
-Albedo = '213f53ab-efb3-4126-bbac-2dca3ebe951d'
-AmbientOcclusion = '443c3376-43fb-45fa-ac7b-c8254e6e3fe1'
-Metallic = '9fe7c8ff-a6e7-4837-882d-99ac1a2a98be'
-Normal = '8ce09af5-e673-4aa5-9f9f-84bda08c327e'
-Roughness = '429045a2-9012-4811-8b0b-834064d64f89'
+Albedo = 'edf7b023-fe92-4157-a8fa-f89b151c5700'
+AmbientOcclusion = '7532dd13-83da-4fbb-9a23-0ab740591f96'
+Metallic = '51f2f464-0d82-4d89-b2c2-ef646140de57'
+Normal = 'ec463982-45fb-4c47-be14-d9e241833541'
+Roughness = 'e70366ec-b9c9-4016-8209-428f80253fb3'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

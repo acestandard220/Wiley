@@ -1,6 +1,6 @@
 Name = 'Material__25.toml'
 Type = 'Material'
-UUID = '626522d7-56d2-440d-a618-994f99e580c3'
+UUID = '0103de6c-276c-4383-abfb-8f4305d9ddae'
 
 ['dependencies.path']
 Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/lion.tga'
@@ -10,11 +10,11 @@ Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/lion_ddn.t
 Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
 
 ['dependencies.uuid']
-Albedo = 'd070691c-5ef8-4264-aa7a-e67ca1f4c1dd'
-AmbientOcclusion = '443c3376-43fb-45fa-ac7b-c8254e6e3fe1'
-Metallic = '9fe7c8ff-a6e7-4837-882d-99ac1a2a98be'
-Normal = '27de8675-c504-44cc-bc34-f0ae8d037a97'
-Roughness = '429045a2-9012-4811-8b0b-834064d64f89'
+Albedo = '802e8e34-d153-4bfa-9ed3-b090f9a1bd85'
+AmbientOcclusion = '7532dd13-83da-4fbb-9a23-0ab740591f96'
+Metallic = '51f2f464-0d82-4d89-b2c2-ef646140de57'
+Normal = '0fb0e827-7076-4d5b-8cbc-4f1e02596215'
+Roughness = 'e70366ec-b9c9-4016-8209-428f80253fb3'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

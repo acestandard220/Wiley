@@ -84,6 +84,7 @@ namespace RHI
 
 		static TextureFormat GetTextureFormat(int bitPerChannel);
 
+		ComPtr<ID3D12Resource>& GetComPtr() { return resource; }
 		ID3D12Resource* GetResource() { return resource.Get(); }
 		ID3D12Resource** GetResourceAddress() { return resource.GetAddressOf(); }
 
@@ -113,6 +114,7 @@ namespace RHI
 		}
 
 	private:
+		friend class RenderContext;
 
 		DescriptorHeap::Descriptor rtv;
 		DescriptorHeap::Descriptor dsv;

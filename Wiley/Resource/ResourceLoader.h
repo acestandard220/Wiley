@@ -56,6 +56,8 @@ namespace Wiley {
 
 			Resource::Ref LoadFromFile(filespace::filepath path, ResourceLoadDesc& loadDesc);
 
+			Resource::Ref LoadFromDDSFile(filespace::filepath path, ResourceLoadDesc& loadDesc);
+
 			void SaveToFile(filespace::filepath path, ImageTexture* imageTexture);
 		private:
 			ResourceCache* resourceCache;

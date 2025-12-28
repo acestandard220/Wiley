@@ -33,9 +33,11 @@ namespace RHI
         copyCommandList = CommandList::CreateCommandList(device, CommandListType::CommandListCopy, "Copy_Command_List");
         computeCommandList = CommandList::CreateCommandList(device, CommandListType::CommandListCompute, "Compute_Command_List");
         dynamicResourceCommandList = CommandList::CreateCommandList(device, CommandListType::CommandListCompute, "DynamicCommandList");
+        dynamicResourceGfxList = CommandList::CreateCommandList(device, CommandListType::CommandListDirect, "DynamicGfxList");
 
         computeFence = Fence::CreateFence(device,"Compute_Fence");
         dynamicResourceFence = Fence::CreateFence(device, "DynamicResourceFence");
+        dynamicResourceGfxFence = Fence::CreateFence(device, "DynamicResourceGfxFence");
 
         linearSampler = CreateSampler(SamplerAddress::Wrap, SamplerFilter::Linear);
 
@@ -141,18 +143,63 @@ namespace RHI
         return defaultTexture;
     }
 
-    WILEY_NODISCARD Texture::Ref RenderContext::CreateShaderResourceTextureFromFile(const std::string& name, int width, int height, int nChannel, int bitPerChannel)
+    WILEY_NODISCARD Texture::Ref RenderContext::CreateShaderResourceTextureFromFile(const std::wstring& name, int& width, int& height, int& nChannel, int& bpc)
     {
-        dynamicResourceFence->BlockCPU();
+        dynamicResourceGfxFence->BlockCPU();
 
-        dynamicResourceCommandList->Begin();
+        Texture::Ref uploadTexture  = std::make_shared<Texture>(RHI::TextureUsage::CopySrc);
+        Texture::Ref defaultTexture = std::make_shared<Texture>(RHI::TextureUsage::Common);
 
+        dynamicResourceGfxList->Begin();
 
+        HRESULT result = DirectX::CreateDDSTextureFromFile12(device->GetNative(), dynamicResourceGfxList->GetCommandList(), name.c_str(), defaultTexture->GetComPtr(), uploadTexture->GetComPtr());
+        if (FAILED(result)) {
+            return nullptr;
+        }
 
-        computeCommandQueue->Submit({ dynamicResourceCommandList });
-        dynamicResourceFence->Signal(computeCommandQueue.get());
-        dynamicResourceFence->BlockCPU();
-        return nullptr;
+        D3D12_RESOURCE_DESC desc = defaultTexture->GetResource()->GetDesc();
+        defaultTexture->width = static_cast<UINT>(desc.Width);
+        defaultTexture->height = desc.Height;
+        defaultTexture->format = desc.Format;
+        defaultTexture->_device = device;
+
+        width = static_cast<UINT>(desc.Width);
+        height = desc.Height;
+
+        switch (desc.Format) {
+            case DXGI_FORMAT_R8G8B8A8_UNORM:
+            case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:
+                nChannel = 4; bpc = 8; break;
+
+            case DXGI_FORMAT_B8G8R8A8_UNORM:
+            case DXGI_FORMAT_B8G8R8A8_UNORM_SRGB:
+                nChannel = 4; bpc = 8; break;
+
+            case DXGI_FORMAT_R16G16B16A16_FLOAT:
+                nChannel = 4; bpc = 16; break;
+
+            case DXGI_FORMAT_R32G32B32A32_FLOAT:
+                nChannel = 4; bpc = 32; break;
+
+            case DXGI_FORMAT_R8_UNORM:
+                nChannel = 1; bpc = 8; break;
+
+            case DXGI_FORMAT_R16_FLOAT:
+                nChannel = 1; bpc = 16; break;
+
+            case DXGI_FORMAT_BC1_UNORM: 
+            case DXGI_FORMAT_BC2_UNORM: 
+            case DXGI_FORMAT_BC3_UNORM: 
+                nChannel = 4; bpc = 0;  
+                break;
+        }
+
+        dynamicResourceGfxList->End();
+
+        gfxCommandQueue->Submit({ dynamicResourceGfxList });
+        dynamicResourceGfxFence->Signal(gfxCommandQueue.get());
+        dynamicResourceGfxFence->BlockCPU();
+        return defaultTexture;
     }
 
     std::vector<uint8_t> RenderContext::GetTextureBytes(RHI::Texture::Ref texture) {

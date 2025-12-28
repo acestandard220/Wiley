@@ -1,6 +1,6 @@
 Name = 'chain.toml'
 Type = 'Material'
-UUID = '243cba5f-f3eb-44be-9c9f-66528e793faf'
+UUID = '1deac998-293a-4f81-a783-363f7cda0ed4'
 
 ['dependencies.path']
 Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/chain_texture.tga'
@@ -10,11 +10,11 @@ Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/chain_text
 Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
 
 ['dependencies.uuid']
-Albedo = '4e000f9f-eb0c-4a88-9e95-e621792c6618'
-AmbientOcclusion = '443c3376-43fb-45fa-ac7b-c8254e6e3fe1'
-Metallic = '9fe7c8ff-a6e7-4837-882d-99ac1a2a98be'
-Normal = '84bb2aeb-163f-4b66-866b-a75ea138fde9'
-Roughness = '429045a2-9012-4811-8b0b-834064d64f89'
+Albedo = '690d39fc-c8dd-4fbf-a9d6-31432c722842'
+AmbientOcclusion = '7532dd13-83da-4fbb-9a23-0ab740591f96'
+Metallic = '51f2f464-0d82-4d89-b2c2-ef646140de57'
+Normal = '2856dba8-1de8-44b1-a79b-d96727ebe63f'
+Roughness = 'e70366ec-b9c9-4016-8209-428f80253fb3'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]
