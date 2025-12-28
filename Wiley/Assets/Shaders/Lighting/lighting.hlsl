@@ -37,7 +37,6 @@ SamplerState samplerState : register(s4);
 TextureCube irrandiance : register(t5);
 
 StructuredBuffer<Light> lights : register(t1, space1);
-//StructuredBuffer<uint> nonDirectionalLights : register(t2, space1);
 
 float4 PSmain(VertexOutput input) : SV_Target
 {
@@ -54,10 +53,12 @@ float4 PSmain(VertexOutput input) : SV_Target
 
     float3 N = normalize(normal);
 
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < lightCompCount; i++)
     {
-        //uint index = nonDirectionalLights[i];
         Light light = lights[i];
+        
+        if(light.type == 0)
+            continue;
         
         float type = light.type - 1;
         float isSpotLight = type;

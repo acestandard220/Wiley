@@ -331,11 +331,13 @@ namespace Renderer3D {
 			computeCommandList->BufferUAVToCopyDest(lightCompBuffer);
 			computeCommandList->CopyBufferToBuffer(uploadLightCompBuffer, 0, lightCompBuffer, WILEY_SIZEOF(Wiley::LightComponent) * lightCompCount, true);
 			computeCommandList->BufferCopyDestToUAV(lightCompBuffer);
+		}
 
+		{
 			computeCommandList->ClearUAVUint(lightGridPtr);
 			computeCommandList->UAVBarrier(lightGridPtr);
-			computeCommandList->Dispatch(activeClusterCountData, 1, 1);
 
+			computeCommandList->Dispatch(activeClusterCountData, 1, 1);
 		}
 
 		{

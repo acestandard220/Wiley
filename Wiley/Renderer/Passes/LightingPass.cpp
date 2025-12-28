@@ -22,6 +22,7 @@ namespace Renderer3D {
 
 		RHI::Buffer::Ref lightCompBuffer = frameGraph->GetInputBufferResource(pass, 4);
 
+
 		RHI::Texture::Ref lightPassMap = frameGraph->GetOutputTextureResource(pass, 0);
 
 		const auto& cameraPosition = _scene->GetCamera()->GetPosition();
@@ -30,9 +31,13 @@ namespace Renderer3D {
 		const auto& em = env.currentEnvirontmentMap;
 		const bool doIBL = env.doIBL;
 
+		const UINT lightCompCount = _scene->GetComponentReach<Wiley::LightComponent>();
+
+
 		{
 			frameGraph->TransistionInputTextures(pass);
 			frameGraph->TransitionOutputTextures(pass);
+
 			commandList->BufferUAVToPixelShader({
 				lightCompBuffer
 			});
@@ -49,16 +54,17 @@ namespace Renderer3D {
 
 			struct ConstantPush { 
 				DirectX::XMFLOAT4 cameraPosition;
-				uint32_t nonDirLightCount;
 				uint32_t doIBL;
+				uint32_t lightComCount;
 			}cp;
 
 			cp.cameraPosition = cameraPosition;
-			cp.nonDirLightCount;
 			cp.doIBL = doIBL;
+			cp.lightComCount = lightCompCount;
 
 			commandList->PushConstant(&cp, sizeof(ConstantPush), 6);
 			commandList->BindShaderResource(lightCompBuffer->GetSRV(), 7);
+
 		}
 		
 		{

@@ -70,7 +70,9 @@ void ClusterAssignment(ComputeInput input)
     {
         Light light = lights[i];
         if (light.type == DIRECTIONAL_LIGHT)
+        {
             continue;
+        }
         
         float3 lightPositionVS = mul(view, float4(light.position, 1.0f)).xyz;
 

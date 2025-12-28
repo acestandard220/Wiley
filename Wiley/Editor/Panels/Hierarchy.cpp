@@ -14,10 +14,12 @@ namespace Wiley
 	{
 		if (!enabled)
 			return;
+		int flags = ImGuiWindowFlags_NoCollapse;
 
-		ImGui::Begin(name.c_str());
+		ImGui::Begin(name.c_str(), nullptr, flags);
 
 		int i = 0;
+		ImGui::Indent(10.0f);
 		auto& entts = editor->GetCurrentScene()->GetEntities();
 		for (auto& entt : entts) {
 			std::string enttName = entt.GetTag().data() + std::string("##") + std::to_string(i);

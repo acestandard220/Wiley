@@ -146,9 +146,9 @@ local cluster_heatmap_pass = RenderPass.new()
 	cluster_heatmap_pass:set_type(render_pass_type.graphics)
 
 	--Input Resources
-	cluster_heatmap_pass:read_buffer("ClusterDataBuffer",buffer_usage.shader_resource)
-	cluster_heatmap_pass:read_texture("DepthPrepassBuffer",buffer_usage.shader_resource)
-	cluster_heatmap_pass:create_input_buffer("ClusterHeatMapCBuffer",256,256,buffer_usage.constant,true,buffer_usage.constant)
+	cluster_heatmap_pass:read_buffer("ClusterDataBuffer", buffer_usage.shader_resource)
+	cluster_heatmap_pass:read_texture("DepthPrepassBuffer", buffer_usage.shader_resource)
+	cluster_heatmap_pass:create_input_buffer("ClusterHeatMapCBuffer", 256, 256, buffer_usage.constant, true, buffer_usage.constant)
 
 	--OuputResources
 	cluster_heatmap_pass:create_texture("ClusterHeatMap", texture_format.rgba16, width, height, texture_usage.present, texture_usage.render_target, true)
@@ -210,6 +210,7 @@ local lighting_pass = RenderPass.new()
 	lighting_pass:read_texture("ColorData",texture_usage.pixel_shader_resource)
 	lighting_pass:read_texture("ArmData",texture_usage.pixel_shader_resource)
 	lighting_pass:read_buffer("LightComponentBuffer", buffer_usage.pixel_shader_resource)
+
 
 	--Outputs Resources
 	lighting_pass:create_texture("LightPassMap",texture_format.rgba16,width,height,texture_usage.present,texture_usage.render_target,true)

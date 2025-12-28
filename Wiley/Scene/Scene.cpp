@@ -85,9 +85,7 @@ namespace Wiley
 
 				for (int y = 0; y < gridSizeY; ++y)
 				{
-					if (y != 3)
-						continue;
-
+					
 					for (int z = 0; z < gridSizeZ; ++z)
 					{
 						Entity sphere = AddModel("P:/Projects/VS/Wiley/Wiley/Assets/Models/Cylinder.obj", loadDesc);

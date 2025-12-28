@@ -23,8 +23,8 @@ struct Light
 cbuffer Constant : register(b0, space1)
 {
     float4 cameraPosition;
-    uint nonDirLightCount;
     uint doIBL;
+    uint lightCompCount;
 };
 
 float3 FresnelSchlick(float cosTheta, float3 F0)
@@ -110,8 +110,8 @@ float3 ComputePointLight(Light light, float3 position, float3 N, float3 albedo, 
     float metallic = arm.z;
     
     float distance = length(light.position - position.rgb);
-    float attenuation = 1.0 / (distance * distance);
-    float3 radiance = light.color.rgb * 1.0f;
+    float attenuation = light.intensity / (distance * distance);
+    float3 radiance = light.color.rgb * attenuation;
     
     float3 V = normalize(cameraPosition.xyz - position);
     float3 L = normalize(light.position - position);
@@ -156,7 +156,7 @@ float3 ComputeSpotLight(Light light, float3 position, float3 N, float3 albedo, f
     float intensity = clamp((theta - light.outerRadius) / epsilon, 0.0, 1.0);
     
     float distance = length(light.position - position.rgb);
-    float attenuation = 1.0 / (distance * distance);
+    float attenuation = light.intensity / (distance * distance);
     float3 radiance = light.color.rgb * attenuation * intensity;
     
     float NdotL = max(dot(N, L), 0.0f);

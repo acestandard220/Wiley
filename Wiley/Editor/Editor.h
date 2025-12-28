@@ -45,6 +45,9 @@ namespace Wiley {
 	private:
 		EditorSelction selection;
 		std::vector<Panel::Ptr> panels;
+		
+		std::unique_ptr<Hierarchy> hierarchy;
+		std::unique_ptr<Inspector> inspector;
 
 		//Contexts...
 		Window::Ref window;

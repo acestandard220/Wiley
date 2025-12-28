@@ -44,7 +44,7 @@ namespace Wiley
 
 		auto entt = *selection.entt;
 
-		ImGui::Begin(name.c_str());
+		ImGui::Begin(name.c_str(),nullptr);
 
 		ImGui::Text("UUID :: %s", WILEY_UUID_STRING(selection.selectedUUID).c_str());
 
@@ -80,6 +80,8 @@ namespace Wiley
 			ImGui::DragFloat("Intensity", &light.intensity, 0.5, 0.0f, 0.0f);
 			ImGui::DragFloat("Radius", &light.radius, 0.5, 0.0f, 0.0f);
 			
+			ImGui::Separator();
+
 			if (light.type == LightType::Spot) {
 				const static float _bias = 0.05f;
 				
@@ -93,8 +95,12 @@ namespace Wiley
 
 				ImGui::DragFloat3("Spot Direction", &light.spotDirection.x);
 			}
-
 		});
+
+
+		{
+			ImGui::Button("Add Component");
+		}
 
 		ImGui::End();
 

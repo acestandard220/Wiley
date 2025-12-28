@@ -35,7 +35,6 @@ namespace Wiley {
 		ImGui::Image((ImTextureID)srv.gpuHandle.ptr, lastViewportSize);
 
 		ImGui::End();
-
 	}
 
 }

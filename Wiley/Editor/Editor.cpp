@@ -25,7 +25,6 @@ namespace Wiley {
     Editor::Editor(Window::Ref window, RHI::RenderContext::Ref rctx, Scene::Ref scene, Renderer3D::Renderer::Ref renderer)
         : window(window), rctx(rctx), scene(scene), renderer(renderer)
     {
-        //ImGui Init...
         {
             // Setup ImGui context
             IMGUI_CHECKVERSION();
@@ -57,13 +56,17 @@ namespace Wiley {
             io.FontGlobalScale = 1.0f;
 
             SetBlenderTheme();
+
+            ImGui::GetStyle().Colors[ImGuiCol_TitleBgActive] = ImGui::GetStyle().Colors[ImGuiCol_TitleBg];
+
         }
 
 
         {
-            panels.emplace_back(std::make_unique<Hierarchy>(this));
-            panels.emplace_back(std::make_unique<Inspector>(this));
             panels.emplace_back(std::make_unique<Viewport>(this));
+
+            panels.emplace_back(std::make_unique<Inspector>(this));
+            panels.emplace_back(std::make_unique<Hierarchy>(this));
         }
     }
 
@@ -115,14 +118,15 @@ namespace Wiley {
         BeginDockspace();
         auto& io = ImGui::GetIO();
 
-        /*ImGui::Begin("WindowIMGuiDemo");
-        ImGui::ColorEdit3("ColorV", color);
-        ImGui::Text("FPS %.3f", io.Framerate);
-        ImGui::End();*/
-
-        for (const auto& panel : panels) {
+        for (auto& panel : panels) {
             panel->Render();
         }
+
+        ImGui::Begin("WindowIMGuiDemo");
+        ImGui::ColorEdit3("ColorV", color);
+        ImGui::Text("FPS %.3f", io.Framerate);
+        ImGui::End();
+
         EndDockspace();
     }
 
