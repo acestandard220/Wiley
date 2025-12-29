@@ -93,6 +93,9 @@ namespace Wiley {
 		FLOAT innerRadius = 5.0f;
 		FLOAT outerRadius = 30.0f;
 		DirectX::XMFLOAT3 spotDirection = { 0.0f,0.0f,-1.0f };
+
+		uint32_t depthMapIndex;
+		uint32_t depthMapSrvIndex;
 	};
 
 }

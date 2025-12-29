@@ -8,6 +8,8 @@
 #include "FrameGraph.h"
 #include "../Scene/Scene.h"
 
+
+
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_dx12.h"
 #include "ImGui/imgui_impl_win32.h"
@@ -141,6 +143,7 @@ namespace Renderer3D
 		Wiley::Window::Ref window;
 		RHI::RenderContext::Ref rctx;
 		FrameGraph::Ref frameGraph;
+
 
 		Wiley::Scene::Ref _scene;
 

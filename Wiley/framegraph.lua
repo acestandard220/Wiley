@@ -127,12 +127,12 @@ local cluster_assignment_pass = RenderPass.new()
 	--Input Resources
 	cluster_assignment_pass:read_buffer("ActiveClusterIndex",buffer_usage.compute_storage)
 	cluster_assignment_pass:read_buffer("ClusterBuffer",buffer_usage.compute_storage)
-	cluster_assignment_pass:create_input_buffer("UploadLightComponentBuffer", light_component_size * max_light_count,light_component_size,buffer_usage.copy,false,buffer_usage.copy)
+	cluster_assignment_pass:create_input_buffer("UploadLightComponentBuffer", uint_size * max_light_count,light_component_size,buffer_usage.copy,false,buffer_usage.copy)
 	cluster_assignment_pass:create_input_buffer("ClusterAssignCBuffer", 256,256,buffer_usage.constant, true, buffer_usage.constant)
 	cluster_assignment_pass:read_buffer("ReadBackActiveClusterCount",buffer_usage.copy)
 
 	--Output Resources
-	cluster_assignment_pass:create_buffer("LightComponentBuffer", light_component_size * max_light_count,light_component_size,buffer_usage.compute_storage,false,buffer_usage.compute_storage)
+	cluster_assignment_pass:create_buffer("LightComponentBuffer", uint_size * max_light_count,light_component_size,buffer_usage.compute_storage,false,buffer_usage.compute_storage)
 	cluster_assignment_pass:create_buffer("LightGridPtr", uint_size,uint_size,buffer_usage.compute_storage,false,buffer_usage.compute_storage)
 
 	cluster_assignment_pass:create_buffer("ClusterDataBuffer", cluster_data_size * clusterCount, cluster_data_size,buffer_usage.compute_storage,false,buffer_usage.compute_storage)

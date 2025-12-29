@@ -101,6 +101,72 @@ namespace RHI
 #endif // _DEBUG
 	}
 
+	Texture::Texture(Device::Ref device, UINT width, UINT height, DescriptorHeap::Heap& heaps, const std::string& name)
+		:_device(device), width(width), height(height), state(TextureUsage::DepthStencilTarget), creationState(TextureUsage::DepthStencilTarget)
+		,format(DXGI_FORMAT_D32_FLOAT)
+	{
+		auto _d3dDevice = device->GetNative();
+
+
+		CD3DX12_HEAP_PROPERTIES heapProperties(D3D12_HEAP_TYPE_DEFAULT);
+		D3D12_RESOURCE_DESC resourceDesc{};
+		resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+		resourceDesc.Format = format;
+		resourceDesc.MipLevels = 1;
+		resourceDesc.Alignment = 0;
+		resourceDesc.DepthOrArraySize = 6;
+		resourceDesc.Height = height;
+		resourceDesc.Width = width;
+		resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
+		resourceDesc.SampleDesc.Count = 1;
+		resourceDesc.Flags = GetResourceFlag(state);
+
+		D3D12_CLEAR_VALUE _clearValue{};
+		{
+			_clearValue.Color[0] = 1.0f;
+			_clearValue.Color[1] = 1.0f;
+			_clearValue.Color[2] = 1.0f;
+			_clearValue.Color[3] = 1.0f;
+
+			_clearValue.DepthStencil.Depth = 1.0f;
+			_clearValue.DepthStencil.Stencil = 0;
+
+			_clearValue.Format = GetDepthViewFormat(TextureFormat::D32);
+		}
+
+		D3D12_CLEAR_VALUE* clearValue = &_clearValue;
+
+		if (state == TextureUsage::RenderTarget || state == TextureUsage::Present ||
+			state == TextureUsage::DepthStencilTarget) {
+			clearValue = &_clearValue;
+		}
+		else {
+			clearValue = nullptr;
+		}
+
+		HRESULT result = _d3dDevice->CreateCommittedResource(&heapProperties, D3D12_HEAP_FLAG_NONE, &resourceDesc,
+			(D3D12_RESOURCE_STATES)state, clearValue, IID_PPV_ARGS(&resource));
+		if (FAILED(result))
+		{
+			std::cout << "Failed to create upload texture." << std::endl;
+			return;
+		}
+
+
+		{
+			D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+			dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
+			dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2DARRAY;
+			dsvDesc.Texture2DArray.MipSlice = 0;
+			dsvDesc.Texture2DArray.FirstArraySlice = 0; 
+			dsvDesc.Texture2DArray.ArraySize = 6;
+
+			dsv = heaps.dsv->Allocate();
+			_d3dDevice->CreateDepthStencilView(resource.Get(), &dsvDesc, dsv.cpuHandle);
+		}
+
+	}
+
 
 	RHI::Texture::Texture(Device::Ref device, TextureFormat fmt, UINT w, UINT h, TextureUsage usage, const std::string& name)
 		:_device(device), format((DXGI_FORMAT)fmt), width(w), height(h), creationState(usage), beforeState(usage)
@@ -141,6 +207,19 @@ namespace RHI
 
 	Texture::~Texture()
 	{
+		if (rtv.parentHeap) {
+			rtv.parentHeap->Deallocate(rtv.heapIndex);
+		}
+		if (dsv.parentHeap) {
+			dsv.parentHeap->Deallocate(dsv.heapIndex);
+		}
+		if (uav.parentHeap) {
+			uav.parentHeap->Deallocate(uav.heapIndex);
+		}
+		if (srv.parentHeap) {
+			srv.parentHeap->Deallocate(srv.heapIndex);
+		}
+
 		resource.Reset();
 		_device.reset();
 	}

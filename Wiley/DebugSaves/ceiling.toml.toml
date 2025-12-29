@@ -1,6 +1,6 @@
 Name = 'ceiling.toml'
 Type = 'Material'
-UUID = 'fbe0aedf-4bc1-4c04-97ec-7052e71642dd'
+UUID = 'cc9a78bd-be4d-4750-abc3-999c51922306'
 
 ['dependencies.path']
 Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_ceiling_a_diff.tga'
@@ -10,11 +10,11 @@ Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_cei
 Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
 
 ['dependencies.uuid']
-Albedo = 'e2c8a5fc-4f5e-4995-bc34-ea16d5214c03'
-AmbientOcclusion = '7532dd13-83da-4fbb-9a23-0ab740591f96'
-Metallic = '51f2f464-0d82-4d89-b2c2-ef646140de57'
-Normal = '7f1ab9e8-6c81-4077-8cb3-253db2440a6b'
-Roughness = 'e70366ec-b9c9-4016-8209-428f80253fb3'
+Albedo = '5153c35e-ab53-45e1-83e4-3c05c34ce95e'
+AmbientOcclusion = 'd516c30e-1a00-4332-93a7-00842791a762'
+Metallic = '168f340c-4a48-4262-a73a-f0cd35439a59'
+Normal = '01540af0-93fa-4a37-b24f-fbd543b68f17'
+Roughness = '2481bd11-a2f0-40e4-8d00-80ecd6eaa291'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

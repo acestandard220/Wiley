@@ -24,6 +24,7 @@ namespace Renderer3D
 	{
 		ZoneScopedN("Renderer::Renderer");
 
+
 		isVertexIndexDataDirty.fill(true);
 		frameGraph = std::make_shared<FrameGraph>(rctx);
 

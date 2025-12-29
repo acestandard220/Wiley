@@ -11,8 +11,10 @@ namespace Wiley {
 		rctx = std::make_shared<RHI::RenderContext>(window);
 		renderer = std::make_shared<Renderer3D::Renderer>(window, rctx);
 
+		shadowMapManager = std::make_shared<Renderer3D::ShadowMapManager>(rctx);
+
 		//Default Scene Creation
-		scene = Scene::CreateScene(rctx);
+		scene = Scene::CreateScene(rctx, shadowMapManager);
 
 		editor = std::make_shared<Editor>(window, rctx, scene,renderer);
 

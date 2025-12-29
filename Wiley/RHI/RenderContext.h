@@ -75,6 +75,7 @@ namespace RHI
 
 		DescriptorHeap::Descriptor AllocateCBV_SRV_UAV() const;
 		std::vector<DescriptorHeap::Descriptor> AllocateCBV_SRV_UAV(UINT nDescriptors) const;
+		std::vector<DescriptorHeap::Descriptor> AllocateDSV(UINT nDescriptors) const;
 		DescriptorHeap::Descriptor AllocateSampler() const;
 		DescriptorHeap::Descriptor AllocateRTV() const;
 		DescriptorHeap::Descriptor AllocateDSV() const;

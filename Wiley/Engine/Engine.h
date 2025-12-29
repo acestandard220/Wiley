@@ -6,6 +6,9 @@
 
 #include "../Renderer/Renderer.h"
 
+#include "../Renderer/ShadowMapManager.h"
+
+
 #include "../Scene/Scene.h"
 #include "../Scene/Entity.h"
 #include "../Scene/Component.h"
@@ -28,8 +31,12 @@ namespace Wiley {
 			WILEY_NODISCARD Scene::Ref GetScene();
 		private:
 			Window::Ref window;
+
 			Renderer3D::Renderer::Ref renderer;
+			Renderer3D::ShadowMapManager::Ref shadowMapManager;
+
 			Scene::Ref scene;
+
 			RHI::RenderContext::Ref rctx;
 
 			Editor::Ref editor;

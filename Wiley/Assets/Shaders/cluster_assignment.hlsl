@@ -21,6 +21,9 @@ struct Light
     float innerRadius;
     float outerRadius;
     float3 spotDirection;
+    
+    uint textureIndex;
+    uint srvIndex;
 };
 
 cbuffer DispatchParams : register(b0)

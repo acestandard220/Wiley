@@ -55,10 +55,15 @@ namespace RHI
 	{
 	public:
 		using Ref = std::shared_ptr<Texture>;
-
+		
+		//Use when someone else is going to create the texture
 		Texture(TextureUsage usage);
+		
+		//Normal use
 		Texture(Device::Ref device,TextureFormat format, UINT width, UINT height,TextureUsage use, DescriptorHeap::Heap& heaps,const std::string& name = "Texture");
 
+		//Used by ShadowMapManager
+		Texture(Device::Ref device, UINT width, UINT height, DescriptorHeap::Heap& heaps, const std::string& name = "Texture");
 		/// <summary>
 		///		This constructor creates a texture resource without any views/descriptors to it.
 		///		Used for pure shader resources/image textures.

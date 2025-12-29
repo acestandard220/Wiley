@@ -14,7 +14,8 @@ namespace Wiley
 {
 	Resource::Ref gResource = nullptr;
 
-	Scene::Scene(RHI::RenderContext::Ref rctx)
+	Scene::Scene(RHI::RenderContext::Ref rctx, Renderer3D::ShadowMapManager::Ref shadowMapManager)
+		:shadowMapManager(shadowMapManager)
 	{
 		ZoneScopedN("Scene::Scene");
 
@@ -151,9 +152,9 @@ namespace Wiley
 		sceneFlags.isWindowResize = true;
 	}
 
-	Scene::Ref Scene::CreateScene(RHI::RenderContext::Ref rctx)
+	Scene::Ref Scene::CreateScene(RHI::RenderContext::Ref rctx, Renderer3D::ShadowMapManager::Ref shadowMapManager)
 	{
-		return std::make_shared<Scene>(rctx);
+		return std::make_shared<Scene>(rctx, shadowMapManager);
 	}
 
 	/// <summary>
@@ -223,6 +224,11 @@ namespace Wiley
 		lightComponent.type = type;
 		lightComponent.radius = 2.0f;
 		lightComponent.intensity = 1.0f;
+
+		//Allocate Resource for shadow map
+		const auto shadowMapData = shadowMapManager->AllocateTexture(type);
+		lightComponent.depthMapIndex = shadowMapData.textureIndex;
+		lightComponent.depthMapSrvIndex = shadowMapData.srvOffset;
 
 		return entities.back();
 	}

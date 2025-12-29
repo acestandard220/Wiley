@@ -1,20 +1,20 @@
 Name = 'Material__47.toml'
 Type = 'Material'
-UUID = '907665a4-ac61-40a4-aab4-8faa6494f2f8'
+UUID = '268e955f-aeb7-4a0f-9a2f-0261ad41a68d'
 
 ['dependencies.path']
-Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_diffuse.dds'
+Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_diffuse.png'
 AmbientOcclusion = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_ambient_occlusion.png'
 Metallic = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_metallic.png'
-Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_normal.dds'
+Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_normal.png'
 Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
 
 ['dependencies.uuid']
-Albedo = 'f6a59dd5-f1a4-41d5-8292-cd083e449353'
-AmbientOcclusion = '7532dd13-83da-4fbb-9a23-0ab740591f96'
-Metallic = '51f2f464-0d82-4d89-b2c2-ef646140de57'
-Normal = '9382ce29-c876-4057-95f1-121d16527a29'
-Roughness = 'e70366ec-b9c9-4016-8209-428f80253fb3'
+Albedo = '28e96d5c-6964-48fd-8df0-4d88ccc74708'
+AmbientOcclusion = 'd516c30e-1a00-4332-93a7-00842791a762'
+Metallic = '168f340c-4a48-4262-a73a-f0cd35439a59'
+Normal = 'fc053aa2-90f6-47ea-b154-285915fcfc6f'
+Roughness = '2481bd11-a2f0-40e4-8d00-80ecd6eaa291'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

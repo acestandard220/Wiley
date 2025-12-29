@@ -25,6 +25,9 @@ struct Light
     float innerRadius;
     float outerRadius;
     float3 spotDirection;
+    
+    uint textureIndex;
+    uint srvIndex;
 };
 
 cbuffer Constants : register(b0, space0)

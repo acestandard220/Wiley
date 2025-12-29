@@ -1,6 +1,6 @@
 Name = 'bricks.toml'
 Type = 'Material'
-UUID = '81d96f28-7e74-4273-8a32-93c7af9da2a3'
+UUID = '7a3e4ccb-c36b-4ef2-9f59-e3639ae4582e'
 
 ['dependencies.path']
 Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/spnza_bricks_a_diff.tga'
@@ -10,11 +10,11 @@ Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/spnza_bric
 Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
 
 ['dependencies.uuid']
-Albedo = 'a3bcca03-2c16-4253-9979-6b706b2414b1'
-AmbientOcclusion = '7532dd13-83da-4fbb-9a23-0ab740591f96'
-Metallic = '51f2f464-0d82-4d89-b2c2-ef646140de57'
-Normal = '7d5f75fc-78f6-47f8-b8dc-a292a19bcf40'
-Roughness = 'e70366ec-b9c9-4016-8209-428f80253fb3'
+Albedo = 'c3a58c7f-65cc-4bff-828b-c7577860a97c'
+AmbientOcclusion = 'd516c30e-1a00-4332-93a7-00842791a762'
+Metallic = '168f340c-4a48-4262-a73a-f0cd35439a59'
+Normal = '9e4f0793-9867-4771-87f4-ae4f0289f47e'
+Roughness = '2481bd11-a2f0-40e4-8d00-80ecd6eaa291'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

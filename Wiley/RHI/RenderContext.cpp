@@ -1,6 +1,6 @@
 #include "RenderContext.h"
 #include "DDSTextureLoader.h"
-
+#include "../Resource/ResourceCache.h"
 
 namespace RHI
 {
@@ -19,8 +19,8 @@ namespace RHI
         frameIndex = swapChain->GetSwapChain()->GetCurrentBackBufferIndex();
 
         heaps.rtv = std::make_shared<DescriptorHeap>(device, DescriptorHeapType::RenderTarget, 30);
-        heaps.dsv = std::make_shared<DescriptorHeap>(device, DescriptorHeapType::DepthTarget, 30);
-        heaps.cbv_srv_uav = std::make_shared<DescriptorHeap>(device, DescriptorHeapType::ShaderResource, 2000);
+        heaps.dsv = std::make_shared<DescriptorHeap>(device, DescriptorHeapType::DepthTarget, 30 + (MAX_LIGHTS));
+        heaps.cbv_srv_uav = std::make_shared<DescriptorHeap>(device, DescriptorHeapType::ShaderResource, 1000 + (MAX_LIGHTS * 2) + (MAX_IMAGETEXTURE_COUNT * 4));
         heaps.sampler = std::make_shared<DescriptorHeap>(device, DescriptorHeapType::Sampler, 32);
 
         for (int i = 0; i < FRAMES_IN_FLIGHT; i++)
@@ -409,6 +409,11 @@ namespace RHI
     std::vector<DescriptorHeap::Descriptor> RenderContext::AllocateCBV_SRV_UAV(UINT nDescriptors) const
     {
         return heaps.cbv_srv_uav->AllocateNullDescriptor(nDescriptors);
+    }
+
+    std::vector<DescriptorHeap::Descriptor> RenderContext::AllocateDSV(UINT nDescriptors) const
+    {
+        return heaps.dsv->AllocateNullDescriptor(nDescriptors);
     }
 
     DescriptorHeap::Descriptor RenderContext::AllocateSampler() const

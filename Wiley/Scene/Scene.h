@@ -7,6 +7,10 @@
 
 #include "../RHI/RenderContext.h"
 
+
+#include "../Renderer/ShadowMapManager.h"
+
+
 #include "Camera.h"
 #include "Component.h"
 
@@ -44,13 +48,13 @@ namespace Wiley
 		};
 	public:
 		using Ref = std::shared_ptr<Scene>;
-		Scene(RHI::RenderContext::Ref rctx);
+		Scene(RHI::RenderContext::Ref rctx, Renderer3D::ShadowMapManager::Ref shadowMapManager);
 		~Scene();
 
 		void OnUpdate();
 		void OnResize(uint32_t width, uint32_t height);
 
-		static Scene::Ref CreateScene(RHI::RenderContext::Ref rctx);
+		static Scene::Ref CreateScene(RHI::RenderContext::Ref rctx, Renderer3D::ShadowMapManager::Ref shadowMapManager);
 
 		Entity& AddEntity(const std::string name);
 		Entity& AddModel(std::filesystem::path path, ResourceLoadDesc& loadDesc);
@@ -135,5 +139,8 @@ namespace Wiley
 			bool isCameraDirty = true; //Has any camera parameter been changed?
 			bool isWindowResize = false;
 		}sceneFlags;
+
+		Renderer3D::ShadowMapManager::Ref shadowMapManager;
+
 	};
 }
