@@ -198,10 +198,9 @@ local shadow_pass = RenderPass.new()
 	shadow_pass:set_viewport(width,height)
 
 	--Output Resources
-	shadow_pass:create_texture("ShadowMap",texture_format.r32t,width,height,texture_usage.depth_stencil_target,texture_usage.depth_stencil_target,false)
 
 	shadow_pass:execute(shadow_pass_function)
---add_pass(shadow_pass)
+add_pass(shadow_pass)
 
 local lighting_pass = RenderPass.new()
 	lighting_pass:set_name("LightingPass")

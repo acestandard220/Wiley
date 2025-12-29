@@ -78,7 +78,6 @@ namespace Wiley
 			ImGui::DragFloat3(((bool)light.type) ? "Position" : "Direction", &light.position.x, 0.5f, 0.0f, 0.0f, "%.3f");
 			ImGui::DragFloat3("Color", &light.color.x, 0.5f, 0.0f, 0.0f, "%.3f");
 			ImGui::DragFloat("Intensity", &light.intensity, 0.5, 0.0f, 0.0f);
-			ImGui::DragFloat("Radius", &light.radius, 0.5, 0.0f, 0.0f);
 			
 			ImGui::Separator();
 

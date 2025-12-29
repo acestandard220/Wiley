@@ -121,6 +121,8 @@ namespace Wiley
 		void MakeCameraDirty() { sceneFlags.isCameraDirty = true; }
 
 		std::vector<Entity>& GetEntities() { return entities; }
+
+		Renderer3D::ShadowMapManager::Ref GetShadowMapManager()const { return shadowMapManager; }
 	private:
 		friend class Entity;
 		entt::registry registery;

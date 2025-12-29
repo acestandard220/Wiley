@@ -1,6 +1,6 @@
 Name = 'vase_round.toml'
 Type = 'Material'
-UUID = 'edea7717-9418-4108-a184-41afc7a26e6c'
+UUID = '441f2d05-6492-4824-a48c-43b03dcd5401'
 
 ['dependencies.path']
 Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/vase_round.tga'
@@ -10,11 +10,11 @@ Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/vase_round
 Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
 
 ['dependencies.uuid']
-Albedo = '8d7ba0f6-6807-4d4b-b519-69af3707492a'
-AmbientOcclusion = 'fdbb43cf-82ac-489b-b38f-fa40b76aa7cc'
-Metallic = '1bf2cae4-4cbe-4640-ac3b-ed83c31120d8'
-Normal = '1a748cda-f878-4393-9cd9-0f2902e18d36'
-Roughness = '1957f4f1-aa48-450b-b2d3-0b7894f55581'
+Albedo = 'c624d17a-5e81-4dbe-b06f-528d45ce368a'
+AmbientOcclusion = '7c648b0f-3974-4e17-b932-86b547710e27'
+Metallic = 'b126a381-c13c-4f1e-b73e-fd8853d93ba3'
+Normal = '8d175d4b-213b-480c-a64d-73ec94d6f4f8'
+Roughness = 'be8b05b1-b26a-4ad4-8f4a-f228049a7bf9'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

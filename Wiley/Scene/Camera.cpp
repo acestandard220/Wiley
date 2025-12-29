@@ -195,6 +195,13 @@ namespace Wiley {
 		return DirectX::XMMatrixTranspose(DirectX::XMMatrixInverse(&determinant, projection));
 	}
 
+	DirectX::XMMATRIX Camera::GetInverseViewProjection() const
+	{
+		const auto vp = view * projection;
+		DirectX::XMVECTOR determinant;
+		return DirectX::XMMatrixTranspose(DirectX::XMMatrixInverse(&determinant, vp));
+	}
+
 	bool Camera::IsChanged() const
 	{
 		return isChanged;

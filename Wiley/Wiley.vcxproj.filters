@@ -516,6 +516,9 @@
     <ClCompile Include="Renderer\ShadowMapManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\Systems\LightComponentSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RHI\SwapChain.h">
@@ -1503,6 +1506,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\ShadowMapManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Systems\LightComponentSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

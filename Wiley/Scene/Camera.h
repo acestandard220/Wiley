@@ -82,6 +82,8 @@ namespace Wiley {
 			/// </summary>
 			DirectX::XMMATRIX GetInverseProjection()const;
 
+			DirectX::XMMATRIX GetInverseViewProjection()const;
+
 			bool IsChanged()const;
 		private:
 			void ComputeDirectionVectors();

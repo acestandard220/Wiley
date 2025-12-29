@@ -31,7 +31,7 @@ namespace Wiley {
 			void Optimize() {
 				if (freelist.size() < 2) return;
 
-				std::set<MemoryBlock<T>> merged;
+				std::set<MemoryBlock<T>, SpanCompare> merged;
 				auto it = freelist.begin();
 				MemoryBlock<T> current = *it;
 				++it;
@@ -159,12 +159,18 @@ namespace Wiley {
 			}
 
 			if ((uint8_t*)(block.data() + block.size()) == topPtr){
-				topPtr = topPtr - (nElement * elementSize);
+				topPtr = (T*)topPtr - (nElement * elementSize);
 				return true;
 			}
 
 			freelist.freelist.insert(block);
 			freelist.Optimize();
+		}
+
+		[[nodiscard]] bool Deallocate(uint32_t index, uint32_t count) {
+			auto _ptr = (T*)basePtr + index;
+			MemoryBlock<T> memBlk( _ptr, count );
+			return Deallocate(memBlk);
 		}
 
 		void Reset(){
@@ -195,6 +201,14 @@ namespace Wiley {
 
 			[[nodiscard]] size_t GetReach()const {
 				return (uint8_t*)topPtr - (uint8_t*)basePtr;
+			}
+
+			[[nodiscard]] uint32_t GetIndex(MemoryBlock<T> memBlk)const {
+				return memBlk.data() - (T*)basePtr;
+			}
+			
+			[[nodiscard]] T* GetPointerByIndex(uint32_t index)const {
+				return (T*)basePtr + index;
 			}
 
 		private:

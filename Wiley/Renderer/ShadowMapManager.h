@@ -8,6 +8,7 @@ namespace Renderer3D
 	struct ShadowMapData {
 		uint32_t textureIndex;
 		uint32_t srvOffset;
+		uint32_t vp;
 	};
 
 	enum ShadowMapSize : uint32_t{
@@ -30,13 +31,18 @@ namespace Renderer3D
 			WILEY_NODISCARD ShadowMapData AllocateTexture(Wiley::LightType type, ShadowMapSize mapSize = ShadowMapSize::ShadowMapSize_1024);
 			void DeallocateTexture(ShadowMapData index,Wiley::LightType type);
 
+
 			WILEY_NODISCARD RHI::Texture::Ref GetDepthMap(int index)const;
 			WILEY_NODISCARD RHI::DescriptorHeap::Descriptor GetCubeSRVHead()const;
 			WILEY_NODISCARD RHI::DescriptorHeap::Descriptor GetArraySRVHead()const;
 
+			DirectX::XMFLOAT4X4* GetLightProjection(uint32_t index)const;
+
 		private:
 			uint32_t AllocateSRV(Wiley::LightType type);
 			void BuildSRV(Wiley::LightType type, int index, RHI::Texture::Ref& depthMap);
+
+			uint32_t AllocateMatrixSpace(Wiley::LightType type);
 
 		private:
 			//Texture Pools
@@ -52,6 +58,8 @@ namespace Renderer3D
 			std::vector<RHI::DescriptorHeap::Descriptor> arraySrv;
 			Queue<int> arrayfreelist;
 			int arrayPtr;
+
+			std::unique_ptr<Wiley::LinearAllocator<DirectX::XMFLOAT4X4>> lightViewProjections;
 
 			RHI::RenderContext::Ref rctx;
 	};

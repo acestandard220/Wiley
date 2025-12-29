@@ -4,6 +4,10 @@
 #include "Component.h"
 #include "../Resource/EnvironmentMap.h"
 
+#include "Systems/TransformSystem.h"
+#include "Systems/MeshFilterSystem.h"
+#include "Systems/LightComponentSystem.h"
+
 #include <algorithm>
 #include <execution>
 #include <span>
@@ -34,6 +38,7 @@ namespace Wiley
 		{
 			systems.emplace_back(std::make_unique<TransformSystem>(this));
 			systems.emplace_back(std::make_unique<MeshFilterSystem>(this));
+			systems.emplace_back(std::make_unique<LightComponentSystem>(this));
 		}
 
 
@@ -50,6 +55,11 @@ namespace Wiley
 		auto testP = AddLight("TestPointLight", LightType::Point);
 		testP.GetComponent<LightComponent>().position = {
 			3.0, 3.0f, 0.0
+		};
+
+		auto testD = AddLight("TestDirLight", LightType::Directional);
+		testD.GetComponent<LightComponent>().position = {
+			1.0,-1.0,0.0
 		};
 
 		/*ResourceLoadDesc loadDesc{};
@@ -222,13 +232,13 @@ namespace Wiley
 		lightComponent.position = { 0.0f,3.0f,1.0f };
 		lightComponent.spotDirection = { 0.0f,-1.0f,0.0f };
 		lightComponent.type = type;
-		lightComponent.radius = 2.0f;
 		lightComponent.intensity = 1.0f;
 
 		//Allocate Resource for shadow map
 		const auto shadowMapData = shadowMapManager->AllocateTexture(type);
 		lightComponent.depthMapIndex = shadowMapData.textureIndex;
 		lightComponent.depthMapSrvIndex = shadowMapData.srvOffset;
+		lightComponent.matrixIndex = shadowMapData.vp;
 
 		return entities.back();
 	}

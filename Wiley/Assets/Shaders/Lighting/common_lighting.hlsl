@@ -12,7 +12,6 @@ struct Light
     float3 position;
     float3 color;
     float intensity;
-    float radius;
 
     //Spot Parameters
     float innerRadius;
@@ -21,6 +20,7 @@ struct Light
     
     uint textureIndex;
     uint srvIndex;
+    uint vpIndex;
 };
 
 cbuffer Constant : register(b0, space1)

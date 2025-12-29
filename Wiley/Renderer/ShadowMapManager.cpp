@@ -9,6 +9,11 @@ namespace Renderer3D {
 	{
 		cubeSrv	 = rctx->AllocateCBV_SRV_UAV(MAX_LIGHTS);
 		arraySrv = rctx->AllocateCBV_SRV_UAV(MAX_LIGHTS);
+
+		//Tears in my eyes... 400KB...
+		lightViewProjections = std::make_unique<LinearAllocator<DirectX::XMFLOAT4X4>>(MAX_LIGHTS * 6);
+		lightViewProjections->Initialize();
+
 	}
 
 	ShadowMapManager::~ShadowMapManager()
@@ -37,10 +42,13 @@ namespace Renderer3D {
 			}
 
 			uint32_t srvIndex = AllocateSRV(type);
-			BuildSRV(type, srvIndex, depthMap);			
+			BuildSRV(type, srvIndex, depthMap);	
+
+			uint32_t matrixIndex = AllocateMatrixSpace(type);
 			return {
 				.textureIndex = index,
-				.srvOffset = srvIndex
+				.srvOffset = srvIndex,
+				.vp = matrixIndex
 			};
 		}
 
@@ -55,29 +63,43 @@ namespace Renderer3D {
 		
 		uint32_t srvIndex = AllocateSRV(type);
 		BuildSRV(type, srvIndex, depthMap);
+		uint32_t matrixIndex = AllocateMatrixSpace(type);
+
 		return {
 			.textureIndex = index,
-			.srvOffset = srvIndex
+			.srvOffset = srvIndex,
+			.vp = matrixIndex
 		};
 	}
 
 	void ShadowMapManager::DeallocateTexture(ShadowMapData data, Wiley::LightType type)
 	{
 		mapfreelist.push(data.textureIndex);
+		uint32_t matrixAllocCount = 0;
 		switch (type)
 		{
-			case Wiley::LightType::Directional: [[fallthrough]];
+			case Wiley::LightType::Directional: 
+			{
+				arrayfreelist.push(data.srvOffset);
+				matrixAllocCount = 4;
+				break;
+			}
 			case Wiley::LightType::Spot:
 			{
 				arrayfreelist.push(data.srvOffset);
+				matrixAllocCount = 1;
 				break;
 			}
 			case LightType::Point:
 			{
 				cubefreelist.push(data.srvOffset);
+				matrixAllocCount = 6;
 				break;
 			}
 		}
+
+		lightViewProjections->Deallocate(data.vp, matrixAllocCount);
+
 		return;
 	}
 
@@ -99,6 +121,11 @@ namespace Renderer3D {
 	RHI::DescriptorHeap::Descriptor ShadowMapManager::GetArraySRVHead() const
 	{
 		return *arraySrv.data();
+	}
+
+	DirectX::XMFLOAT4X4* ShadowMapManager::GetLightProjection(uint32_t index) const
+	{
+		return lightViewProjections->GetPointerByIndex(index);
 	}
 
 	/// <summary>
@@ -176,4 +203,32 @@ namespace Renderer3D {
 		rctx->GetDevice()->GetNative()->CreateShaderResourceView(depthMap->GetResource(), &srvDesc, descriptor.cpuHandle);
 	}
 
+	uint32_t ShadowMapManager::AllocateMatrixSpace(Wiley::LightType type)
+	{
+		int allocCount = 0;
+		switch (type) {
+			case LightType::Directional:
+			{
+				allocCount = 4;
+				break;
+			}
+			case LightType::Point:
+			{
+				allocCount = 6;
+				break;
+			}
+			case LightType::Spot:
+			{
+				allocCount = 1;
+				break;
+			}
+		}
+
+		auto memBlk = lightViewProjections->Allocate(allocCount);
+		return lightViewProjections->GetIndex(memBlk);
+	}
+
 }
+
+
+//Todo: Change all pools to use linear allocator as free list will be handled for you.
