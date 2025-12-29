@@ -1,6 +1,6 @@
 Name = 'fabric_a.toml'
 Type = 'Material'
-UUID = '9a306689-7512-4fc4-882c-ea03437e5cfe'
+UUID = 'd2cf10e2-adaf-4415-bed4-1be477e42361'
 
 ['dependencies.path']
 Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_fabric_diff.tga'
@@ -10,11 +10,11 @@ Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_fab
 Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
 
 ['dependencies.uuid']
-Albedo = '4e2b4e19-174f-415f-abbd-412a99fd5bec'
-AmbientOcclusion = 'd516c30e-1a00-4332-93a7-00842791a762'
-Metallic = '168f340c-4a48-4262-a73a-f0cd35439a59'
-Normal = '49e93d4c-eee7-46cf-ad25-1329feec6cea'
-Roughness = '2481bd11-a2f0-40e4-8d00-80ecd6eaa291'
+Albedo = '4a9496f9-cca3-4808-8a54-93a096d0a527'
+AmbientOcclusion = 'fdbb43cf-82ac-489b-b38f-fa40b76aa7cc'
+Metallic = '1bf2cae4-4cbe-4640-ac3b-ed83c31120d8'
+Normal = '16022000-0ced-48e6-87d1-e56efff5bdc4'
+Roughness = '1957f4f1-aa48-450b-b2d3-0b7894f55581'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

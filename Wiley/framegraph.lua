@@ -127,16 +127,19 @@ local cluster_assignment_pass = RenderPass.new()
 	--Input Resources
 	cluster_assignment_pass:read_buffer("ActiveClusterIndex",buffer_usage.compute_storage)
 	cluster_assignment_pass:read_buffer("ClusterBuffer",buffer_usage.compute_storage)
-	cluster_assignment_pass:create_input_buffer("UploadLightComponentBuffer", uint_size * max_light_count,light_component_size,buffer_usage.copy,false,buffer_usage.copy)
+	cluster_assignment_pass:create_input_buffer("UploadLightCullDataBuffer", (uint_size * 4) * max_light_count,(uint_size * 4),buffer_usage.copy,false,buffer_usage.copy)
 	cluster_assignment_pass:create_input_buffer("ClusterAssignCBuffer", 256,256,buffer_usage.constant, true, buffer_usage.constant)
 	cluster_assignment_pass:read_buffer("ReadBackActiveClusterCount",buffer_usage.copy)
+	cluster_assignment_pass:create_input_buffer("UploadLightCompBuffer", light_component_size * max_light_count,light_component_size,buffer_usage.copy, false, buffer_usage.copy)
 
 	--Output Resources
-	cluster_assignment_pass:create_buffer("LightComponentBuffer", uint_size * max_light_count,light_component_size,buffer_usage.compute_storage,false,buffer_usage.compute_storage)
+	cluster_assignment_pass:create_buffer("LightCullDataBuffer", (uint_size * 4) * max_light_count,(uint_size * 4),buffer_usage.compute_storage,false,buffer_usage.compute_storage)
 	cluster_assignment_pass:create_buffer("LightGridPtr", uint_size,uint_size,buffer_usage.compute_storage,false,buffer_usage.compute_storage)
 
 	cluster_assignment_pass:create_buffer("ClusterDataBuffer", cluster_data_size * clusterCount, cluster_data_size,buffer_usage.compute_storage,false,buffer_usage.compute_storage)
 	cluster_assignment_pass:create_buffer("LightGridBuffer", uint_size * max_light_per_cluster * max_light_count, uint_size, buffer_usage.compute_storage,false,buffer_usage.compute_storage)
+
+	cluster_assignment_pass:create_buffer("LightCompBuffer", light_component_size * max_light_count, light_component_size, buffer_usage.compute_storage, false, buffer_usage.compute_storage)
 
 	cluster_assignment_pass:execute(cluster_assignment_pass_function)
 add_pass(cluster_assignment_pass)
@@ -209,8 +212,7 @@ local lighting_pass = RenderPass.new()
 	lighting_pass:read_texture("NormalData",texture_usage.pixel_shader_resource)
 	lighting_pass:read_texture("ColorData",texture_usage.pixel_shader_resource)
 	lighting_pass:read_texture("ArmData",texture_usage.pixel_shader_resource)
-	lighting_pass:read_buffer("LightComponentBuffer", buffer_usage.pixel_shader_resource)
-
+	lighting_pass:read_buffer("LightCompBuffer", buffer_usage.pixel_shader_resource)
 
 	--Outputs Resources
 	lighting_pass:create_texture("LightPassMap",texture_format.rgba16,width,height,texture_usage.present,texture_usage.render_target,true)

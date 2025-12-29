@@ -279,19 +279,30 @@ namespace Renderer3D {
 
 		RHI::Buffer::Ref activeClusterIndex = frameGraph->GetInputBufferResource(pass, 0);
 		RHI::Buffer::Ref clusterBuffer = frameGraph->GetInputBufferResource(pass, 1);
-		RHI::Buffer::Ref uploadLightCompBuffer = frameGraph->GetInputBufferResource(pass, 2);
+		RHI::Buffer::Ref uploadLightCullDataBuffer = frameGraph->GetInputBufferResource(pass, 2);
 		RHI::Buffer::Ref constantBuffer = frameGraph->GetInputBufferResource(pass, 3);
 		RHI::Buffer::Ref readBackActiveClusterCount = frameGraph->GetInputBufferResource(pass, 4);
+		RHI::Buffer::Ref uploadLightCompBuffer = frameGraph->GetInputBufferResource(pass, 5);
 
-		RHI::Buffer::Ref lightCompBuffer = frameGraph->GetOutputBufferResource(pass, 0);
+
+
+		RHI::Buffer::Ref lightCullDataBuffer = frameGraph->GetOutputBufferResource(pass, 0);
 		RHI::Buffer::Ref lightGridPtr = frameGraph->GetOutputBufferResource(pass, 1);
 		RHI::Buffer::Ref clusterDataBuffer = frameGraph->GetOutputBufferResource(pass, 2);
 		RHI::Buffer::Ref lightGridBuffer = frameGraph->GetOutputBufferResource(pass, 3);
 
+		RHI::Buffer::Ref lightCompBuffer = frameGraph->GetOutputBufferResource(pass, 4);
+
 		Wiley::LightComponent* lightCompStorage = _scene->GetComponentStorage<Wiley::LightComponent>();
 		UINT lightCompCount = _scene->GetComponentReach<Wiley::LightComponent>();
+		std::span<Wiley::LightComponent> lightCompStorSpan(lightCompStorage, lightCompCount);
 
+		{
+			uploadLightCompBuffer->UploadData<Wiley::LightComponent>(lightCompStorSpan);
+		}
+		
 		UINT activeClusterCountData = 0;
+
 		{
 			struct ConstantBuffer {
 				uint32_t lightCount;
@@ -301,8 +312,27 @@ namespace Renderer3D {
 			constantBufferData.lightCount = lightCompCount;
 			DirectX::XMStoreFloat4x4(&constantBufferData.view, viewMatrix);
 			constantBuffer->UploadData(&constantBufferData, WILEY_SIZEOF(ConstantBuffer), 0, 0);
+		}
 
-			uploadLightCompBuffer->UploadData<Wiley::LightComponent>(std::span<Wiley::LightComponent>(lightCompStorage, lightCompCount));
+		struct LightCullData {
+			DirectX::XMFLOAT3 position;
+			float radius; //intensity
+		};
+
+		{
+
+			std::vector<LightCullData> lightRadia;
+			lightRadia.reserve(lightCompStorSpan.size());
+
+			std::ranges::transform(lightCompStorSpan, std::back_inserter(lightRadia),
+				[](const Wiley::LightComponent& l) {
+					return LightCullData{
+						.position = l.position,
+						.radius = l.intensity
+					};
+			});
+
+			uploadLightCullDataBuffer->UploadData<LightCullData>(lightRadia);
 		}
 
 		{
@@ -321,15 +351,19 @@ namespace Renderer3D {
 			computeCommandList->BindComputeShaderResource(constantBuffer->GetCBV(), 0);
 			computeCommandList->BindComputeShaderResource(clusterBuffer->GetUAV(), 1);
 			computeCommandList->BindComputeShaderResource(activeClusterIndex->GetUAV(), 2);
-			computeCommandList->BindComputeShaderResource(lightCompBuffer->GetUAV(), 3);
+			computeCommandList->BindComputeShaderResource(lightCullDataBuffer->GetUAV(), 3);
 			computeCommandList->BindComputeShaderResource(lightGridPtr->GetUAV(), 4);
 			computeCommandList->BindComputeShaderResource(clusterDataBuffer->GetUAV(), 5);
 			computeCommandList->BindComputeShaderResource(lightGridBuffer->GetUAV(), 6);
 		}
 
 		{
+			computeCommandList->BufferUAVToCopyDest(lightCullDataBuffer);
+			computeCommandList->CopyBufferToBuffer(uploadLightCullDataBuffer, 0, lightCullDataBuffer, WILEY_SIZEOF(LightCullData) * lightCompCount, false);
+			computeCommandList->BufferCopyDestToUAV(lightCullDataBuffer);
+
 			computeCommandList->BufferUAVToCopyDest(lightCompBuffer);
-			computeCommandList->CopyBufferToBuffer(uploadLightCompBuffer, 0, lightCompBuffer, WILEY_SIZEOF(Wiley::LightComponent) * lightCompCount, true);
+			computeCommandList->CopyBufferToBuffer(uploadLightCompBuffer, 0, lightCompBuffer, WILEY_SIZEOF(Wiley::LightComponent)* lightCompCount, false);
 			computeCommandList->BufferCopyDestToUAV(lightCompBuffer);
 		}
 

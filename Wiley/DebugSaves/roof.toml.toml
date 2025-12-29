@@ -1,6 +1,6 @@
 Name = 'roof.toml'
 Type = 'Material'
-UUID = '88a49908-004a-4319-be66-bbe5427d37eb'
+UUID = '21a2ab8a-b504-450a-9ef6-26871dd436a6'
 
 ['dependencies.path']
 Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_roof_diff.tga'
@@ -10,11 +10,11 @@ Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_roo
 Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
 
 ['dependencies.uuid']
-Albedo = '39efa7c1-8f50-49ea-94d2-396f908f5f1f'
-AmbientOcclusion = 'd516c30e-1a00-4332-93a7-00842791a762'
-Metallic = '168f340c-4a48-4262-a73a-f0cd35439a59'
-Normal = '7641cec9-c40b-4d71-9c69-becde843244c'
-Roughness = '2481bd11-a2f0-40e4-8d00-80ecd6eaa291'
+Albedo = '9494cc0e-797e-457e-8e3e-c40d3ba250f6'
+AmbientOcclusion = 'fdbb43cf-82ac-489b-b38f-fa40b76aa7cc'
+Metallic = '1bf2cae4-4cbe-4640-ac3b-ed83c31120d8'
+Normal = '29193537-9d45-4de9-a2a5-cfca9a1c0a9d'
+Roughness = '1957f4f1-aa48-450b-b2d3-0b7894f55581'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

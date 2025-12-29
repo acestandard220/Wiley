@@ -9,21 +9,8 @@
 
 struct Light
 {
-    uint type;
-
-	//Base Parameters
     float3 position;
-    float3 color;
-    float intensity;
     float radius;
-
-    //Spot Parameters
-    float innerRadius;
-    float outerRadius;
-    float3 spotDirection;
-    
-    uint textureIndex;
-    uint srvIndex;
 };
 
 cbuffer DispatchParams : register(b0)
@@ -72,10 +59,6 @@ void ClusterAssignment(ComputeInput input)
     for (int i = groupThreadID; i < lightCount; i += THREAD_PER_GROUP)
     {
         Light light = lights[i];
-        if (light.type == DIRECTIONAL_LIGHT)
-        {
-            continue;
-        }
         
         float3 lightPositionVS = mul(view, float4(light.position, 1.0f)).xyz;
 

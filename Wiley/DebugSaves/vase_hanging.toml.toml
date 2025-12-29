@@ -1,6 +1,6 @@
 Name = 'vase_hanging.toml'
 Type = 'Material'
-UUID = '52b78940-5ae8-4829-b0d9-81be0629cffe'
+UUID = 'aae48a90-ddfc-40cd-ba24-52d2911e275b'
 
 ['dependencies.path']
 Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/vase_hanging.tga'
@@ -10,11 +10,11 @@ Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/vase_hangi
 Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
 
 ['dependencies.uuid']
-Albedo = '9dec14a6-4655-4d1d-85b4-42df940668e4'
-AmbientOcclusion = 'd516c30e-1a00-4332-93a7-00842791a762'
-Metallic = '168f340c-4a48-4262-a73a-f0cd35439a59'
-Normal = 'db4c65fc-2b83-4237-a49c-c6f627144c9b'
-Roughness = '2481bd11-a2f0-40e4-8d00-80ecd6eaa291'
+Albedo = 'de486f3f-b8f5-4e4a-b403-bfedbb35af7c'
+AmbientOcclusion = 'fdbb43cf-82ac-489b-b38f-fa40b76aa7cc'
+Metallic = '1bf2cae4-4cbe-4640-ac3b-ed83c31120d8'
+Normal = '5bf45c8a-0af9-45ef-b89b-ebeb2237cce7'
+Roughness = '1957f4f1-aa48-450b-b2d3-0b7894f55581'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]
