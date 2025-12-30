@@ -53,13 +53,37 @@ namespace RHI
 		for (int i = 0; i < nDescriptors; i++) {
 			descriptors[i] = Allocate();
 
-			D3D12_SHADER_RESOURCE_VIEW_DESC nullSrvDesc = {};
-			nullSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-			nullSrvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-			nullSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-			nullSrvDesc.Texture2D.MipLevels = 1;
+			switch (this->type) {
+				case D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV:
+				{
+					D3D12_SHADER_RESOURCE_VIEW_DESC nullSrvDesc = {};
+					nullSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+					nullSrvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+					nullSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+					nullSrvDesc.Texture2D.MipLevels = 1;
 
-			_device->GetNative()->CreateShaderResourceView(nullptr, &nullSrvDesc, descriptors[i].cpuHandle);
+					_device->GetNative()->CreateShaderResourceView(nullptr, &nullSrvDesc, descriptors[i].cpuHandle);
+					break;
+				}
+				case D3D12_DESCRIPTOR_HEAP_TYPE_DSV:
+				{
+					D3D12_DEPTH_STENCIL_VIEW_DESC nullDsvDesc{};
+					nullDsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
+					nullDsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+					
+					_device->GetNative()->CreateDepthStencilView(nullptr, &nullDsvDesc, descriptors[i].cpuHandle);
+					break;
+				}
+				case D3D12_DESCRIPTOR_HEAP_TYPE_RTV:
+				{
+					D3D12_RENDER_TARGET_VIEW_DESC nullRtvDesc{};
+					nullRtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+					nullRtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
+
+					_device->GetNative()->CreateRenderTargetView(nullptr, &nullRtvDesc, descriptors[i].cpuHandle);
+					break;
+				}
+			}
 		}
 		return descriptors;
 	}

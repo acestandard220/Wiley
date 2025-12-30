@@ -152,17 +152,18 @@ namespace RHI
 			return;
 		}
 
-
+		auto arrayDSV = heaps.dsv->Allocate(6);
+		for (int i = 0; i < 6; i++)
 		{
 			D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 			dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
 			dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2DARRAY;
 			dsvDesc.Texture2DArray.MipSlice = 0;
-			dsvDesc.Texture2DArray.FirstArraySlice = 0; 
-			dsvDesc.Texture2DArray.ArraySize = 6;
+			dsvDesc.Texture2DArray.FirstArraySlice = i; 
+			dsvDesc.Texture2DArray.ArraySize = 1;
 
-			dsv = heaps.dsv->Allocate();
-			_d3dDevice->CreateDepthStencilView(resource.Get(), &dsvDesc, dsv.cpuHandle);
+			shadowMapDSV[i] = arrayDSV[i];
+			_d3dDevice->CreateDepthStencilView(resource.Get(), &dsvDesc, shadowMapDSV[i].cpuHandle);
 		}
 
 	}
@@ -451,6 +452,11 @@ namespace RHI
 			case 32:
 				return TextureFormat::RGBA32;
 		}
+	}
+
+	const DescriptorHeap::Descriptor& Texture::GetDepthMapDSV(uint32_t index) const
+	{
+		return shadowMapDSV[index];
 	}
 
 	UINT Texture::GetBitPerChannel(TextureFormat format)

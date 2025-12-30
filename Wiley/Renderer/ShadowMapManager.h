@@ -3,6 +3,8 @@
 #include "../Resource/ResourceCache.h"
 #include "../Scene/Component.h"
 
+#include <entt.hpp>
+
 namespace Renderer3D
 {
 	struct ShadowMapData {
@@ -31,12 +33,18 @@ namespace Renderer3D
 			WILEY_NODISCARD ShadowMapData AllocateTexture(Wiley::LightType type, ShadowMapSize mapSize = ShadowMapSize::ShadowMapSize_1024);
 			void DeallocateTexture(ShadowMapData index,Wiley::LightType type);
 
+			void MakeLightEntityDirty(entt::entity entity);
+			void MakeAllLightEntityDirty();
+			void MakeAllLightClean();
 
 			WILEY_NODISCARD RHI::Texture::Ref GetDepthMap(int index)const;
 			WILEY_NODISCARD RHI::DescriptorHeap::Descriptor GetCubeSRVHead()const;
 			WILEY_NODISCARD RHI::DescriptorHeap::Descriptor GetArraySRVHead()const;
 
 			DirectX::XMFLOAT4X4* GetLightProjection(uint32_t index)const;
+
+			Queue<entt::entity>& GetDirtyEntities();
+			bool IsAllLightEntitiesDirty()const;
 
 		private:
 			uint32_t AllocateSRV(Wiley::LightType type);
@@ -60,6 +68,9 @@ namespace Renderer3D
 			int arrayPtr;
 
 			std::unique_ptr<Wiley::LinearAllocator<DirectX::XMFLOAT4X4>> lightViewProjections;
+
+			Queue<entt::entity> dirtyLightEntities;
+			bool isAllLightEntitiesDirty;
 
 			RHI::RenderContext::Ref rctx;
 	};

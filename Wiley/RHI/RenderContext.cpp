@@ -19,7 +19,7 @@ namespace RHI
         frameIndex = swapChain->GetSwapChain()->GetCurrentBackBufferIndex();
 
         heaps.rtv = std::make_shared<DescriptorHeap>(device, DescriptorHeapType::RenderTarget, 30);
-        heaps.dsv = std::make_shared<DescriptorHeap>(device, DescriptorHeapType::DepthTarget, 30 + (MAX_LIGHTS));
+        heaps.dsv = std::make_shared<DescriptorHeap>(device, DescriptorHeapType::DepthTarget, 30 + (MAX_LIGHTS * 6));
         heaps.cbv_srv_uav = std::make_shared<DescriptorHeap>(device, DescriptorHeapType::ShaderResource, 1000 + (MAX_LIGHTS * 2) + (MAX_IMAGETEXTURE_COUNT * 4));
         heaps.sampler = std::make_shared<DescriptorHeap>(device, DescriptorHeapType::Sampler, 32);
 

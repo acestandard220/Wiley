@@ -156,6 +156,7 @@
     <ClCompile Include="ext\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Editor\Panels\Panel.cpp" />
     <ClCompile Include="Editor\Panels\Hierarchy.cpp" />
+    <ClCompile Include="Renderer\Passes\ShadowMap.cpp" />
     <ClCompile Include="Resource\Loaders\EnvironmentMapLoader.cpp" />
     <ClCompile Include="RHI\CubeMap.cpp" />
     <ClCompile Include="Editor\Editor.cpp" />

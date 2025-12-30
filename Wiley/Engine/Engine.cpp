@@ -22,7 +22,7 @@ namespace Wiley {
         loadDesc.extension = FileExtension::OBJ;
 		loadDesc.flipUV = false;
 
-		const auto model = scene->AddModel("P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/sponza.obj", loadDesc);
+		//const auto model = scene->AddModel("P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/sponza.obj", loadDesc);
 		const auto cylinder = scene->AddModel("P:/Projects/VS/Wiley/Wiley/Assets/Models/Cylinder.obj",loadDesc);
 		scene->AssignGlobalDefaultMaterial(cylinder);
 

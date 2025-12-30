@@ -57,10 +57,10 @@ namespace Wiley
 			3.0, 3.0f, 0.0
 		};
 
-		auto testD = AddLight("TestDirLight", LightType::Directional);
+		/*auto testD = AddLight("TestDirLight", LightType::Directional);
 		testD.GetComponent<LightComponent>().position = {
 			1.0,-1.0,0.0
-		};
+		};*/
 
 		/*ResourceLoadDesc loadDesc{};
 		loadDesc.extension = FileExtension::OBJ;
@@ -157,6 +157,10 @@ namespace Wiley
 	{
 		ZoneScopedN("Scene::OnResize");
 
+		if (width == 0 || height == 0) {
+			return;
+		}
+
 		camera->OnResize(width, height);
 
 		sceneFlags.isWindowResize = true;
@@ -239,6 +243,8 @@ namespace Wiley
 		lightComponent.depthMapIndex = shadowMapData.textureIndex;
 		lightComponent.depthMapSrvIndex = shadowMapData.srvOffset;
 		lightComponent.matrixIndex = shadowMapData.vp;
+
+		shadowMapManager->MakeLightEntityDirty(static_cast<entt::entity>(entity));
 
 		return entities.back();
 	}

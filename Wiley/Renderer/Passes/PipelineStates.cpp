@@ -234,9 +234,9 @@ namespace Renderer3D {
 		//Shadow Pass PSO
 		{
 			RHI::ShaderByteCode vertexByteCode = RHI::ShaderCompiler::CompileShader(RHI::ShaderType::Vertex,
-				L"P:/Projects/VS/Wiley/Wiley/Assets/Shaders/depth.hlsl", L"VSmain", nullptr);
+				L"P:/Projects/VS/Wiley/Wiley/Assets/Shaders/shadow_map.hlsl", L"VSmain", nullptr);
 			RHI::ShaderByteCode pixelByteCode = RHI::ShaderCompiler::CompileShader(RHI::ShaderType::Pixel,
-				L"P:/Projects/VS/Wiley/Wiley/Assets/Shaders/depth.hlsl", L"PSmain", nullptr);
+				L"P:/Projects/VS/Wiley/Wiley/Assets/Shaders/shadow_map.hlsl", L"PSmain", nullptr);
 
 			std::unordered_map<RHI::ShaderType, RHI::ShaderByteCode> shaders{
 				{ RHI::ShaderType::Vertex, vertexByteCode},
@@ -254,11 +254,10 @@ namespace Renderer3D {
 
 			specs.nRenderTarget = 0;
 
-			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::Constant, 0 });
-			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::CBVRange, 1 });
+			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::Constant, 0, 16 });
 
 			specs.byteCodes = shaders;
-			gfxPsoCache[RenderPassSemantic::ShadowPass] = rctx->CreateGraphicsPipeline(specs);
+			gfxPsoCache[RenderPassSemantic::ShadowMapPass] = rctx->CreateGraphicsPipeline(specs);
 		}
 
 		//Skybox Pass

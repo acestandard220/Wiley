@@ -1,11 +1,13 @@
 #include "ShadowMapManager.h"
+#include "../Scene/Entity.h"
+
 
 namespace Renderer3D {
 
 	using namespace Wiley;
 
 	ShadowMapManager::ShadowMapManager(RHI::RenderContext::Ref rctx)
-		:arrayPtr(0),cubePtr(0), mapPtr(0), rctx(rctx)
+		:arrayPtr(0), cubePtr(0), mapPtr(0), rctx(rctx), isAllLightEntitiesDirty(false)
 	{
 		cubeSrv	 = rctx->AllocateCBV_SRV_UAV(MAX_LIGHTS);
 		arraySrv = rctx->AllocateCBV_SRV_UAV(MAX_LIGHTS);
@@ -103,6 +105,21 @@ namespace Renderer3D {
 		return;
 	}
 
+	void ShadowMapManager::MakeLightEntityDirty(entt::entity entity)
+	{
+		dirtyLightEntities.push(entity);
+	}
+
+	void ShadowMapManager::MakeAllLightEntityDirty()
+	{
+		isAllLightEntitiesDirty = true;
+	}
+
+	void ShadowMapManager::MakeAllLightClean()
+	{
+		isAllLightEntitiesDirty = false;
+	}
+
 	RHI::Texture::Ref ShadowMapManager::GetDepthMap(int index) const
 	{
 		if (index >= mapPtr)
@@ -126,6 +143,16 @@ namespace Renderer3D {
 	DirectX::XMFLOAT4X4* ShadowMapManager::GetLightProjection(uint32_t index) const
 	{
 		return lightViewProjections->GetPointerByIndex(index);
+	}
+
+	Queue<entt::entity>& ShadowMapManager::GetDirtyEntities()
+	{
+		return dirtyLightEntities;
+	}
+
+	bool ShadowMapManager::IsAllLightEntitiesDirty() const
+	{
+		return isAllLightEntitiesDirty;
 	}
 
 	/// <summary>

@@ -59,7 +59,7 @@ namespace Renderer3D {
 
 		UINT graphicsRingIndex = rctx->GetBackBufferIndex();
 
-		RHI::GraphicsPipeline::Ref pso = gfxPsoCache[RenderPassSemantic::ShadowPass];
+		RHI::GraphicsPipeline::Ref pso = gfxPsoCache[RenderPassSemantic::ShadowMapPass];
 
 		Wiley::cBufferLight cBufferData;
 		DirectX::XMMATRIX vp = DirectX::XMMatrixLookAtLH(DirectX::XMVectorSet(1.0f, 1.0f, -3.0f, 1.0),

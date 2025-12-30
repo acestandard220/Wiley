@@ -65,6 +65,7 @@ namespace Renderer3D
 		void NewFrame(Wiley::Scene::Ref scene);
 		void EndFrame();
 		void RenderToWindowDirect();
+		void DrawCommands(RHI::CommandList::Ref);
 
 		//Render Pass Execution Functions
 		void WireframePass(RenderPass& pass);
@@ -75,7 +76,7 @@ namespace Renderer3D
 		void SceneCopyPass(RenderPass& pass);
 		void LightingPass(RenderPass& pass);
 		void SkyboxPass(RenderPass& pass);
-
+		void ShadowMapPass(RenderPass& pass);
 		//Compute Executions
 		void ComputeSceneDrawPass(RenderPass& pass);
 
@@ -90,6 +91,7 @@ namespace Renderer3D
 		void OnResize(uint32_t width, uint32_t height);
 
 		RHI::Texture::Ref GetOutputTexture()const;
+		FrameGraph::Ref GetFrameGraph()const;
 
 	private:
 		std::vector<DrawCommand> drawCommandCache;

@@ -1,5 +1,5 @@
-local width = frame_width()
-local height = frame_height()
+local width = 800
+local height = 800
 
 local clusterCountX = (width + tile_size - 1) // tile_size
 local clusterCountY = (height + tile_size - 1) // tile_size
@@ -192,15 +192,18 @@ local wire_frame_pass = RenderPass.new()
 	wire_frame_pass:execute(wireframe_pass_function)
 --add_pass(wire_frame_pass)
 
-local shadow_pass = RenderPass.new()
-	shadow_pass:set_name("ShadowPass")
-	shadow_pass:set_type(render_pass_type.graphics)
-	shadow_pass:set_viewport(width,height)
+local shadow_map_pass = RenderPass.new()
+	shadow_map_pass:set_name("ShadowMapPass")
+	shadow_map_pass:set_type(render_pass_type.graphics)
+	shadow_map_pass:set_viewport(width,height)
+
+	--Input Resources
+	shadow_map_pass:create_input_buffer("ShadowMapPassCBuffer", 256, 256, buffer_usage.constant, true, buffer_usage.constant)
 
 	--Output Resources
 
-	shadow_pass:execute(shadow_pass_function)
-add_pass(shadow_pass)
+	shadow_map_pass:execute(shadow_map_pass_function)
+add_pass(shadow_map_pass)
 
 local lighting_pass = RenderPass.new()
 	lighting_pass:set_name("LightingPass")

@@ -5,30 +5,51 @@
 
 namespace Wiley {
 
+    void LightComponentSystem::Execute(void* data) {
+        LightComponent* light = (LightComponent*)data;
+        switch (light->type) {
+            case LightType::Directional:
+            {
+                ComputeDirectionalLightViewProjections(light);
+                break;
+            }
+            case LightType::Point:
+            {
+                ComputePointLightViewProjections(light);
+                break;
+            }
+            case LightType::Spot:
+            {
+                ComputeSpotLightViewProjection(light);
+                break;
+            }
+        }
+    }
+
 	void LightComponentSystem::OnUpdate(float dt)
 	{
+        const auto smm = scene->GetShadowMapManager();
+        auto dirtyComps = smm->GetDirtyEntities();
+
+        for (int i = 0; i < dirtyComps.size(); i++) {
+            Entity entity = Entity(dirtyComps.front(), scene);;
+            auto& light = entity.GetComponent<LightComponent>();
+
+            Execute(&light);
+            dirtyComps.pop();
+        }
+
+        
+        if (!smm->IsAllLightEntitiesDirty())
+            return;
+
+        //Update all.
 		for (auto& entt : scene->GetComponentView<LightComponent>())
 		{
 			Entity entity(entt, scene);
 			auto& light = entity.GetComponent<LightComponent>();
 
-			switch (light.type) {
-				case LightType::Directional:
-				{
-                    ComputeDirectionalLightViewProjections(&light);
-					break;
-				}
-				case LightType::Point:
-				{
-					ComputePointLightViewProjections(&light);
-					break;
-				}
-				case LightType::Spot:
-				{
-                    ComputeSpotLightViewProjection(&light);
-					break;
-				}
-			}
+            Execute(&light);
 		}
 
 	}

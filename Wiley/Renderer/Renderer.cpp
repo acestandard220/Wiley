@@ -88,6 +88,9 @@ namespace Renderer3D
 
 		rctx->GetGraphicsFence(graphicsRingIndex)->BlockGPU(rctx->GetCommandQueue().get());
 
+		if (width == 0 || height == 0) {
+			return;
+		}
 
 		{
 			uint32_t _width, _height;
@@ -108,6 +111,11 @@ namespace Renderer3D
 	RHI::Texture::Ref Renderer::GetOutputTexture() const
 	{
 		return outputTexture;
+	}
+
+	FrameGraph::Ref Renderer::GetFrameGraph() const
+	{
+		return frameGraph;
 	}
 
 	void Renderer3D::Renderer::NewFrame(Wiley::Scene::Ref scene) {
@@ -166,6 +174,15 @@ namespace Renderer3D
 	void Renderer::RenderToWindowDirect()
 	{
 		rctx->Present(false);
+	}
+
+	void Renderer::DrawCommands(RHI::CommandList::Ref commandList)
+	{
+		for (int i = 0; i < drawCommandCache.size(); i++) {
+			const DrawCommand& drawCmd = drawCommandCache[i];
+			commandList->DrawInstancedIndexed(drawCmd.indexCount, drawCmd.instanceCount,
+				drawCmd.indexStartLocation, drawCmd.vertexStartLocation, drawCmd.instanceStartIndex);
+		}
 	}
 
 

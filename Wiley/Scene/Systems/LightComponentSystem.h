@@ -13,6 +13,7 @@ namespace Wiley {
 		}
 		virtual void OnUpdate(float dt)override;
 	private:
+		void Execute(void* data);
 		void ComputeDirectionalLightViewProjections(void* lightComponent);
 		void ComputePointLightViewProjections(void* lightComponent);
 		void ComputeSpotLightViewProjection(void* lightComponent);

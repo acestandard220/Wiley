@@ -2,6 +2,8 @@
 #include "Device.h"
 #include "DescriptorHeap.h"
 
+#include <array>
+
 namespace RHI
 {
 	enum class TextureFormat
@@ -105,6 +107,8 @@ namespace RHI
 		const DescriptorHeap::Descriptor& GetSRV()const { return srv; }
 		const DescriptorHeap::Descriptor& GetUAVDescriptor()const { return uav; }
 
+		const DescriptorHeap::Descriptor& GetDepthMapDSV(uint32_t index)const;
+
 		//DescriptorHeap::Descriptor CreateView(DescriptorHeapType type);
 		
 		//static TextureFormat GetTextureFormat(int nChannel, int bitPerChannel);
@@ -125,6 +129,8 @@ namespace RHI
 		DescriptorHeap::Descriptor dsv;
 		DescriptorHeap::Descriptor srv;
 		DescriptorHeap::Descriptor uav;
+
+		std::array<DescriptorHeap::Descriptor, 6> shadowMapDSV;
 
 		Device::Ref _device;
 		ComPtr<ID3D12Resource> resource;

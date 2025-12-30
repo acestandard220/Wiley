@@ -59,7 +59,7 @@ namespace Renderer3D
 
 		state.set_function("geometry_pass_function", &Renderer::GeometryPass, this);
 		state.set_function("wireframe_pass_function", &Renderer::WireframePass, this);
-		state.set_function("shadow_pass_function", &Renderer::ShadowPass, this);
+		state.set_function("shadow_map_pass_function", &Renderer::ShadowMapPass, this);
 		state.set_function("present_pass_function", &Renderer::PresentPass, this);
 		state.set_function("scene_copy_pass_function", &Renderer::SceneCopyPass, this);
 		state.set_function("compute_scene_draw_pass_function", &Renderer::ComputeSceneDrawPass, this);

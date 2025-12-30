@@ -124,7 +124,13 @@ namespace Wiley {
 
         ImGui::Begin("WindowIMGuiDemo");
         ImGui::ColorEdit3("ColorV", color);
-        ImGui::Text("FPS %.3f", io.Framerate);
+        ImGui::Text("FPS %.3f", io.Framerate);  
+
+        ////auto resource = renderer->GetFrameGraph()->GetResource("ShadowDepthMap");
+        //const auto resource = scene->GetShadowMapManager()->GetDepthMap(0);
+        //const auto& desc = resource->GetSRV();
+        //ImGui::Image(desc.gpuHandle.ptr, ImVec2(300, 300));
+
         ImGui::End();
 
         EndDockspace();

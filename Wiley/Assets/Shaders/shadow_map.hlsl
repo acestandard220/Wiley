@@ -1,12 +1,8 @@
-cbuffer ConstantBuffer : register(b1)
+cbuffer ConstantBuffer : register(b0)
 {
     float4x4 vp;
-    float pad[48];
-}
-
-cbuffer ExecuteID : register(b0)
-{
-    uint drawID;
+    uint arrayIndex;
+    float pad[47];
 }
 
 struct VertexInput
