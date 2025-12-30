@@ -57,9 +57,17 @@ namespace Wiley
 			0.0, 100.0f, 0.0
 		};*/
 
-		auto testD = AddLight("TestDirLight", LightType::Directional);
+		/*auto testD = AddLight("TestDirLight", LightType::Directional);
 		testD.GetComponent<LightComponent>().position = {
 			0.0, 0.0, 1.0
+		};*/
+
+		auto testS = AddLight("TestSpotLight", LightType::Spot);
+		testS.GetComponent<LightComponent>().position = {
+			0.0f, 100.0f, 0.0f
+		};
+		testS.GetComponent<LightComponent>().spotDirection = {
+			0.0f,0.0f,1.0f
 		};
 
 		/*ResourceLoadDesc loadDesc{};
