@@ -28,7 +28,7 @@ namespace RHI
             gfxCommandList[i] = CommandList::CreateCommandList(device, CommandListType::CommandListDirect, "Graphics_Command_List_" + std::to_string(i));
             gfxFence[i] = Fence::CreateFence(device, "Graphics_Fence_" + std::to_string(i));
             copyFence[i] = Fence::CreateFence(device,"Copy_Fence_" + std::to_string(i));
-        }
+        } 
 
         copyCommandList = CommandList::CreateCommandList(device, CommandListType::CommandListCopy, "Copy_Command_List");
         computeCommandList = CommandList::CreateCommandList(device, CommandListType::CommandListCompute, "Compute_Command_List");
@@ -39,7 +39,7 @@ namespace RHI
         dynamicResourceFence = Fence::CreateFence(device, "DynamicResourceFence");
         dynamicResourceGfxFence = Fence::CreateFence(device, "DynamicResourceGfxFence");
 
-        linearSampler = CreateSampler(SamplerAddress::Wrap, SamplerFilter::Linear);
+        linearSampler = CreateSampler(SamplerAddress::Wrap, SamplerFilter::Linear, RHI::SamplerComparisonFunc::Never, 1);
 
         {
             RHI::ShaderByteCode computeByteCode = RHI::ShaderCompiler::CompileShader(RHI::ShaderType::Compute,
@@ -353,9 +353,9 @@ namespace RHI
         return std::make_shared<RootSignature>(device, specs, name); 
     }
 
-    Sampler::Ref RenderContext::CreateSampler(SamplerAddress address, SamplerFilter filter)
+    Sampler::Ref RenderContext::CreateSampler(SamplerAddress address, SamplerFilter filter, SamplerComparisonFunc compFunc, float maxAni)
     {
-        return std::make_shared<Sampler>(device, address, filter, heaps);
+        return std::make_shared<Sampler>(device, address, filter, compFunc, maxAni, heaps);
     }
 
     WILEY_NODISCARD CubeMap::Ref RenderContext::CreateCubeMap(uint32_t width, uint32_t height, TextureFormat formate, const std::string& name) {

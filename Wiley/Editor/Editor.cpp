@@ -65,7 +65,7 @@ namespace Wiley {
 
 
         {
-            //panels.emplace_back(std::make_unique<Viewport>(this));
+            panels.emplace_back(std::make_unique<Viewport>(this));
 
             panels.emplace_back(std::make_unique<Inspector>(this));
             panels.emplace_back(std::make_unique<Hierarchy>(this));

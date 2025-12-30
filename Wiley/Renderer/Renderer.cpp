@@ -44,10 +44,11 @@ namespace Renderer3D
 		cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::UAVRange, 4, 1, 1 });
 		computePso = RHI::ComputePipeline::CreateComputePipeline(rctx->GetDevice(), cSpecs,"ComputePipelineTest");
 
-		sampler = rctx->CreateSampler(RHI::SamplerAddress::Clamp, RHI::SamplerFilter::Linear);
-		postProcessSampler = rctx->CreateSampler(RHI::SamplerAddress::Clamp, RHI::SamplerFilter::Linear);
-		gBufferReadSampler = rctx->CreateSampler(RHI::SamplerAddress::Clamp, RHI::SamplerFilter::Point);
-		pbrSampler = rctx->CreateSampler(RHI::SamplerAddress::Wrap, RHI::SamplerFilter::Linear);
+		sampler = rctx->CreateSampler(RHI::SamplerAddress::Clamp, RHI::SamplerFilter::Linear, RHI::SamplerComparisonFunc::Never, 1.0f);
+		postProcessSampler = rctx->CreateSampler(RHI::SamplerAddress::Clamp, RHI::SamplerFilter::Linear, RHI::SamplerComparisonFunc::Never, 1.0f);
+		gBufferReadSampler = rctx->CreateSampler(RHI::SamplerAddress::Clamp, RHI::SamplerFilter::Point, RHI::SamplerComparisonFunc::Never, 1.0f);
+		pbrSampler = rctx->CreateSampler(RHI::SamplerAddress::Wrap, RHI::SamplerFilter::Anisotropy, RHI::SamplerComparisonFunc::Never, 16.0f);
+		depthSampler = rctx->CreateSampler(RHI::SamplerAddress::Boarder, RHI::SamplerFilter::ComparisonLinear, RHI::SamplerComparisonFunc::LessEqual, 1.0f);
 
 		const auto& heaps = rctx->GetDescriptorHeaps();
 

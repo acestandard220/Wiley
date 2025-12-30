@@ -20,7 +20,14 @@ namespace RHI
 		Linear = D3D12_FILTER_MIN_MAG_MIP_LINEAR,
 		Anisotropy = D3D12_FILTER_ANISOTROPIC,
 
-		ComparisonLinear = D3D12_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR
+		ComparisonLinear = D3D12_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT
+	};
+
+	enum class SamplerComparisonFunc {
+		Never = D3D12_COMPARISON_FUNC_NEVER,
+		LessEqual = D3D12_COMPARISON_FUNC_LESS_EQUAL,
+		Less = D3D12_COMPARISON_FUNC_LESS,
+		Equal = D3D12_COMPARISON_FUNC_EQUAL
 	};
 
 	class Sampler
@@ -28,7 +35,7 @@ namespace RHI
 	public:
 		using Ref = std::shared_ptr<Sampler>;
 
-		Sampler(Device::Ref device, SamplerAddress address, SamplerFilter filter, DescriptorHeap::Heap& heap);
+		Sampler(Device::Ref device, SamplerAddress address, SamplerFilter filter, SamplerComparisonFunc compFunc, float maxAni, DescriptorHeap::Heap& heap);
 		~Sampler();
 
 		DescriptorHeap::Descriptor GetDescriptor()const { return descriptor; }

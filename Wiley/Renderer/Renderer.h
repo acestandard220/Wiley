@@ -106,6 +106,7 @@ namespace Renderer3D
 		RHI::Sampler::Ref postProcessSampler;
 		RHI::Sampler::Ref pbrSampler;
 		RHI::Sampler::Ref gBufferReadSampler;
+		RHI::Sampler::Ref depthSampler;
 
 
 		RHI::Texture::Ref  shaderTexture;

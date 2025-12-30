@@ -59,7 +59,7 @@ namespace RHI
 
 		WILEY_NODISCARD GraphicsPipeline::Ref CreateGraphicsPipeline(GraphicsPipelineSpecs specs);
 		WILEY_NODISCARD RootSignature::Ref CreateRootSignature(RootSignatureSpecs specs, const std::string& name = "Root_Signature");
-		WILEY_NODISCARD Sampler::Ref CreateSampler(SamplerAddress address, SamplerFilter filter);
+		WILEY_NODISCARD Sampler::Ref CreateSampler(SamplerAddress address, SamplerFilter filter, SamplerComparisonFunc compFunc, float maxAni);
 
 		WILEY_NODISCARD CubeMap::Ref CreateCubeMap(uint32_t width, uint32_t height,TextureFormat formate,const std::string& name = "CubeMap");
 
