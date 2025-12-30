@@ -5,6 +5,8 @@
 
 #include <entt.hpp>
 
+#include <string>
+
 namespace Renderer3D
 {
 	struct ShadowMapData {
@@ -30,7 +32,7 @@ namespace Renderer3D
 			ShadowMapManager(RHI::RenderContext::Ref rctx);
 			~ShadowMapManager();
 
-			WILEY_NODISCARD ShadowMapData AllocateTexture(Wiley::LightType type, ShadowMapSize mapSize = ShadowMapSize::ShadowMapSize_1024);
+			WILEY_NODISCARD ShadowMapData AllocateTexture(Wiley::LightType type, ShadowMapSize mapSize = ShadowMapSize::ShadowMapSize_1024, const std::string& name = "ShadowMapTexture");
 			void DeallocateTexture(ShadowMapData index,Wiley::LightType type);
 
 			void MakeLightEntityDirty(entt::entity entity);

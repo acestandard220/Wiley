@@ -95,7 +95,7 @@ namespace Wiley {
 
 		int i = 0;
 		for (const auto& vp : shadowVPs) {
-			DirectX::XMStoreFloat4x4(matrixDataHead + i, vp);
+            DirectX::XMStoreFloat4x4(matrixDataHead + i, DirectX::XMMatrixTranspose(vp));
 			i++;
 		}
 	}
@@ -189,7 +189,7 @@ namespace Wiley {
         DirectX::XMFLOAT4X4* matrixDataHead = scene->GetShadowMapManager()->GetLightProjection(light->matrixIndex);
         for (int i = 0; i < numCascades; i++)
         {
-            DirectX::XMStoreFloat4x4(matrixDataHead + i, shadowVPs[i]);
+            DirectX::XMStoreFloat4x4(matrixDataHead + i, DirectX::XMMatrixTranspose(shadowVPs[i]));
         }
     }
 
@@ -219,6 +219,6 @@ namespace Wiley {
         XMMATRIX shadowVP = view * proj;
 
         DirectX::XMFLOAT4X4* matrixDataHead = scene->GetShadowMapManager()->GetLightProjection(light->matrixIndex);
-        DirectX::XMStoreFloat4x4(matrixDataHead, shadowVP);
+        DirectX::XMStoreFloat4x4(matrixDataHead, DirectX::XMMatrixTranspose(shadowVP));
     }
 }

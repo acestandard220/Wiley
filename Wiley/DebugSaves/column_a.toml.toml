@@ -1,6 +1,6 @@
 Name = 'column_a.toml'
 Type = 'Material'
-UUID = 'be995891-dfae-49df-a5df-159a456fdd88'
+UUID = '0a94861c-905d-47a8-a32d-034e8c530660'
 
 ['dependencies.path']
 Albedo = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_column_a_diff.tga'
@@ -10,11 +10,11 @@ Normal = 'P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/textures/sponza_col
 Roughness = 'P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/default_roughness.png'
 
 ['dependencies.uuid']
-Albedo = '06151d44-698d-4988-869d-cb4d66d5ed84'
-AmbientOcclusion = 'e017429a-4f3d-484f-80e6-db3b467423cf'
-Metallic = '917023cc-8912-406f-b4dd-b9f98b81e821'
-Normal = '0c778623-af78-4970-96a2-b5b16818a688'
-Roughness = 'ae673f67-7b5e-4fb4-88a7-9c90a9f42169'
+Albedo = '7c02e75b-1384-41c7-a4e7-c12b860afda1'
+AmbientOcclusion = '9218116a-a526-48d9-9218-b36f869068c6'
+Metallic = 'ef1e4911-ac09-408d-9fe2-dd5d255caa40'
+Normal = '5c50224d-bcfe-47fc-b959-ee741fa3f069'
+Roughness = 'd6ef4333-62e5-49d4-a3e1-62d1dc36bcaf'
 
 ['properties.albedo']
 value = [ 1.0, 1.0, 1.0, 1.0 ]

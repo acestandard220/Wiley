@@ -8,3 +8,6 @@
 void SetBlenderTheme();
 
 void ThemeTest();
+
+
+void SetD5RendererStyle();

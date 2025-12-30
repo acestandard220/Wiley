@@ -166,6 +166,8 @@ namespace RHI
 			_d3dDevice->CreateDepthStencilView(resource.Get(), &dsvDesc, shadowMapDSV[i].cpuHandle);
 		}
 
+		WILEY_NAME_D3D12_OBJECT(resource, name);
+
 	}
 
 
@@ -434,12 +436,8 @@ namespace RHI
 	void Texture::SetName(const std::string name)
 	{
 #ifdef _DEBUG
-
-		wchar_t lName[256];
-		swprintf_s(lName, 256, L"%hs", name.c_str());
-		resource->SetName(lName);
-
-#endif // _DEBUG
+		WILEY_NAME_D3D12_OBJECT(resource, name);
+#endif
 	}
 
 	TextureFormat Texture::GetTextureFormat(int bitPerChannel)

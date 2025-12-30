@@ -574,9 +574,7 @@ namespace Wiley {
                 material->Get(AI_MATKEY_BUMPSCALING, mtlData->normal.strength);
 
                 meshData.loadMaterials.push_back(newMtlUUID);
-                std::string saveTo = "DebugSaves/" + mtl->GetName() + ".toml";
-                resourceCache->materialLoader->SaveToFile(saveTo, mtl);
-           }
+           } 
 
             SubMesh subMesh{};
             subMesh.index = meshData.subMeshes.size();

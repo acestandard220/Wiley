@@ -26,9 +26,10 @@ namespace Renderer3D {
 		depthMaps.fill(nullptr);
 	}
 
-	ShadowMapData ShadowMapManager::AllocateTexture(Wiley::LightType type, ShadowMapSize mapSize)
+	ShadowMapData ShadowMapManager::AllocateTexture(Wiley::LightType type, ShadowMapSize mapSize, const std::string& name)
 	{
 		uint32_t index;
+		const std::string mapName = name + "_ShadowMap";
 
 		if (mapfreelist.size()) {
 			index = mapfreelist.front();
@@ -42,6 +43,9 @@ namespace Renderer3D {
 			if (oldWidth != mapSize || oldHeight != mapSize) {
 				depthMap->Resize(mapSize, mapSize);
 			}
+
+			
+			depthMap->SetName(mapName);
 
 			uint32_t srvIndex = AllocateSRV(type);
 			BuildSRV(type, srvIndex, depthMap);	
@@ -61,7 +65,7 @@ namespace Renderer3D {
 
 		index = mapPtr++;
 		RHI::Texture::Ref &depthMap = depthMaps[index];
-		depthMap = std::make_shared<RHI::Texture>(rctx->GetDevice(), mapSize, mapSize, rctx->GetDescriptorHeaps(), "ShadowDepthMap");
+		depthMap = std::make_shared<RHI::Texture>(rctx->GetDevice(), mapSize, mapSize, rctx->GetDescriptorHeaps(), mapName);
 		
 		uint32_t srvIndex = AllocateSRV(type);
 		BuildSRV(type, srvIndex, depthMap);

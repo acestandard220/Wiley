@@ -54,7 +54,7 @@ namespace Wiley
 
 		auto testP = AddLight("TestPointLight", LightType::Point);
 		testP.GetComponent<LightComponent>().position = {
-			3.0, 3.0f, 0.0
+			0.0, 100.0f, 0.0
 		};
 
 		/*auto testD = AddLight("TestDirLight", LightType::Directional);
@@ -236,10 +236,10 @@ namespace Wiley
 		lightComponent.position = { 0.0f,3.0f,1.0f };
 		lightComponent.spotDirection = { 0.0f,-1.0f,0.0f };
 		lightComponent.type = type;
-		lightComponent.intensity = 1.0f;
+		lightComponent.intensity = 10000.0f;
 
 		//Allocate Resource for shadow map
-		const auto shadowMapData = shadowMapManager->AllocateTexture(type);
+		const auto shadowMapData = shadowMapManager->AllocateTexture(type, Renderer3D::ShadowMapSize_1024, name);
 		lightComponent.depthMapIndex = shadowMapData.textureIndex;
 		lightComponent.depthMapSrvIndex = shadowMapData.srvOffset;
 		lightComponent.matrixIndex = shadowMapData.vp;

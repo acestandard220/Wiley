@@ -57,6 +57,8 @@ namespace Wiley {
 
             SetBlenderTheme();
 
+            //SetD5RendererStyle();
+
             ImGui::GetStyle().Colors[ImGuiCol_TitleBgActive] = ImGui::GetStyle().Colors[ImGuiCol_TitleBg];
 
         }
