@@ -65,7 +65,9 @@ namespace Renderer3D
 		void NewFrame(Wiley::Scene::Ref scene);
 		void EndFrame();
 		void RenderToWindowDirect();
-		void DrawCommands(RHI::CommandList::Ref);
+
+		void DrawCommands(RHI::CommandList::Ref commandList);
+		void DrawCommandsWithIndex(RHI::CommandList::Ref commandList);
 
 		//Render Pass Execution Functions
 		void WireframePass(RenderPass& pass);

@@ -69,13 +69,7 @@ namespace Renderer3D {
 		{
 			ZoneScopedN("DepthPrepassDrawCmdExec.");
 
-			for (int i = 0; i < drawCommandCache.size(); i++) {
-				const DrawCommand& drawCmd = drawCommandCache[i];
-
-				commandList->PushConstant(&drawCmd.drawID, 4, 0);
-				commandList->DrawInstancedIndexed(drawCmd.indexCount, drawCmd.instanceCount,
-					drawCmd.indexStartLocation, drawCmd.vertexStartLocation, drawCmd.instanceStartIndex);
-			}
+			DrawCommandsWithIndex(commandList);
 		}
 
 		{
