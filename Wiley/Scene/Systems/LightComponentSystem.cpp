@@ -111,9 +111,18 @@ namespace Wiley {
         const auto cameraFar = camera->GetFar();
 
         const int numCascades = 4;
-        const float cascadeSplits[5] = { cameraNear, 10.0f, 30.0f, 60.0f, cameraFar }; // Adjust splits as needed
+        float cascadeSplits[5];
 
-        WILEY_DEBUGBREAK; //Fix cascade splits...
+        float lambda = 0.75f; // 0 = linear, 1 = logarithmic
+        cascadeSplits[0] = cameraNear;
+        cascadeSplits[numCascades] = cameraFar;
+
+        for (int i = 1; i < numCascades; i++) {
+            float p = (float)i / numCascades;
+            float logSplit = cameraNear * pow(cameraFar / cameraNear, p);
+            float linearSplit = cameraNear + (cameraFar - cameraNear) * p;
+            cascadeSplits[i] = lambda * logSplit + (1.0f - lambda) * linearSplit;
+        }
 
         XMVECTOR lightDir = XMLoadFloat3(&light->position);
         lightDir = XMVector3Normalize(lightDir);
@@ -132,6 +141,7 @@ namespace Wiley {
                 XMVectorSet(1.0f, -1.0f, 0.0f, 1.0f),
                 XMVectorSet(-1.0f,  1.0f, 0.0f, 1.0f),
                 XMVectorSet(1.0f,  1.0f, 0.0f, 1.0f),
+
                 XMVectorSet(-1.0f, -1.0f, 1.0f, 1.0f), // far
                 XMVectorSet(1.0f, -1.0f, 1.0f, 1.0f),
                 XMVectorSet(-1.0f,  1.0f, 1.0f, 1.0f),
@@ -140,7 +150,7 @@ namespace Wiley {
 
             for (int i = 0; i < 8; i++)
             {
-                XMVECTOR corner = XMVector4Transform(frustumCorners[i], invCameraViewProj);
+                XMVECTOR corner = XMVector4Transform(frustumCorners[i], DirectX::XMMatrixTranspose(invCameraViewProj));
                 frustumCorners[i] = corner / XMVectorGetW(corner);
             }
 

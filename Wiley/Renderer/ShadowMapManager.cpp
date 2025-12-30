@@ -114,6 +114,11 @@ namespace Renderer3D {
 		dirtyLightEntities.push(entity);
 	}
 
+	void ShadowMapManager::ClearnDirtyQueue()
+	{
+		Queue<entt::entity>().swap(dirtyLightEntities);
+	}
+
 	void ShadowMapManager::MakeAllLightEntityDirty()
 	{
 		isAllLightEntitiesDirty = true;

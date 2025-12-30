@@ -81,7 +81,6 @@ namespace Wiley {
 	};
 
 	struct LightComponent {
-		
 		LightType type = LightType::Directional;
 
 		//Base Parameters

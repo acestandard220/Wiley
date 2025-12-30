@@ -108,8 +108,10 @@ namespace Renderer3D {
 			Wiley::Entity lightEntt = Wiley::Entity(entities.front(), _scene.get());
 			const auto& light = lightEntt.GetComponent<Wiley::LightComponent>();
 			Execute(commandList, light, this, shadowMapManager);
-			entities.pop();
 		}
+
+		shadowMapManager->ClearnDirtyQueue();
+		
 
 		if (shadowMapManager->IsAllLightEntitiesDirty())
 		{

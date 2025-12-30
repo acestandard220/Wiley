@@ -36,6 +36,8 @@ namespace Renderer3D
 			void DeallocateTexture(ShadowMapData index,Wiley::LightType type);
 
 			void MakeLightEntityDirty(entt::entity entity);
+			void ClearnDirtyQueue();
+
 			void MakeAllLightEntityDirty();
 			void MakeAllLightClean();
 

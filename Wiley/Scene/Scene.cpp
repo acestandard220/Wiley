@@ -52,15 +52,15 @@ namespace Wiley
 			gResource = resourceCache->LoadResource<EnvironmentMap>("EM.toml", loadDesc);
 		}
 
-		auto testP = AddLight("TestPointLight", LightType::Point);
+		/*auto testP = AddLight("TestPointLight", LightType::Point);
 		testP.GetComponent<LightComponent>().position = {
 			0.0, 100.0f, 0.0
-		};
-
-		/*auto testD = AddLight("TestDirLight", LightType::Directional);
-		testD.GetComponent<LightComponent>().position = {
-			1.0,-1.0,0.0
 		};*/
+
+		auto testD = AddLight("TestDirLight", LightType::Directional);
+		testD.GetComponent<LightComponent>().position = {
+			0.0, 0.0, 1.0
+		};
 
 		/*ResourceLoadDesc loadDesc{};
 		loadDesc.extension = FileExtension::OBJ;

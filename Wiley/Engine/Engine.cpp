@@ -56,7 +56,7 @@ namespace Wiley {
 		renderer->RenderFrame();
 
 		//Crashes RenderDoc and PIX on launch
-		//editor->Run();
+		editor->Run();
 
 		renderer->EndFrame();
 		renderer->RenderToWindowDirect();
