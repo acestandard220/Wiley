@@ -25,7 +25,7 @@ namespace Wiley
 			std::string enttName = entt.GetTag().data() + std::string("##") + std::to_string(i);
 
 			bool selected = (i == selectedIndex) ? true : false;
-			if (ImGui::Selectable(enttName.c_str(), &selected))
+			if (ImGui::Selectable(enttName.c_str(), &selected) || selected)
 			{
 				editor->MakeEditorSelection(i, entt.GetUUID(), &entt);
 				selectedIndex = i;

@@ -202,25 +202,21 @@ SamplerState depthSampler : register(s5, space5);
 
 float ComputePointLightShadow(Light light, float3 worldPos)
 {    
-    // Vector from light to fragment
     float3 lightToFrag = worldPos - light.position;
     
-    // Current distance from light
     float currentDepth = length(lightToFrag);
     
-    // Sample the cubemap in the direction of the fragment
     float closestDepth = pointlightDepthMaps.Sample(depthSampler, float4(lightToFrag, light.srvIndex)).r;
     closestDepth *= 10000.0f;
-    // Bias to prevent shadow acne
+
     float bias = 0.05f;
     
-    // Compare depths
     float shadow = (currentDepth - bias) > closestDepth ? 0.0f : 1.0f;
     
     float3 sampleOffsetDirections[20] =
     {
         float3(1, 1, 1), float3(1, -1, 1), float3(-1, -1, 1), float3(-1, 1, 1),
-        float3(1, 1, -1), float3(1, -1, -1), float3(-1, -1, -1), float3(-1, 1, -1),
+        float3(1, 1,-1), float3(1, -1, -1), float3(-1, -1, -1), float3(-1, 1, -1),
         float3(1, 1, 0), float3(1, -1, 0), float3(-1, -1, 0), float3(-1, 1, 0),
         float3(1, 0, 1), float3(-1, 0, 1), float3(1, 0, -1), float3(-1, 0, -1),
         float3(0, 1, 1), float3(0, -1, 1), float3(0, -1, -1), float3(0, 1, -1)

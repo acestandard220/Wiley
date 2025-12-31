@@ -95,9 +95,9 @@ namespace Wiley
 					smm->MakeLightEntityDirty(static_cast<entt::entity>(entt));
 			}
 			
-			ImGui::Separator(); 
 
 			if (light.type == LightType::Spot) {
+				ImGui::Separator(); 
 				const static float _bias = 0.05f;
 				
 				const float orMin = light.innerRadius + _bias;
@@ -115,6 +115,9 @@ namespace Wiley
 						smm->MakeLightEntityDirty(static_cast<entt::entity>(entt));
 				}
 			}
+
+			ImGui::Separator(); 
+			
 		});
 
 

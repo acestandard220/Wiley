@@ -236,7 +236,7 @@ namespace Wiley
 		lightComponent.intensity = 10000.0f;
 
 		//Allocate Resource for shadow map
-		const auto shadowMapData = shadowMapManager->AllocateTexture(type, Renderer3D::ShadowMapSize_1024, name);
+		const auto shadowMapData = shadowMapManager->AllocateTexture(type, Renderer3D::ShadowMapSize_4096, name);
 		lightComponent.depthMapIndex = shadowMapData.textureIndex;
 		lightComponent.depthMapSrvIndex = shadowMapData.srvOffset;
 		lightComponent.matrixIndex = shadowMapData.vp;

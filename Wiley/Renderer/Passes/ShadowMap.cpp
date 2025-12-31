@@ -38,7 +38,7 @@ namespace Renderer3D {
 				uint32_t _pad2;
 			}pConstants;
 
-			pConstants.farPlane = camera->GetFar();
+			pConstants.farPlane = light.intensity;
 			pConstants.vpIndex = light.matrixIndex + f;
 			pConstants.lightPosition = light.position;
 
