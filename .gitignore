@@ -366,3 +366,9 @@ FodyWeavers.xsd
 *.mtl
 
 Wiley/DebugSaves
+/Wiley/Assets/Models/Ferrari
+/Wiley/Assets/Models/Jaleel
+/Wiley/Assets/Models/modern_apartment/textures
+/Wiley/Assets/Models/modern_apartment/license.txt
+/Wiley/Assets/Models/modern_apartment/scene.bin
+/Wiley/Assets/Models/modern_apartment/scene.gltf
