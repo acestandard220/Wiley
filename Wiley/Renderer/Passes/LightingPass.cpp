@@ -65,6 +65,12 @@ namespace Renderer3D {
 			commandList->PushConstant(&cp, sizeof(ConstantPush), 6);
 			commandList->BindShaderResource(lightCompBuffer->GetSRV(), 7);
 
+			const auto smm = _scene->GetShadowMapManager();
+			commandList->BindShaderResource(smm->GetCubeSRVHead(), 8);
+			commandList->BindShaderResource(smm->GetArraySRVHead(), 9);
+
+			commandList->BindShaderResource(postProcessSampler->GetDescriptor(), 11);
+
 		}
 		
 		{

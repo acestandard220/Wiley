@@ -231,7 +231,7 @@ namespace Renderer3D {
 			gfxPsoCache[RenderPassSemantic::Wireframe] = rctx->CreateGraphicsPipeline(specs);
 		}
 
-		//Shadow Pass PSO
+		//Point Shadow Pass PSO
 		{
 			RHI::ShaderByteCode vertexByteCode = RHI::ShaderCompiler::CompileShader(RHI::ShaderType::Vertex,
 				L"P:/Projects/VS/Wiley/Wiley/Assets/Shaders/shadow_map.hlsl", L"VSmain", nullptr);
@@ -252,12 +252,20 @@ namespace Renderer3D {
 			specs.frontFace = RHI::FrontFace::CounterClockWise;
 			specs.cullMode = RHI::CullMode::None;
 
-			specs.nRenderTarget = 0;
+			specs.nRenderTarget = 1;
+			specs.textureFormats[0] = RHI::TextureFormat::R32;
 
-			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::Constant, 0, 16 });
+			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::Constant, 0, 8,0, RHI::ShaderVisibility::Vertex });
+
+			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 0, 1, 1, RHI::ShaderVisibility::Vertex});
+			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 1, 1, 1, RHI::ShaderVisibility::Vertex});
+			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 2, 1, 1, RHI::ShaderVisibility::Vertex});
+			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 3, 1, 1, RHI::ShaderVisibility::Vertex});
+
+			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 0, 1, 2, RHI::ShaderVisibility::Vertex });
 
 			specs.byteCodes = shaders;
-			gfxPsoCache[RenderPassSemantic::ShadowMapPass] = rctx->CreateGraphicsPipeline(specs);
+			gfxPsoCache[RenderPassSemantic::PointShadowMapPass] = rctx->CreateGraphicsPipeline(specs);
 		}
 
 		//Skybox Pass
@@ -329,6 +337,11 @@ namespace Renderer3D {
 
 			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::Constant, 0,6,1,RHI::ShaderVisibility::Pixel });
 			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 1,1,1,RHI::ShaderVisibility::Pixel });
+
+			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 2, MAX_LIGHTS,2,RHI::ShaderVisibility::Pixel }); //CubeDepths
+			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 3, MAX_LIGHTS,3,RHI::ShaderVisibility::Pixel }); //ArrayDepths
+			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 4, 1,4,RHI::ShaderVisibility::Pixel }); //LightVPs
+			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::SamplerRange, 5,1,5,RHI::ShaderVisibility::Pixel }); //DepthSamplerNoComp
 
 			specs.byteCodes = shaders;
 			gfxPsoCache[RenderPassSemantic::LightingPass] = rctx->CreateGraphicsPipeline(specs);

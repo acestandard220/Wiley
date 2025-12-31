@@ -106,6 +106,7 @@ float3 ComputeDirectionalLight(Light light, float3 position, float3 N, float3 al
     return Lo;
 }
 
+float ComputePointLightShadow(Light light, float3 worldPos);
 float3 ComputePointLight(Light light, float3 position, float3 N, float3 albedo, float3 arm)
 {
     float ambientOcclustion = arm.x;
@@ -141,6 +142,7 @@ float3 ComputePointLight(Light light, float3 position, float3 N, float3 albedo, 
     float3 diffuse = albedo / PI;
     
     float3 Lo = float3((Kd * diffuse + specular) * NdotL * radiance);
+    Lo *= ComputePointLightShadow(light, position);
     return Lo;
 }
 
@@ -190,4 +192,52 @@ float3 LinearToHDR10(float3 color)
 {
     float3 L = pow(color, 0.1593017578125);
     return pow((0.8359375 + 18.8515625 * L) / (1.0 + 18.6875 * L), 78.84375);
+}
+
+TextureCubeArray pointlightDepthMaps : register(t2, space2);
+Texture2DArray dirSpotLightDepthMaps : register(t3, space3);
+
+StructuredBuffer<float4x4> lightVPs : register(t4, space4);
+SamplerState depthSampler : register(s5, space5);
+
+float ComputePointLightShadow(Light light, float3 worldPos)
+{    
+    // Vector from light to fragment
+    float3 lightToFrag = worldPos - light.position;
+    
+    // Current distance from light
+    float currentDepth = length(lightToFrag);
+    
+    // Sample the cubemap in the direction of the fragment
+    float closestDepth = pointlightDepthMaps.Sample(depthSampler, float4(lightToFrag, light.srvIndex)).r;
+    closestDepth *= 10000.0f;
+    // Bias to prevent shadow acne
+    float bias = 0.05f;
+    
+    // Compare depths
+    float shadow = (currentDepth - bias) > closestDepth ? 0.0f : 1.0f;
+    
+    float3 sampleOffsetDirections[20] =
+    {
+        float3(1, 1, 1), float3(1, -1, 1), float3(-1, -1, 1), float3(-1, 1, 1),
+        float3(1, 1, -1), float3(1, -1, -1), float3(-1, -1, -1), float3(-1, 1, -1),
+        float3(1, 1, 0), float3(1, -1, 0), float3(-1, -1, 0), float3(-1, 1, 0),
+        float3(1, 0, 1), float3(-1, 0, 1), float3(1, 0, -1), float3(-1, 0, -1),
+        float3(0, 1, 1), float3(0, -1, 1), float3(0, -1, -1), float3(0, 1, -1)
+    };
+    
+    shadow = 0.0f;
+    float diskRadius = 0.05f;
+    
+    for (int i = 0; i < 20; ++i)
+    {
+        float3 sampleDir = lightToFrag + sampleOffsetDirections[i] * diskRadius;
+        closestDepth = pointlightDepthMaps.Sample(depthSampler, float4(sampleDir, light.srvIndex)).r;
+        closestDepth *= 10000.0f;
+
+        shadow += (currentDepth - bias) > closestDepth ? 0.0f : 1.0f;
+    }
+    shadow /= 20.0f;
+    
+    return shadow;
 }

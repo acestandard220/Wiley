@@ -198,7 +198,12 @@ local shadow_map_pass = RenderPass.new()
 	shadow_map_pass:set_viewport(width,height)
 
 	--Input Resources
-	shadow_map_pass:create_input_buffer("ShadowMapPassCBuffer", 256, 256, buffer_usage.constant, true, buffer_usage.constant)
+	shadow_map_pass:read_buffer("MeshFilterBuffer", buffer_usage.non_pixel_shader_resource)
+	shadow_map_pass:read_buffer("SubMeshDataBuffer", buffer_usage.non_pixel_shader_resource)
+	shadow_map_pass:read_buffer("MeshInstanceIndexBuffer_PostOcclusion", buffer_usage.read_back)
+	shadow_map_pass:read_buffer("MeshInstanceBaseBuffer", buffer_usage.read_back)
+	shadow_map_pass:create_input_buffer("UploadLightViewProjectionsBuffer", 64 * max_light_count * 6, 64, buffer_usage.copy, false, buffer_usage.copy)
+	shadow_map_pass:create_input_buffer("LightViewProjectionsBuffer", 64 * max_light_count * 6, 64, buffer_usage.shader_resource, false, buffer_usage.shader_resource)
 
 	--Output Resources
 

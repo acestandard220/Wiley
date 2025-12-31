@@ -6,9 +6,21 @@ namespace Renderer3D {
 
 	using namespace Wiley;
 
+	constexpr ShadowMapSize shadowMapSizeArray[5] = {
+		ShadowMapSize_512,ShadowMapSize_1024,
+		ShadowMapSize_2048,ShadowMapSize_4096,
+		ShadowMapSize_8192
+	};
+
 	ShadowMapManager::ShadowMapManager(RHI::RenderContext::Ref rctx)
-		:arrayPtr(0), cubePtr(0), mapPtr(0), rctx(rctx), isAllLightEntitiesDirty(false)
+		:arrayPtr(0), cubePtr(0), mapPtr(0), rctx(rctx), isAllLightEntityDiry(false)
 	{
+		for (auto i = 0; auto& texture : dummyDepthBuffers) {
+			const auto mapSize = shadowMapSizeArray[i++];
+			const std::string dummyDepthTextureName = "DummyDepthTexture" + std::to_string(i);
+			texture = rctx->CreateTexture(RHI::TextureFormat::D32, mapSize, mapSize, RHI::TextureUsage::DepthStencilTarget, dummyDepthTextureName);
+		}
+
 		cubeSrv	 = rctx->AllocateCBV_SRV_UAV(MAX_LIGHTS);
 		arraySrv = rctx->AllocateCBV_SRV_UAV(MAX_LIGHTS);
 
@@ -28,25 +40,18 @@ namespace Renderer3D {
 
 	ShadowMapData ShadowMapManager::AllocateTexture(Wiley::LightType type, ShadowMapSize mapSize, const std::string& name)
 	{
+		using namespace RHI;
 		uint32_t index;
 		const std::string mapName = name + "_ShadowMap";
+		const auto textureUsage = (type == LightType::Point) ? TextureUsage::RenderTarget : TextureUsage::DepthStencilTarget;
 
 		if (mapfreelist.size()) {
 			index = mapfreelist.front();
 			mapfreelist.pop();
 
-			RHI::Texture::Ref depthMap = depthMaps[index];
+			RHI::Texture::Ref& depthMap = depthMaps[index];
+			depthMap = std::make_shared<RHI::Texture>(rctx->GetDevice(), mapSize, mapSize, textureUsage, rctx->GetDescriptorHeaps(), mapName);
 			
-			uint32_t oldWidth = depthMap->GetWidth();
-			uint32_t oldHeight = depthMap->GetHeight();
-			
-			if (oldWidth != mapSize || oldHeight != mapSize) {
-				depthMap->Resize(mapSize, mapSize);
-			}
-
-			
-			depthMap->SetName(mapName);
-
 			uint32_t srvIndex = AllocateSRV(type);
 			BuildSRV(type, srvIndex, depthMap);	
 
@@ -64,8 +69,8 @@ namespace Renderer3D {
 		}
 
 		index = mapPtr++;
-		RHI::Texture::Ref &depthMap = depthMaps[index];
-		depthMap = std::make_shared<RHI::Texture>(rctx->GetDevice(), mapSize, mapSize, rctx->GetDescriptorHeaps(), mapName);
+		Texture::Ref &depthMap = depthMaps[index];
+		depthMap = std::make_shared<Texture>(rctx->GetDevice(), mapSize, mapSize, textureUsage, rctx->GetDescriptorHeaps(), mapName);
 		
 		uint32_t srvIndex = AllocateSRV(type);
 		BuildSRV(type, srvIndex, depthMap);
@@ -114,19 +119,31 @@ namespace Renderer3D {
 		dirtyLightEntities.push(entity);
 	}
 
-	void ShadowMapManager::ClearnDirtyQueue()
+	void ShadowMapManager::MakePointLightDirty(entt::entity entity)
 	{
-		Queue<entt::entity>().swap(dirtyLightEntities);
+		dirtyPointLights.push(entity);
 	}
 
 	void ShadowMapManager::MakeAllLightEntityDirty()
 	{
-		isAllLightEntitiesDirty = true;
+		isAllLightEntityDiry = true;
 	}
 
-	void ShadowMapManager::MakeAllLightClean()
+	void ShadowMapManager::ClearDirtyLightQueue()
 	{
-		isAllLightEntitiesDirty = false;
+		Queue<entt::entity>().swap(dirtyLightEntities);
+	}
+
+	void ShadowMapManager::ClearDirtyPointLightQueue()
+	{
+		Queue<entt::entity>().swap(dirtyPointLights);
+	}
+
+	void ShadowMapManager::CleanAllLightEntity()
+	{
+		isAllLightEntityDiry = false;
+		ClearDirtyPointLightQueue();
+		ClearDirtyLightQueue();
 	}
 
 	RHI::Texture::Ref ShadowMapManager::GetDepthMap(int index) const
@@ -149,9 +166,25 @@ namespace Renderer3D {
 		return *arraySrv.data();
 	}
 
+	WILEY_NODISCARD Span<DirectX::XMFLOAT4X4> ShadowMapManager::GetViewProjectionsHead() const
+	{
+		return Span<DirectX::XMFLOAT4X4>((DirectX::XMFLOAT4X4*)lightViewProjections->GetBasePtr(), MAX_LIGHTS * 6);
+	}
+
 	DirectX::XMFLOAT4X4* ShadowMapManager::GetLightProjection(uint32_t index) const
 	{
 		return lightViewProjections->GetPointerByIndex(index);
+	}
+
+	RHI::Texture::Ref& ShadowMapManager::GetDummyDepthTexture(ShadowMapSize shadowMapSize)
+	{
+		switch (shadowMapSize) {
+			case ShadowMapSize_512: return dummyDepthBuffers[0];
+			case ShadowMapSize_1024:return dummyDepthBuffers[1];
+			case ShadowMapSize_2048:return dummyDepthBuffers[2];
+			case ShadowMapSize_4096:return dummyDepthBuffers[3];
+			case ShadowMapSize_8192:return dummyDepthBuffers[4];
+		}
 	}
 
 	Queue<entt::entity>& ShadowMapManager::GetDirtyEntities()
@@ -159,9 +192,14 @@ namespace Renderer3D {
 		return dirtyLightEntities;
 	}
 
-	bool ShadowMapManager::IsAllLightEntitiesDirty() const
+	Queue<entt::entity>& ShadowMapManager::GetDirtyPointLight()
 	{
-		return isAllLightEntitiesDirty;
+		return dirtyPointLights;
+	}
+
+	bool ShadowMapManager::IsAllLightEntityDirty() const
+	{
+		return isAllLightEntityDiry;
 	}
 
 	/// <summary>

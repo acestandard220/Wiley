@@ -47,38 +47,27 @@ namespace Wiley
 		auto subMeshBase = (SubMeshData*)subMeshData->GetBasePtr();
 
 		{
-			ResourceLoadDesc loadDesc{};
-			loadDesc.extension = FileExtension::TOML;
-			gResource = resourceCache->LoadResource<EnvironmentMap>("EM.toml", loadDesc);
+			ZoneScopedN("Scene->TestLights");
+
+			{
+				auto testP = AddLight("TestPointLight", LightType::Point);
+				auto& comp = testP.GetComponent<LightComponent>();
+				comp.position = { 10.0, 100.0f, 0.0 };
+				comp.color = { 0.0f,0.0f,1.0f };
+			}
+			/*{
+				auto testP2 = AddLight("TestPointLight2", LightType::Point);
+				auto& comp = testP2.GetComponent<LightComponent>();
+				comp.position = { 50.0, 100.0f, 0.0 };
+				comp.color = { 1.0f,0.0f,0.0f };
+			}
+			{
+				auto testP3 = AddLight("TestPointLight3", LightType::Point);
+				auto& comp = testP3.GetComponent<LightComponent>();
+				comp.position = { -50.0, 100.0f, 0.0 };
+				comp.color = { 0.0f,1.0f,0.0f };
+			}*/
 		}
-
-		/*auto testP = AddLight("TestPointLight", LightType::Point);
-		testP.GetComponent<LightComponent>().position = {
-			0.0, 100.0f, 0.0
-		};*/
-
-		/*auto testD = AddLight("TestDirLight", LightType::Directional);
-		testD.GetComponent<LightComponent>().position = {
-			0.0, 0.0, 1.0
-		};*/
-
-		auto testS = AddLight("TestSpotLight", LightType::Spot);
-		testS.GetComponent<LightComponent>().position = {
-			0.0f, 100.0f, 0.0f
-		};
-		testS.GetComponent<LightComponent>().spotDirection = {
-			0.0f,0.0f,1.0f
-		};
-
-		/*ResourceLoadDesc loadDesc{};
-		loadDesc.extension = FileExtension::OBJ;
-		loadDesc.desc.mesh.lodCount = 4;
-		Entity sphere = AddModel("P:/Projects/VS/Wiley/Wiley/Assets/Models/Cylinder.obj", loadDesc);
-		auto& transform = sphere.GetComponent<TransformComponent>();
-		transform.position = {
-			0.0, 10.0f, 1.0
-		};*/
-
 
 		if(0)
 		{
@@ -252,7 +241,10 @@ namespace Wiley
 		lightComponent.depthMapSrvIndex = shadowMapData.srvOffset;
 		lightComponent.matrixIndex = shadowMapData.vp;
 
-		shadowMapManager->MakeLightEntityDirty(static_cast<entt::entity>(entity));
+		if (type != LightType::Point)
+			shadowMapManager->MakeLightEntityDirty(static_cast<entt::entity>(entity));
+		else 
+			shadowMapManager->MakePointLightDirty(static_cast<entt::entity>(entity));
 
 		return entities.back();
 	}

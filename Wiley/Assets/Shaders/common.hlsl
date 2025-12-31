@@ -35,6 +35,75 @@ struct ComputeInput
     uint3 groupID : SV_GroupID;
 };
 
+struct AABB
+{
+    float3 min;
+    float3 max;
+    float3 pos;
+};
+
+struct MeshFilterComponent
+{
+    uint4 mesh;
+
+    AABB aabb;
+    
+    uint subMeshCount;
+    uint subMeshDataOffset;
+    
+    uint __padding;
+};
+
+struct MaterialData
+{
+    struct AlbedoProperty
+    {
+        uint mapIndex;
+        float4 value;
+    } albedo;
+
+    struct NormalProperty
+    {
+        uint mapIndex;
+        float strength;
+    } normal;
+
+    struct AmbientOcclusionProperty
+    {
+        uint mapIndex;
+        float value;
+        uint valueChannel;
+    } ambientOcclusion;
+
+    struct MetallicProperty
+    {
+        uint mapIndex;
+        float value;
+        uint valueChannel;
+    } metallic;
+
+    struct RoughnessProperty
+    {
+        uint mapIndex;
+        float value;
+        uint valueChannel;
+    } roughness;
+
+    float2 mapScale;
+};
+
+struct MeshInstanceBase
+{
+    uint offset;
+    uint size;
+};
+
+struct SubMeshData
+{
+    float4x4 modelMatrix;
+    uint materialID;
+};
+
 
 Plane ComputePlane(float3 p0, float3 p1, float3 p2)
 {

@@ -13,14 +13,14 @@ namespace Wiley {
                 ComputeDirectionalLightViewProjections(light);
                 break;
             }
-            case LightType::Point:
-            {
-                ComputePointLightViewProjections(light);
-                break;
-            }
             case LightType::Spot:
             {
                 ComputeSpotLightViewProjection(light);
+                break;
+            }
+            case LightType::Point:
+            {
+                ComputePointLightViewProjections(light);
                 break;
             }
         }
@@ -29,29 +29,38 @@ namespace Wiley {
 	void LightComponentSystem::OnUpdate(float dt)
 	{
         const auto smm = scene->GetShadowMapManager();
-        auto dirtyComps = smm->GetDirtyEntities();
+        
+        if (smm->IsAllLightEntityDirty()) {
 
-        for (int i = 0; i < dirtyComps.size(); i++) {
-            Entity entity = Entity(dirtyComps.front(), scene);;
+            auto entts = scene->GetEntitiesWith<LightComponent>();
+            for (auto& entt : entts)
+            {
+                auto& light = entt.GetComponent<LightComponent>();
+                Execute(&light);
+            }
+            //If all lights are dirty then everything is going to end up being cleaned so no need to go through the lists.
+            return;
+        }
+
+        auto dirtyPointLights = smm->GetDirtyPointLight();
+        while(dirtyPointLights.size())
+        {
+            Entity entity = Entity(dirtyPointLights.front(), scene);
             auto& light = entity.GetComponent<LightComponent>();
+            ComputePointLightViewProjections(&light);
+            dirtyPointLights.pop();
+        }
 
+        auto dirtyLights = smm->GetDirtyEntities();
+        while (dirtyLights.size())
+        {
+            Entity entity = Entity(dirtyLights.front(), scene);;
+            auto& light = entity.GetComponent<LightComponent>();
             Execute(&light);
-            dirtyComps.pop();
+            dirtyLights.pop();
         }
 
         
-        if (!smm->IsAllLightEntitiesDirty())
-            return;
-
-        //Update all.
-		for (auto& entt : scene->GetComponentView<LightComponent>())
-		{
-			Entity entity(entt, scene);
-			auto& light = entity.GetComponent<LightComponent>();
-
-            Execute(&light);
-		}
-
 	}
 
 	void LightComponentSystem::ComputePointLightViewProjections(void* lightComponent)

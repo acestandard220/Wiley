@@ -53,7 +53,7 @@ namespace Renderer3D
 		//Graphics
 		Wireframe,
 		Geometry,
-		ShadowMapPass,
+		PointShadowMapPass,
 		PresentPass,
 		DepthPrepass,
 		ClusterHeapMapPass,

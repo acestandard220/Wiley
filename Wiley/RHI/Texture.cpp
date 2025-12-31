@@ -101,12 +101,12 @@ namespace RHI
 #endif // _DEBUG
 	}
 
-	Texture::Texture(Device::Ref device, UINT width, UINT height, DescriptorHeap::Heap& heaps, const std::string& name)
-		:_device(device), width(width), height(height), state(TextureUsage::DepthStencilTarget), creationState(TextureUsage::DepthStencilTarget)
-		,format(DXGI_FORMAT_D32_FLOAT)
+	Texture::Texture(Device::Ref device, UINT width, UINT height, TextureUsage usage, DescriptorHeap::Heap& heaps, const std::string& name)
+		:_device(device), width(width), height(height), state(usage), creationState(usage)
 	{
-		auto _d3dDevice = device->GetNative();
+		format = (usage == TextureUsage::DepthStencilTarget) ? DXGI_FORMAT_D32_FLOAT : DXGI_FORMAT_R32_FLOAT;
 
+		auto _d3dDevice = device->GetNative();
 
 		CD3DX12_HEAP_PROPERTIES heapProperties(D3D12_HEAP_TYPE_DEFAULT);
 		D3D12_RESOURCE_DESC resourceDesc{};
@@ -131,7 +131,7 @@ namespace RHI
 			_clearValue.DepthStencil.Depth = 1.0f;
 			_clearValue.DepthStencil.Stencil = 0;
 
-			_clearValue.Format = GetDepthViewFormat(TextureFormat::D32);
+			_clearValue.Format = GetDepthViewFormat((TextureFormat)format);
 		}
 
 		D3D12_CLEAR_VALUE* clearValue = &_clearValue;
@@ -152,22 +152,38 @@ namespace RHI
 			return;
 		}
 
-		auto arrayDSV = heaps.dsv->Allocate(6);
-		for (int i = 0; i < 6; i++)
-		{
-			D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
-			dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
-			dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2DARRAY;
-			dsvDesc.Texture2DArray.MipSlice = 0;
-			dsvDesc.Texture2DArray.FirstArraySlice = i; 
-			dsvDesc.Texture2DArray.ArraySize = 1;
 
-			shadowMapDSV[i] = arrayDSV[i];
-			_d3dDevice->CreateDepthStencilView(resource.Get(), &dsvDesc, shadowMapDSV[i].cpuHandle);
+		if (usage == TextureUsage::DepthStencilTarget) {
+			auto arrayDSV = heaps.dsv->Allocate(6);
+			for (int i = 0; i < 6; i++)
+			{
+				D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+				dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
+				dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2DARRAY;
+				dsvDesc.Texture2DArray.MipSlice = 0;
+				dsvDesc.Texture2DArray.FirstArraySlice = i;
+				dsvDesc.Texture2DArray.ArraySize = 1;
+
+				shadowMapDesc[i] = arrayDSV[i];
+				_d3dDevice->CreateDepthStencilView(resource.Get(), &dsvDesc, shadowMapDesc[i].cpuHandle);
+			}
 		}
+		else if (usage == TextureUsage::RenderTarget) {
+			auto arrayRTV = heaps.rtv->Allocate(6);
+			for (int i = 0; i < 6; i++)
+			{
+				D3D12_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+				rtvDesc.Format = DXGI_FORMAT_R32_FLOAT;
+				rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2DARRAY;
+				rtvDesc.Texture2DArray.MipSlice = 0;
+				rtvDesc.Texture2DArray.FirstArraySlice = i;
+				rtvDesc.Texture2DArray.ArraySize = 1;
 
+				shadowMapDesc[i] = arrayRTV[i];
+				_d3dDevice->CreateRenderTargetView(resource.Get(), &rtvDesc, shadowMapDesc[i].cpuHandle);
+			}
+		}
 		WILEY_NAME_D3D12_OBJECT(resource, name);
-
 	}
 
 
@@ -235,6 +251,9 @@ namespace RHI
 
 	void Texture::Resize(UINT width, UINT height)
 	{
+		if (this->width == width && this->height == height)
+			return;
+
 		this->width = width;
 		this->height = height;
 
@@ -454,7 +473,17 @@ namespace RHI
 
 	const DescriptorHeap::Descriptor& Texture::GetDepthMapDSV(uint32_t index) const
 	{
-		return shadowMapDSV[index];
+		return shadowMapDesc[index];
+	}
+
+	const DescriptorHeap::Descriptor& Texture::GetDepthMapRTV(uint32_t index) const
+	{
+		return shadowMapDesc[index];
+	}
+
+	const std::array<DescriptorHeap::Descriptor, 6>& Texture::GetDepthMapRTVs() const
+	{
+		return shadowMapDesc;
 	}
 
 	UINT Texture::GetBitPerChannel(TextureFormat format)

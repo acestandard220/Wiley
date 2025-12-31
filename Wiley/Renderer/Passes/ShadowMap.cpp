@@ -5,127 +5,155 @@
 namespace Renderer3D {
 
 
-	void Execute(RHI::CommandList::Ref& commandList, const Wiley::LightComponent& light, Renderer* renderer, ShadowMapManager::Ref shadowMapManager) {
-
+	void ExecutePointLight(RHI::CommandList::Ref& commandList, const Wiley::LightComponent& light, ShadowMapManager::Ref shadowMapManager, Wiley::Camera::Ref camera, std::vector<DrawCommand>drawCommandCache)
+	{
 		ZoneScopedN("Renderer::ShadowMapPass->Execute");
 
-		RHI::Texture::Ref depthBuffer = shadowMapManager->GetDepthMap(light.depthMapIndex);
-		const auto depthMapWidth = depthBuffer->GetWidth();
-		const auto depthMapHeight = depthBuffer->GetHeight();
+		const auto depthMap = shadowMapManager->GetDepthMap(light.depthMapIndex);
+		const auto& depthMapRTVs = depthMap->GetDepthMapRTVs();
+		const auto mapSize = depthMap->GetWidth();
 
-		commandList->SetViewport(depthMapWidth, depthMapHeight, 0, 0);
+		const auto& mainDepthBuffer = shadowMapManager->GetDummyDepthTexture(static_cast<Renderer3D::ShadowMapSize>(mapSize));
 
-		const auto* lightMatrixHead = shadowMapManager->GetLightProjection(light.matrixIndex);
-
-		if (light.type == Wiley::LightType::Point)
 		{
-			for (int i = 0; i < 6; i++)
+			commandList->SetViewport(mapSize, mapSize, 0, 0);
+			commandList->ImageBarrier(depthMap, RHI::TextureUsage::RenderTarget);
+		}
+
+		for (int f = 0; f < 6; f++)
+		{
 			{
-				struct ConstantBuffer {
-					DirectX::XMFLOAT4X4 vp;
-				}cBufferData;
-
-				cBufferData.vp = *(lightMatrixHead + i);
-
-				const auto& dsv = depthBuffer->GetDepthMapDSV(i);
-				commandList->SetRenderTargets({}, dsv);
-				commandList->ClearDepthTarget(dsv);
-
-				commandList->PushConstant(&cBufferData, WILEY_SIZEOF(ConstantBuffer), 0);
-
-				renderer->DrawCommands(commandList);
+				commandList->SetRenderTargets({ depthMapRTVs[f] }, mainDepthBuffer->GetDSVDescriptor());
+				commandList->ClearRenderTarget({ depthMapRTVs[f] }, { 1.0f,1.0f,1.0f,1.0f });
+				commandList->ClearDepthTarget(mainDepthBuffer->GetDSVDescriptor());
 			}
-		}
-		else if (light.type == Wiley::LightType::Directional) {
 
-			for (int i = 0; i < 4; i++) {
-				struct ConstantBuffer {
-					DirectX::XMFLOAT4X4 vp;
-				}cBufferData;
+			struct PushConstants {
+				uint32_t drawID;
+				uint32_t vpIndex;
+				float farPlane;
+				uint32_t _pad1;
 
-				cBufferData.vp = *(lightMatrixHead + i);
+				DirectX::XMFLOAT3 lightPosition;
+				uint32_t _pad2;
+			}pConstants;
 
-				const auto& dsv = depthBuffer->GetDepthMapDSV(i);
-				commandList->SetRenderTargets({}, dsv);
-				commandList->ClearDepthTarget(dsv);
+			pConstants.farPlane = camera->GetFar();
+			pConstants.vpIndex = light.matrixIndex + f;
+			pConstants.lightPosition = light.position;
 
-				commandList->PushConstant(&cBufferData, WILEY_SIZEOF(ConstantBuffer), 0);
+			for (int i = 0; i < drawCommandCache.size(); i++) {
+				const DrawCommand& drawCmd = drawCommandCache[i];
 
-				renderer->DrawCommands(commandList);
+				pConstants.drawID = drawCmd.drawID;
+
+				commandList->PushConstant(&pConstants, 8 * 4, 0);
+				commandList->DrawInstancedIndexed(drawCmd.indexCount, drawCmd.instanceCount,
+					drawCmd.indexStartLocation, drawCmd.vertexStartLocation, drawCmd.instanceStartIndex);
 			}
-		}
-		else if (light.type == Wiley::LightType::Spot) {
-			struct ConstantBuffer {
-				DirectX::XMFLOAT4X4 vp;
-			}cBufferData;
-
-			cBufferData.vp = *(lightMatrixHead);
-
-			const auto& dsv = depthBuffer->GetDepthMapDSV(0);
-			commandList->SetRenderTargets({}, dsv);
-			commandList->ClearDepthTarget(dsv);
-
-			commandList->PushConstant(&cBufferData, WILEY_SIZEOF(ConstantBuffer), 0);
-
-			renderer->DrawCommands(commandList);
-		}
+		}		
 	}
 
 	void Renderer3D::Renderer::ShadowMapPass(RenderPass& pass)
 	{
 		ZoneScopedN("Renderer::ShadowMapPass");
 
-		RHI::GraphicsPipeline::Ref pso = gfxPsoCache[RenderPassSemantic::ShadowMapPass];
+		RHI::GraphicsPipeline::Ref pso = gfxPsoCache[RenderPassSemantic::PointShadowMapPass];
+
+		RHI::Buffer::Ref meshFilterBuffer = frameGraph->GetInputBufferResource(pass, 0);
+		RHI::Buffer::Ref subMeshDataBuffer = frameGraph->GetInputBufferResource(pass, 1);
+		RHI::Buffer::Ref meshInstanceIndex = frameGraph->GetInputBufferResource(pass, 2);
+		RHI::Buffer::Ref meshInstanceBaseBuffer = frameGraph->GetInputBufferResource(pass, 3);
+
+		RHI::Buffer::Ref uploadLightViewProjections = frameGraph->GetInputBufferResource(pass, 4);
+		RHI::Buffer::Ref lightViewProjections = frameGraph->GetInputBufferResource(pass, 5);
 
 		UINT graphicsRingIndex = rctx->GetBackBufferIndex();
 		auto commandList = rctx->GetCurrentCommandList();
 
 		const auto& heaps = rctx->GetDescriptorHeaps();
+		const auto shadowMapManager = _scene->GetShadowMapManager();
 
 		{
-			commandList->Begin({ heaps.cbv_srv_uav,heaps.sampler });
+			commandList->BufferUAVToNonPixelShader({
+				meshFilterBuffer
+			});
 		}
 
+		if (shadowMapManager->GetDirtyEntities().size() || shadowMapManager->GetDirtyPointLight().size() || shadowMapManager->IsAllLightEntityDirty())
 		{
-			commandList->BindVertexBuffer(vertexBuffer[graphicsRingIndex]);
-			commandList->BindIndexBuffer(indexBuffer[graphicsRingIndex]);
+			const auto span = shadowMapManager->GetViewProjectionsHead();
+			uploadLightViewProjections->UploadData<DirectX::XMFLOAT4X4>(span);
 
-			commandList->SetGraphicsPipeline(pso);
-			commandList->SetGraphicsRootSignature(pso->GetRootSignature());
+			commandList->BufferBarrier(lightViewProjections, D3D12_RESOURCE_STATE_COPY_DEST);
+			commandList->CopyBufferToBuffer(uploadLightViewProjections, 0, lightViewProjections, span.size_bytes(), false);
+			commandList->BufferBarrier(lightViewProjections, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE);
 		}
 
 		{
 			commandList->SetGraphicsPipeline(pso);
 			commandList->SetGraphicsRootSignature(pso->GetRootSignature());
 			commandList->SetPrimitiveTopology(RHI::PrimitiveTopology::TriangleList);
+
+			commandList->BindShaderResource(meshFilterBuffer->GetSRV(), 1);
+			commandList->BindShaderResource(subMeshDataBuffer->GetSRV(), 2);
+			commandList->BindShaderResource(meshInstanceBaseBuffer->GetSRV(), 3);
+			commandList->BindShaderResource(meshInstanceIndex->GetSRV(), 4);
+			commandList->BindShaderResource(lightViewProjections->GetSRV(), 5);
 		}
 
-		const auto shadowMapManager = _scene->GetShadowMapManager();
 
-		auto& entities = shadowMapManager->GetDirtyEntities();
+		std::vector<RHI::Barrier> depthToPixelBarriers;
 
-		for (int i = 0; i < entities.size(); i++) {
-			Wiley::Entity lightEntt = Wiley::Entity(entities.front(), _scene.get());
-			const auto& light = lightEntt.GetComponent<Wiley::LightComponent>();
-			Execute(commandList, light, this, shadowMapManager);
-		}
-
-		shadowMapManager->ClearnDirtyQueue();
-		
-
-		if (shadowMapManager->IsAllLightEntitiesDirty())
+		if(shadowMapManager->IsAllLightEntityDirty())
 		{
-			Wiley::LightComponent* lightComponent = _scene->GetComponentStorage<Wiley::LightComponent>();
-			uint32_t lightComponentCount = _scene->GetComponentReach< Wiley::LightComponent>();
+			for (auto& lightEntt : _scene->GetEntitiesWith<Wiley::LightComponent>()) {
 
-			std::span<Wiley::LightComponent>lightComponentSpan(lightComponent, lightComponentCount);
+				auto& light = lightEntt.GetComponent<Wiley::LightComponent>();
+				switch (light.type) {
+					case Wiley::LightType::Point: {
+						ExecutePointLight(commandList, light, shadowMapManager, camera, drawCommandCache);
+						break;
+					}
+					case Wiley::LightType::Directional: {
 
-			for (const auto& light : lightComponentSpan)
-			{
-				Execute(commandList, light, this, shadowMapManager);
+						break;
+					}
+					case Wiley::LightType::Spot: {
+
+						break;
+					}
+				}
+				depthToPixelBarriers.push_back({ shadowMapManager->GetDepthMap(light.depthMapIndex),RHI::TextureUsage::PixelShaderResource });
 			}
-			shadowMapManager->MakeAllLightClean();
+			shadowMapManager->CleanAllLightEntity();
 		}
+
+
+
+		auto dirtyPointLights = shadowMapManager->GetDirtyPointLight();
+		while (dirtyPointLights.size())
+		{
+			Wiley::Entity lightEntt = Wiley::Entity(dirtyPointLights.front(), _scene.get());
+			const auto& light = lightEntt.GetComponent<Wiley::LightComponent>();
+
+			ExecutePointLight(commandList, light, shadowMapManager, camera, drawCommandCache);
+
+			depthToPixelBarriers.push_back({ shadowMapManager->GetDepthMap(light.depthMapIndex),RHI::TextureUsage::PixelShaderResource });
+			dirtyPointLights.pop();
+		}
+		shadowMapManager->ClearDirtyPointLightQueue();
+
+
+
+
+		{
+			commandList->ImageBarrier(depthToPixelBarriers);
+			commandList->BufferNonPixelShaderToUAV({
+				meshFilterBuffer
+			});
+		}
+
 
 		{
 			commandList->End();
@@ -137,6 +165,12 @@ namespace Renderer3D {
 			RHI::CommandQueue::Ref commandQueue = rctx->GetCommandQueue();
 			gfxFence->Signal(commandQueue.get());
 			gfxFence->BlockCPU();
+		}
+
+		{
+			commandList->Begin({ heaps.cbv_srv_uav,heaps.sampler });
+			commandList->BindVertexBuffer(vertexBuffer[graphicsRingIndex]);
+			commandList->BindIndexBuffer(indexBuffer[graphicsRingIndex]);
 		}
 	}
 

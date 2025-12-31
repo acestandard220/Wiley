@@ -16,18 +16,19 @@ static const float2 fullscreenQuad[6] =
     { -1.0f, -1.0f }
 };
 
+
 VertexOutput VSmain(uint vId : SV_VertexID)
 {
     VertexOutput output;
     output.position = float4(fullscreenQuad[vId], 0.0f, 1.0f);
     output.uv = output.position.xy * 0.5f + 0.5f;
     output.uv.y = 1.0f - output.uv.y;
+    
     return output;
 }
 
 
 //// Pixel Shader /////
-
 
 Texture2D positionMap : register(t0);
 Texture2D normalMap : register(t1);

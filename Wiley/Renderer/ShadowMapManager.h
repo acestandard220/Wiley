@@ -7,6 +7,9 @@
 
 #include <string>
 
+template<typename T>
+using Span = std::span<T>;
+
 namespace Renderer3D
 {
 	struct ShadowMapData {
@@ -36,19 +39,24 @@ namespace Renderer3D
 			void DeallocateTexture(ShadowMapData index,Wiley::LightType type);
 
 			void MakeLightEntityDirty(entt::entity entity);
-			void ClearnDirtyQueue();
-
+			void MakePointLightDirty(entt::entity entity);
 			void MakeAllLightEntityDirty();
-			void MakeAllLightClean();
+
+			void ClearDirtyLightQueue();
+			void ClearDirtyPointLightQueue();
+			void CleanAllLightEntity();
 
 			WILEY_NODISCARD RHI::Texture::Ref GetDepthMap(int index)const;
 			WILEY_NODISCARD RHI::DescriptorHeap::Descriptor GetCubeSRVHead()const;
 			WILEY_NODISCARD RHI::DescriptorHeap::Descriptor GetArraySRVHead()const;
+			WILEY_NODISCARD Span<DirectX::XMFLOAT4X4> GetViewProjectionsHead()const;
 
 			DirectX::XMFLOAT4X4* GetLightProjection(uint32_t index)const;
+			RHI::Texture::Ref& GetDummyDepthTexture(ShadowMapSize shadowMapSize);
 
 			Queue<entt::entity>& GetDirtyEntities();
-			bool IsAllLightEntitiesDirty()const;
+			Queue<entt::entity>& GetDirtyPointLight();
+			bool IsAllLightEntityDirty()const;
 
 		private:
 			uint32_t AllocateSRV(Wiley::LightType type);
@@ -57,6 +65,8 @@ namespace Renderer3D
 			uint32_t AllocateMatrixSpace(Wiley::LightType type);
 
 		private:
+			std::array<RHI::Texture::Ref, 5> dummyDepthBuffers;
+
 			//Texture Pools
 			std::array<RHI::Texture::Ref, MAX_LIGHTS> depthMaps;	
 			Queue<int> mapfreelist;
@@ -74,7 +84,8 @@ namespace Renderer3D
 			std::unique_ptr<Wiley::LinearAllocator<DirectX::XMFLOAT4X4>> lightViewProjections;
 
 			Queue<entt::entity> dirtyLightEntities;
-			bool isAllLightEntitiesDirty;
+			Queue<entt::entity> dirtyPointLights;
+			bool isAllLightEntityDiry;
 
 			RHI::RenderContext::Ref rctx;
 	};

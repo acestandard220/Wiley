@@ -48,6 +48,8 @@ namespace Wiley
 
 		ImGui::Text("UUID :: %s", WILEY_UUID_STRING(selection.selectedUUID).c_str());
 
+		const auto smm = editor->GetCurrentScene()->GetShadowMapManager();
+
 		DrawComponent<TagComponent>("Entity", entt, [&](auto& component) {
 			auto& tag = component;
 			
@@ -59,9 +61,15 @@ namespace Wiley
 		DrawComponent<TransformComponent>("Transform",entt,[&](auto& component){
 			auto& transform = component;
 
-			ImGui::DragFloat3("Position", &transform.position.x, 0.5f, 0.0f, 0.0f, "%.3f", ImGuiSliderFlags_ColorMarkers);
-			ImGui::DragFloat3("Rotation", &transform.rotation.x, 0.5f, 0.0f, 0.0f, "%.3f", ImGuiSliderFlags_ColorMarkers);
-			ImGui::DragFloat3("Scale",    &transform.scale.x,    0.5f, 0.0f, 0.0f, "%.3f", ImGuiSliderFlags_ColorMarkers);
+			if (ImGui::DragFloat3("Position", &transform.position.x, 0.5f, 0.0f, 0.0f, "%.3f", ImGuiSliderFlags_ColorMarkers)){
+				smm->MakeAllLightEntityDirty();
+			}
+			if (ImGui::DragFloat3("Rotation", &transform.rotation.x, 0.5f, 0.0f, 0.0f, "%.3f", ImGuiSliderFlags_ColorMarkers)) {
+				smm->MakeAllLightEntityDirty();
+			}
+			if (ImGui::DragFloat3("Scale", &transform.scale.x, 0.5f, 0.0f, 0.0f, "%.3f", ImGuiSliderFlags_ColorMarkers)) {
+				smm->MakeAllLightEntityDirty();
+			}
 		});
 
 		DrawComponent<MeshFilterComponent>("Mesh Filter", entt, [&](auto& component) {
@@ -74,12 +82,20 @@ namespace Wiley
 		DrawComponent<LightComponent>("Light", entt, [&](auto& component) {
 			auto& light = component;
 
-			ImGui::Combo("Type", (int*)&light.type, "Directional\0Point\0Spot");
-			ImGui::DragFloat3(((bool)light.type) ? "Position" : "Direction", &light.position.x, 0.5f, 0.0f, 0.0f, "%.3f");
-			ImGui::DragFloat3("Color", &light.color.x, 0.5f, 0.0f, 0.0f, "%.3f");
-			ImGui::DragFloat("Intensity", &light.intensity, 0.5, 0.0f, 0.0f);
+			if (
+				ImGui::Combo("Type", (int*)&light.type, "Directional\0Point\0Spot") |
+				ImGui::DragFloat3(((bool)light.type) ? "Position" : "Direction", &light.position.x, 0.5f, 0.0f, 0.0f, "%.3f") |
+				ImGui::DragFloat3("Color", &light.color.x, 0.5f, 0.0f, 0.0f, "%.3f") |
+				ImGui::DragFloat("Intensity", &light.intensity, 0.5, 0.0f, 0.0f))
+			{
+
+				if (light.type == LightType::Point)
+					smm->MakePointLightDirty(static_cast<entt::entity>(entt));
+				else
+					smm->MakeLightEntityDirty(static_cast<entt::entity>(entt));
+			}
 			
-			ImGui::Separator();
+			ImGui::Separator(); 
 
 			if (light.type == LightType::Spot) {
 				const static float _bias = 0.05f;
@@ -92,7 +108,12 @@ namespace Wiley
 				ImGui::DragFloat("Inner Radius", &light.innerRadius, 0.5f, irMin, irMax);
 				ImGui::DragFloat("Outer Radius", &light.outerRadius, 0.5f, orMin, 0.0);
 
-				ImGui::DragFloat3("Spot Direction", &light.spotDirection.x);
+				if (ImGui::DragFloat3("Spot Direction", &light.spotDirection.x)) {
+					if (light.type == LightType::Point)
+						smm->MakePointLightDirty(static_cast<entt::entity>(entt));
+					else
+						smm->MakeLightEntityDirty(static_cast<entt::entity>(entt));
+				}
 			}
 		});
 

@@ -65,7 +65,7 @@ namespace RHI
 		Texture(Device::Ref device,TextureFormat format, UINT width, UINT height,TextureUsage use, DescriptorHeap::Heap& heaps,const std::string& name = "Texture");
 
 		//Used by ShadowMapManager
-		Texture(Device::Ref device, UINT width, UINT height, DescriptorHeap::Heap& heaps, const std::string& name = "Texture");
+		Texture(Device::Ref device, UINT width, UINT height, TextureUsage usage, DescriptorHeap::Heap& heaps, const std::string& name = "Texture");
 		/// <summary>
 		///		This constructor creates a texture resource without any views/descriptors to it.
 		///		Used for pure shader resources/image textures.
@@ -108,6 +108,8 @@ namespace RHI
 		const DescriptorHeap::Descriptor& GetUAVDescriptor()const { return uav; }
 
 		const DescriptorHeap::Descriptor& GetDepthMapDSV(uint32_t index)const;
+		const DescriptorHeap::Descriptor& GetDepthMapRTV(uint32_t index)const;
+		const std::array<DescriptorHeap::Descriptor, 6>& GetDepthMapRTVs()const;
 
 		//DescriptorHeap::Descriptor CreateView(DescriptorHeapType type);
 		
@@ -130,7 +132,8 @@ namespace RHI
 		DescriptorHeap::Descriptor srv;
 		DescriptorHeap::Descriptor uav;
 
-		std::array<DescriptorHeap::Descriptor, 6> shadowMapDSV;
+		//Used by light depth maps
+		std::array<DescriptorHeap::Descriptor, 6> shadowMapDesc;
 
 		Device::Ref _device;
 		ComPtr<ID3D12Resource> resource;

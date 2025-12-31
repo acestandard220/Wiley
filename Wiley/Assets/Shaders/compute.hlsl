@@ -3,30 +3,6 @@
 #define MAX_MESH_INSTANCE 512
 #define THREAD_PER_GROUP 64
 
-struct AABB
-{
-    float3 min;
-    float3 max;
-    float3 pos;
-};
-
-struct MeshFilterComponent
-{
-    uint4 mesh;
-
-    AABB aabb;
-    
-    uint subMeshCount;
-    uint subMeshDataOffset;
-    
-    uint __padding;
-};
-
-struct MeshInstanceBase
-{
-    uint offset;
-    uint size;
-};
 
 cbuffer DispatchDetails : register(b0)
 {
