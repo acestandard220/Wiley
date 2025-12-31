@@ -34,6 +34,5 @@ namespace Wiley
 		}
 
 		ImGui::End();
-
 	}
 }

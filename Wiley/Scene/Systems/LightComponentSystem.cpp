@@ -73,7 +73,7 @@ namespace Wiley {
 
 		XMVECTOR lightPos = XMLoadFloat3(&light->position);
 		const float nearPlane = 0.1f;
-		const float farPlane = light->intensity;
+        const float farPlane = 100.0f;
 
 		XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV2, 1.0f, nearPlane, farPlane);
 
@@ -222,7 +222,7 @@ namespace Wiley {
         lightDir = XMVector3Normalize(lightDir);
 
         const float nearPlane = 0.1f;
-        const float farPlane = light->intensity; 
+        const float farPlane = light->intensity;
         const float spotAngle = light->outerRadius; 
 
         XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);

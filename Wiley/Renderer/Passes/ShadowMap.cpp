@@ -38,7 +38,7 @@ namespace Renderer3D {
 				uint32_t _pad2;
 			}pConstants;
 
-			pConstants.farPlane = light.intensity;
+			pConstants.farPlane = 100.0f;
 			pConstants.vpIndex = light.matrixIndex + f;
 			pConstants.lightPosition = light.position;
 
@@ -143,8 +143,6 @@ namespace Renderer3D {
 			dirtyPointLights.pop();
 		}
 		shadowMapManager->ClearDirtyPointLightQueue();
-
-
 
 
 		{

@@ -20,7 +20,7 @@ namespace Wiley {
 		DirectX::XMFLOAT4 up;
 
 		Frustum()
-			:fov(45.0f), near(0.1f), far(10000.0f), aspectRatio(1.0f),
+			:fov(45.0f), near(0.1f), far(1000.0f), aspectRatio(1.0f),
 			position({ 0.0f,2.0f,-8.0f,1.0f }), target({ 0.0f,0.0f,1.0f,1.0f }), up({ 0.0f,1.0f,0.0f,1.0f })
 		{
 		}

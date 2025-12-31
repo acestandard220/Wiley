@@ -1,5 +1,7 @@
 #define PI 3.14159265
 
+#define LIGHT_INTENSITY_SCALE 1000
+
 #define DIRECTIONAL_LIGHT 0
 #define POINT_LIGHT 1
 #define SPOT_LIGHT 2
@@ -12,7 +14,7 @@ struct Light
     float3 position;
     float3 color;
     float intensity;
-
+    
     //Spot Parameters
     float innerRadius;
     float outerRadius;
@@ -114,8 +116,8 @@ float3 ComputePointLight(Light light, float3 position, float3 N, float3 albedo, 
     float metallic = arm.z;
     
     float distance = length(light.position - position.rgb);
-    float attenuation = light.intensity / (distance * distance);
-    float3 radiance = light.color.rgb * attenuation;
+    float attenuation = 1.0f / (distance * distance);
+    float3 radiance = float3(light.color.rgb) * float3(light.intensity, light.intensity, light.intensity) * attenuation;
     
     float3 V = normalize(cameraPosition.xyz - position);
     float3 L = normalize(light.position - position);
@@ -161,8 +163,8 @@ float3 ComputeSpotLight(Light light, float3 position, float3 N, float3 albedo, f
     float intensity = clamp((theta - light.outerRadius) / epsilon, 0.0, 1.0);
     
     float distance = length(light.position - position.rgb);
-    float attenuation = light.intensity / (distance * distance);
-    float3 radiance = light.color.rgb * attenuation * intensity;
+    float attenuation = 1.0f / (distance * distance);
+    float3 radiance = float3(light.color.rgb) * float3(light.intensity, light.intensity, light.intensity) * attenuation * intensity;
     
     float NdotL = max(dot(N, L), 0.0f);
     float NdotV = max(dot(N, V), 0.0f);
@@ -207,19 +209,25 @@ float ComputePointLightShadow(Light light, float3 worldPos)
     float currentDepth = length(lightToFrag);
     
     float closestDepth = pointlightDepthMaps.Sample(depthSampler, float4(lightToFrag, light.srvIndex)).r;
-    closestDepth *= 10000.0f;
+    closestDepth *= 100.0f;
 
     float bias = 0.05f;
     
     float shadow = (currentDepth - bias) > closestDepth ? 0.0f : 1.0f;
     
+    float lightRange = 100.0f;
+    if (currentDepth >= lightRange)
+    {
+        return 1.0f; 
+    }   
+    
     float3 sampleOffsetDirections[20] =
     {
-        float3(1, 1, 1), float3(1, -1, 1), float3(-1, -1, 1), float3(-1, 1, 1),
-        float3(1, 1,-1), float3(1, -1, -1), float3(-1, -1, -1), float3(-1, 1, -1),
-        float3(1, 1, 0), float3(1, -1, 0), float3(-1, -1, 0), float3(-1, 1, 0),
-        float3(1, 0, 1), float3(-1, 0, 1), float3(1, 0, -1), float3(-1, 0, -1),
-        float3(0, 1, 1), float3(0, -1, 1), float3(0, -1, -1), float3(0, 1, -1)
+        float3( 1, 1, 1), float3( 1,-1, 1), float3(-1,-1, 1), float3(-1, 1, 1),
+        float3( 1, 1,-1), float3( 1,-1,-1), float3(-1,-1,-1), float3(-1, 1,-1),
+        float3( 1, 1, 0), float3( 1,-1, 0), float3(-1,-1, 0), float3(-1, 1, 0),
+        float3( 1, 0, 1), float3(-1, 0, 1), float3( 1, 0,-1), float3(-1, 0,-1),
+        float3( 0, 1, 1), float3( 0,-1, 1), float3( 0,-1,-1), float3( 0, 1,-1)
     };
     
     shadow = 0.0f;
@@ -229,8 +237,7 @@ float ComputePointLightShadow(Light light, float3 worldPos)
     {
         float3 sampleDir = lightToFrag + sampleOffsetDirections[i] * diskRadius;
         closestDepth = pointlightDepthMaps.Sample(depthSampler, float4(sampleDir, light.srvIndex)).r;
-        closestDepth *= 10000.0f;
-
+        closestDepth *= 100.0f;
         shadow += (currentDepth - bias) > closestDepth ? 0.0f : 1.0f;
     }
     shadow /= 20.0f;

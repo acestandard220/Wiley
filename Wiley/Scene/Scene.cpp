@@ -29,7 +29,7 @@ namespace Wiley
 		{
 			environment.currentEnvirontmentMap = std::static_pointer_cast<EnvironmentMap>(resourceCache->GetDefaultEnvironmentMap());
 			environment.backgroundColor = { 1,1,1 };
-			environment.doIBL = false;
+			environment.doIBL = true;
 		}
 
 		subMeshData = std::make_shared<LinearAllocator<SubMeshData>>(MAX_SUBMESH_COUNT);
@@ -52,20 +52,18 @@ namespace Wiley
 			{
 				auto testP = AddLight("TestPointLight", LightType::Point);
 				auto& comp = testP.GetComponent<LightComponent>();
-				comp.position = { 10.0, 100.0f, 0.0 };
-				comp.color = { 0.0f,0.0f,1.0f };
+				comp.position = { 10.0, 40.0, 0.0 };
+				comp.intensity = 15.0f;
 			}
 			/*{
 				auto testP2 = AddLight("TestPointLight2", LightType::Point);
 				auto& comp = testP2.GetComponent<LightComponent>();
 				comp.position = { 50.0, 100.0f, 0.0 };
-				comp.color = { 1.0f,0.0f,0.0f };
 			}
 			{
 				auto testP3 = AddLight("TestPointLight3", LightType::Point);
 				auto& comp = testP3.GetComponent<LightComponent>();
 				comp.position = { -50.0, 100.0f, 0.0 };
-				comp.color = { 0.0f,1.0f,0.0f };
 			}*/
 		}
 
@@ -227,13 +225,13 @@ namespace Wiley
 		Entity& entity = AddEntity(name);
 
 		LightComponent& lightComponent = entity.AddComponent<LightComponent>();
-		lightComponent.color = { 1.0f,1.0f,1.0f };
+		lightComponent.color = { 255.0f, 255.0f, 255.0f };
 		lightComponent.innerRadius = 5.0f;
 		lightComponent.outerRadius = 30.0f;
 		lightComponent.position = { 0.0f,3.0f,1.0f };
 		lightComponent.spotDirection = { 0.0f,-1.0f,0.0f };
 		lightComponent.type = type;
-		lightComponent.intensity = 10000.0f;
+		lightComponent.intensity = 5.0f;
 
 		//Allocate Resource for shadow map
 		const auto shadowMapData = shadowMapManager->AllocateTexture(type, Renderer3D::ShadowMapSize_4096, name);
