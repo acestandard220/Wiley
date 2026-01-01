@@ -139,7 +139,7 @@ namespace Renderer3D {
 		cBufferData.view._24 = 0.0f;
 		cBufferData.view._34 = 0.0f;
 
-		cBufferData.bgColor = { 1.0f,1.0f,1.0f,static_cast<float>(doIBL) };
+		cBufferData.bgColor = { env.backgroundColor.x,env.backgroundColor.y,env.backgroundColor.z,static_cast<float>(doIBL) };
 		
 		constantBuffer->UploadData(&cBufferData, sizeof(ConstantBuffer), 0, 0);
 

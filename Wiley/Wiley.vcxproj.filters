@@ -522,6 +522,9 @@
     <ClCompile Include="Renderer\Passes\ShadowMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\Panels\SceneProperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RHI\SwapChain.h">
@@ -1512,6 +1515,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene\Systems\LightComponentSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Panels\SceneProperties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

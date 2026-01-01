@@ -145,6 +145,7 @@
     <ClCompile Include="Core\FileSpace.cpp" />
     <ClCompile Include="Editor\ImGuiExtension\Themes.cpp" />
     <ClCompile Include="Editor\Panels\Inspector.cpp" />
+    <ClCompile Include="Editor\Panels\SceneProperties.cpp" />
     <ClCompile Include="Editor\Panels\Viewport.cpp" />
     <ClCompile Include="ext\DX12 Helper\DDSTextureLoader.cpp" />
     <ClCompile Include="ext\ImGui\imgui.cpp" />
@@ -371,6 +372,7 @@
     <ClInclude Include="Core\FileSpace.h" />
     <ClInclude Include="Editor\ImGuiExtension\Themes.h" />
     <ClInclude Include="Editor\Panels\Inspector.h" />
+    <ClInclude Include="Editor\Panels\SceneProperties.h" />
     <ClInclude Include="Editor\Panels\Viewport.h" />
     <ClInclude Include="ext\ImGui\imconfig.h" />
     <ClInclude Include="ext\ImGui\imgui.h" />

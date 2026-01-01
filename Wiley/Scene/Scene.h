@@ -105,8 +105,8 @@ namespace Wiley
 			return static_cast<UINT>(registery.storage<Component>().size());;
 		}
 
-		Camera::Ref GetCamera() { return camera; }
-		const Environment& GetEnvironment()const;
+		Camera::Ref& GetCamera() { return camera; }
+		Environment& GetEnvironment();
 
 		std::shared_ptr<ResourceCache> GetResourceCache()const { return resourceCache; }
 		SubMeshData* GetSubMeshDataHead()const { return (SubMeshData*)subMeshData->GetBasePtr(); }

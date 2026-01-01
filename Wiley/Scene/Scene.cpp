@@ -28,8 +28,8 @@ namespace Wiley
 		
 		{
 			environment.currentEnvirontmentMap = std::static_pointer_cast<EnvironmentMap>(resourceCache->GetDefaultEnvironmentMap());
-			environment.backgroundColor = { 1,1,1 };
-			environment.doIBL = true;
+			environment.backgroundColor = { 0,0,0 };
+			environment.doIBL = false;
 		}
 
 		subMeshData = std::make_shared<LinearAllocator<SubMeshData>>(MAX_SUBMESH_COUNT);
@@ -322,7 +322,7 @@ namespace Wiley
 		AssignMaterial(entity, resourceCache->GetDefaultMaterial()->GetUUID(), subMeshIndex);
 	}
 
-	const Scene::Environment& Scene::GetEnvironment() const
+	Scene::Environment& Scene::GetEnvironment()
 	{
 		return environment;
 	}

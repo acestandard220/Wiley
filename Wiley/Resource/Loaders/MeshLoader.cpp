@@ -715,6 +715,8 @@ namespace Wiley {
 
         ProcessNode(scene->mRootNode, scene, vertices, indices, meshData, path.parent_path());
 
+        OptimizeMesh(vertices, indices);
+
         MemoryBlock<Vertex> vertexMemBlk = resourceCache->vertexPool->Allocate(vertices.size());
         MemoryBlock<UINT> indexMemBlk = resourceCache->indexPool->Allocate(indices.size());
 

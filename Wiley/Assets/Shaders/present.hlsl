@@ -38,11 +38,11 @@ float4 PSmain(VertexOutput input) : SV_Target
 {
     float3 color = positionMap.Sample(samplerState, input.uv).xyz;
 
-    //color = color * exposure;
-    //color = color / (color + whitePoint);
+    color = color * exposure;
+    color = color / (color + whitePoint);
     
-    //float invGamma = 1.0 / gamma;
-    //color = pow(color, invGamma);
+    float invGamma = 1.0 / gamma;
+    color = pow(color, invGamma);
     
     return float4(color, 1.0f);
 }

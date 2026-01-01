@@ -8,6 +8,7 @@
 #include "Panels/Hierarchy.h"
 #include "Panels/Inspector.h"
 #include "Panels/Viewport.h"
+#include "Panels/SceneProperties.h"
 
 
 namespace Wiley {

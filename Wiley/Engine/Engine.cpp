@@ -24,7 +24,7 @@ namespace Wiley {
 		loadDesc.desc.meshDesc.normalType = Wiley::NormalType::Flat;
 
 		//const auto model = scene->AddModel("P:/Projects/VS/Wiley/Wiley/Assets/Models/SponzaOld/sponza.obj", loadDesc);
-		const auto model2 = scene->AddModel("P:/Projects/VS/Wiley/Wiley/Assets/Models/Arch/Day Sketch Ctx.obj", loadDesc);
+		const auto model2 = scene->AddModel("P:/Projects/VS/Wiley/Wiley/Assets/Models/modern_apartment/scene.gltf", loadDesc);
 		//const auto cylinder = scene->AddModel("P:/Projects/VS/Wiley/Wiley/Assets/Models/Cylinder.obj",loadDesc);
 		//scene->AssignGlobalDefaultMaterial(cylinder);
 

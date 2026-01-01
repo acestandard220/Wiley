@@ -204,19 +204,19 @@ SamplerState depthSampler : register(s5, space5);
 
 float ComputePointLightShadow(Light light, float3 worldPos)
 {    
+    const float lightFarPlane = 100.0f;
     float3 lightToFrag = worldPos - light.position;
     
     float currentDepth = length(lightToFrag);
     
     float closestDepth = pointlightDepthMaps.Sample(depthSampler, float4(lightToFrag, light.srvIndex)).r;
-    closestDepth *= 100.0f;
+    closestDepth *= lightFarPlane;
 
     float bias = 0.05f;
     
     float shadow = (currentDepth - bias) > closestDepth ? 0.0f : 1.0f;
     
-    float lightRange = 100.0f;
-    if (currentDepth >= lightRange)
+    if (currentDepth >= lightFarPlane)
     {
         return 1.0f; 
     }   
@@ -232,15 +232,17 @@ float ComputePointLightShadow(Light light, float3 worldPos)
     
     shadow = 0.0f;
     float diskRadius = 0.05f;
+    diskRadius = (1.0 + (currentDepth / lightFarPlane)) / 25.0;
     
-    for (int i = 0; i < 20; ++i)
+    const float sampleCount = 20.0f;
+    for (int i = 0; i < sampleCount; ++i)
     {
         float3 sampleDir = lightToFrag + sampleOffsetDirections[i] * diskRadius;
         closestDepth = pointlightDepthMaps.Sample(depthSampler, float4(sampleDir, light.srvIndex)).r;
-        closestDepth *= 100.0f;
+        closestDepth *= lightFarPlane;
         shadow += (currentDepth - bias) > closestDepth ? 0.0f : 1.0f;
     }
-    shadow /= 20.0f;
+    shadow /= sampleCount;
     
     return shadow;
 }
