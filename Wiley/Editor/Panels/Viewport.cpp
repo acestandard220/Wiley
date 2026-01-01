@@ -28,6 +28,11 @@ namespace Wiley {
 
 		if (avail.x != lastViewportSize.x || avail.y != lastViewportSize.y)
 		{
+			if (avail.x < 0 || avail.y < 0) {
+				ImGui::End();
+				return;
+			}
+
 			lastViewportSize = avail;
 			gInput.DeferResize(pixelWidth, pixelHeight);
 		}

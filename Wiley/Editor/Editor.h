@@ -40,9 +40,10 @@ namespace Wiley {
 		void MakeEditorSelection(int index, UUID id, Entity* entt);
 
 		const EditorSelction& GetEditorSelection()const;
+
 		Scene::Ref GetCurrentScene()const;
 		Renderer3D::Renderer::Ref GetRenderer()const;
-
+		Window::Ref GetWindow()const;
 	private:
 		EditorSelction selection;
 		std::vector<Panel::Ptr> panels;

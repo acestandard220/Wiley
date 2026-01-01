@@ -155,4 +155,9 @@ namespace Wiley {
         return renderer;
     }
 
+    Window::Ref Editor::GetWindow() const
+    {
+        return window;
+    }
+
 }
