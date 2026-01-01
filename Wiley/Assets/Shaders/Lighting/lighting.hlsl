@@ -78,7 +78,7 @@ float4 PSmain(VertexOutput input) : SV_Target
         float3 kS = FresnelSchlickRoughness(max(dot(N, V), 0.0), F0, roughness);
         float3 kD = (1.0 - kS) * (1.0 - metallic);
 
-        float3 irradiance = irrandiance.Sample(samplerState, N).rgb;
+        float3 irradiance = irrandiance.Sample(depthSampler, N).rgb;
         float3 diffuse = irradiance * albedo;
         float3 ambient = kD * diffuse * ambientOcclustion;
     
