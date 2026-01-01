@@ -158,12 +158,12 @@ namespace Renderer3D {
 
 	RHI::DescriptorHeap::Descriptor ShadowMapManager::GetCubeSRVHead() const
 	{
-		return *cubeSrv.data();
+		return cubeSrv[0];
 	}
 
 	RHI::DescriptorHeap::Descriptor ShadowMapManager::GetArraySRVHead() const
 	{
-		return *arraySrv.data();
+		return arraySrv[0];
 	}
 
 	WILEY_NODISCARD Span<DirectX::XMFLOAT4X4> ShadowMapManager::GetViewProjectionsHead() const

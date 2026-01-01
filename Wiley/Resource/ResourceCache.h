@@ -19,8 +19,8 @@
 #include <ranges>
 #include <variant>
 
-#define MAX_VERTEX_COUNT 10'000'000
-#define MAX_INDEX_COUNT  10'000'000
+#define MAX_VERTEX_COUNT 8'000'000
+#define MAX_INDEX_COUNT  8'000'000
 
 #define MAX_MESH_COUNT 10'000
 #define MAX_SUBMESH_COUNT 100'000

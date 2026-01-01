@@ -196,8 +196,8 @@ float3 LinearToHDR10(float3 color)
     return pow((0.8359375 + 18.8515625 * L) / (1.0 + 18.6875 * L), 78.84375);
 }
 
-TextureCubeArray pointlightDepthMaps : register(t2, space2);
-Texture2DArray dirSpotLightDepthMaps : register(t3, space3);
+TextureCube<float> pointlightDepthMaps[] : register(t2, space2);
+Texture2DArray<float> dirSpotLightDepthMaps[] : register(t3, space3);
 
 StructuredBuffer<float4x4> lightVPs : register(t4, space4);
 SamplerState depthSampler : register(s5, space5);
@@ -209,7 +209,7 @@ float ComputePointLightShadow(Light light, float3 worldPos)
     
     float currentDepth = length(lightToFrag);
     
-    float closestDepth = pointlightDepthMaps.Sample(depthSampler, float4(lightToFrag, light.srvIndex)).r;
+    float closestDepth = pointlightDepthMaps[light.srvIndex].Sample(depthSampler, lightToFrag).r;
     closestDepth *= lightFarPlane;
 
     float bias = 0.05f;
@@ -238,7 +238,7 @@ float ComputePointLightShadow(Light light, float3 worldPos)
     for (int i = 0; i < sampleCount; ++i)
     {
         float3 sampleDir = lightToFrag + sampleOffsetDirections[i] * diskRadius;
-        closestDepth = pointlightDepthMaps.Sample(depthSampler, float4(sampleDir, light.srvIndex)).r;
+        closestDepth = pointlightDepthMaps[light.srvIndex].Sample(depthSampler, lightToFrag).r;
         closestDepth *= lightFarPlane;
         shadow += (currentDepth - bias) > closestDepth ? 0.0f : 1.0f;
     }

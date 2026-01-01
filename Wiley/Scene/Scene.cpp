@@ -55,16 +55,18 @@ namespace Wiley
 				comp.position = { 10.0, 40.0, 0.0 };
 				comp.intensity = 15.0f;
 			}
-			/*{
+			{
 				auto testP2 = AddLight("TestPointLight2", LightType::Point);
 				auto& comp = testP2.GetComponent<LightComponent>();
-				comp.position = { 50.0, 100.0f, 0.0 };
+				comp.position = { 0.0, 40.0f, 0.0 };
+				comp.intensity = 15.0f;
 			}
 			{
 				auto testP3 = AddLight("TestPointLight3", LightType::Point);
 				auto& comp = testP3.GetComponent<LightComponent>();
-				comp.position = { -50.0, 100.0f, 0.0 };
-			}*/
+				comp.position = { -10.0, 40.0f, 0.0 };
+				comp.intensity = 15.0f;
+			}
 		}
 
 		if(0)
