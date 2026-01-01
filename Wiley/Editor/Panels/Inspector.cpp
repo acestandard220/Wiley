@@ -85,7 +85,7 @@ namespace Wiley
 			if (
 				ImGui::Combo("Type", (int*)&light.type, "Directional\0Point\0Spot") |
 				ImGui::DragFloat3(((bool)light.type) ? "Position" : "Direction", &light.position.x, 0.5f, 0.0f, 0.0f, "%.3f") |
-				ImGui::ColorEdit3("Color", &light.color.x, 0.5f, 0.01f, 0.0f, "%.3f") |
+				ImGui::ColorEdit3("Color", &light.color.x) |
 				ImGui::DragFloat("Intensity", &light.intensity, 0.25, 0.01f, 0.0f))
 			{
 
