@@ -6,20 +6,11 @@ namespace Renderer3D {
 
 	using namespace Wiley;
 
-	constexpr ShadowMapSize shadowMapSizeArray[5] = {
-		ShadowMapSize_512,ShadowMapSize_1024,
-		ShadowMapSize_2048,ShadowMapSize_4096,
-		ShadowMapSize_8192
-	};
 
 	ShadowMapManager::ShadowMapManager(RHI::RenderContext::Ref rctx)
 		:arrayPtr(0), cubePtr(0), mapPtr(0), rctx(rctx), isAllLightEntityDiry(false)
 	{
-		for (auto i = 0; auto& texture : dummyDepthBuffers) {
-			const auto mapSize = shadowMapSizeArray[i++];
-			const std::string dummyDepthTextureName = "DummyDepthTexture" + std::to_string(i);
-			texture = rctx->CreateTexture(RHI::TextureFormat::D32, mapSize, mapSize, RHI::TextureUsage::DepthStencilTarget, dummyDepthTextureName);
-		}
+		dummyDepthBuffer = rctx->CreateTexture(RHI::TextureFormat::D32, ShadowMapSize_4096, ShadowMapSize_4096, RHI::TextureUsage::DepthStencilTarget, "DummyDepthTextureName");
 
 		cubeSrv	 = rctx->AllocateCBV_SRV_UAV(MAX_LIGHTS);
 		arraySrv = rctx->AllocateCBV_SRV_UAV(MAX_LIGHTS);
@@ -176,15 +167,9 @@ namespace Renderer3D {
 		return lightViewProjections->GetPointerByIndex(index);
 	}
 
-	RHI::Texture::Ref& ShadowMapManager::GetDummyDepthTexture(ShadowMapSize shadowMapSize)
+	RHI::Texture::Ref& ShadowMapManager::GetDummyDepthTexture()
 	{
-		switch (shadowMapSize) {
-			case ShadowMapSize_512: return dummyDepthBuffers[0];
-			case ShadowMapSize_1024:return dummyDepthBuffers[1];
-			case ShadowMapSize_2048:return dummyDepthBuffers[2];
-			case ShadowMapSize_4096:return dummyDepthBuffers[3];
-			case ShadowMapSize_8192:return dummyDepthBuffers[4];
-		}
+		return dummyDepthBuffer;
 	}
 
 	Queue<entt::entity>& ShadowMapManager::GetDirtyEntities()

@@ -23,9 +23,6 @@ namespace Renderer3D
 		ShadowMapSize_1024 = 1024, //Okay
 		ShadowMapSize_2048 = 2048, //Hight Quality Use
 		ShadowMapSize_4096 = 4096, //I know you are rich
-
-		ShadowMapSize_8192 = 8192  //What are you doing.
-
 	};
 
 	class ShadowMapManager
@@ -52,7 +49,7 @@ namespace Renderer3D
 			WILEY_NODISCARD Span<DirectX::XMFLOAT4X4> GetViewProjectionsHead()const;
 
 			DirectX::XMFLOAT4X4* GetLightProjection(uint32_t index)const;
-			RHI::Texture::Ref& GetDummyDepthTexture(ShadowMapSize shadowMapSize);
+			RHI::Texture::Ref& GetDummyDepthTexture();
 
 			Queue<entt::entity>& GetDirtyEntities();
 			Queue<entt::entity>& GetDirtyPointLight();
@@ -65,7 +62,7 @@ namespace Renderer3D
 			uint32_t AllocateMatrixSpace(Wiley::LightType type);
 
 		private:
-			std::array<RHI::Texture::Ref, 5> dummyDepthBuffers;
+			RHI::Texture::Ref dummyDepthBuffer;
 
 			//Texture Pools
 			std::array<RHI::Texture::Ref, MAX_LIGHTS> depthMaps;	

@@ -13,7 +13,7 @@ namespace Renderer3D {
 		const auto& depthMapRTVs = depthMap->GetDepthMapRTVs();
 		const auto mapSize = depthMap->GetWidth();
 
-		const auto& mainDepthBuffer = shadowMapManager->GetDummyDepthTexture(static_cast<Renderer3D::ShadowMapSize>(mapSize));
+		const auto& mainDepthBuffer = shadowMapManager->GetDummyDepthTexture();
 
 		{
 			commandList->SetViewport(mapSize, mapSize, 0, 0);
