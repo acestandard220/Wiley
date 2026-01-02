@@ -43,13 +43,11 @@ namespace Renderer3D {
 		{
 			UINT8* bufferPtr = nullptr;
 			vertexBufferUpload->Map(reinterpret_cast<void**>(&bufferPtr), 0, 0);
-			bufferPtr = (uint8_t*)(bufferPtr)+(graphicsRingIndex * maxVertexCount * sizeof(Wiley::Vertex));
 			vertexBufferUpload->UploadPersistent(bufferPtr, resourceCache->GetVertexPoolBasePtr(), vertexPool->GetReach());
 			vertexBufferUpload->Unmap(0, 0);
 
 			bufferPtr = nullptr;
 			indexBufferUpload->Map(reinterpret_cast<void**>(&bufferPtr), 0, 0);
-			bufferPtr = (uint8_t*)(bufferPtr)+(graphicsRingIndex * maxIndexCount * sizeof(UINT));
 			indexBufferUpload->UploadPersistent(bufferPtr, indexPool->GetBasePtr(), indexPool->GetReach());
 			indexBufferUpload->Unmap(0, 0);
 
@@ -61,10 +59,8 @@ namespace Renderer3D {
 
 		//Copy Data to default buffers.
 		{
-			copyCommandList->CopyBufferToBuffer(vertexBufferUpload, graphicsRingIndex * maxVertexCount * sizeof(Wiley::Vertex),
-				vertexBuffer[graphicsRingIndex], vertexPool->GetReach());
-			copyCommandList->CopyBufferToBuffer(indexBufferUpload, graphicsRingIndex * maxIndexCount * sizeof(UINT),
-				indexBuffer[graphicsRingIndex], indexPool->GetReach());
+			copyCommandList->CopyBufferToBuffer(vertexBufferUpload, 0, vertexBuffer[graphicsRingIndex], vertexPool->GetReach());
+			copyCommandList->CopyBufferToBuffer(indexBufferUpload, 0, indexBuffer[graphicsRingIndex], indexPool->GetReach());
 			copyCommandList->CopyBufferToBuffer(uploadMaterialData, 0, materialDataBuffer, mtlDataPool->GetReach());
 		}
 

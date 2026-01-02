@@ -43,10 +43,7 @@ namespace Wiley
 
 		bool Tick(std::function<void()> callback);
 
-		void OnResize(std::function<void(uint32_t width, uint32_t height)> callback) { resizeCallback = callback; }
-
 		bool IsActive()const noexcept;
-		bool IsDone()const noexcept;
 
 		void GetDimensions(uint32_t& width, uint32_t& height) const;
 		void GetClientDimensions(uint32_t& width, uint32_t& height);
@@ -56,7 +53,6 @@ namespace Wiley
 		WindowEvent& GetWindowEvent();
 
 		void BroadCast(const WindowEventInfo& eventInfo);
-		static void SetDimension(UINT width, UINT height);
 
 		inline static Window* sWindow;
 	private:
@@ -64,11 +60,8 @@ namespace Wiley
 
 		UINT width;
 		UINT height;
-		bool isDone;
 
 		WindowEvent windowEvent;
-
-		std::function<void(uint32_t, uint32_t)> resizeCallback;
 	};
 }
 

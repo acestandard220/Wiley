@@ -62,7 +62,6 @@ namespace Wiley
 
 		if (msg.message == WM_QUIT)
 		{
-			isDone = true;
 			return false;
 		}
 		
@@ -72,11 +71,6 @@ namespace Wiley
 	bool Window::IsActive() const noexcept
 	{
 		return GetForegroundWindow() == hwnd;
-	}
-
-	bool Window::IsDone() const noexcept
-	{
-		return isDone;
 	}
 
 	void Window::GetDimensions(uint32_t& width, uint32_t& height) const
@@ -103,15 +97,6 @@ namespace Wiley
 	void Window::BroadCast(const WindowEventInfo& eventInfo)
 	{
 		windowEvent.Broadcast(eventInfo);
-	}
-
-	void Window::SetDimension(UINT width, UINT height)
-	{
-		sWindow->height = height;
-		sWindow->width = width;
-
-		if(sWindow->resizeCallback)
-			sWindow->resizeCallback(width, height);
 	}
 
 	LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)

@@ -57,8 +57,8 @@ namespace Renderer3D
 		window->GetClientDimensions(width, height);
 		depthResource = std::make_shared<RHI::Texture>(rctx->GetDevice(), RHI::TextureFormat::D32, width, height, RHI::TextureUsage::DepthStencilTarget,rctx->GetDescriptorHeaps());
 
-		vertexUploadBuffer = rctx->CreateUploadBuffer(FRAMES_IN_FLIGHT * maxVertexCount * sizeof(Wiley::Vertex), sizeof(Wiley::Vertex), "VertexUploadBuffer");
-		indexUploadBuffer = rctx->CreateUploadBuffer(FRAMES_IN_FLIGHT * maxIndexCount * sizeof(uint32_t), sizeof(uint32_t), "IndexUploadBuffer");
+		vertexUploadBuffer = rctx->CreateUploadBuffer(maxVertexCount * sizeof(Wiley::Vertex), sizeof(Wiley::Vertex), "VertexUploadBuffer");
+		indexUploadBuffer = rctx->CreateUploadBuffer(maxIndexCount * sizeof(uint32_t), sizeof(uint32_t), "IndexUploadBuffer");
 
 		for (int i = 0; i < FRAMES_IN_FLIGHT; i++)
 		{
