@@ -124,9 +124,6 @@ namespace Renderer3D
 
 		RHI::Buffer::Ref constantBuffer;
 		RHI::Buffer::Ref constantLightBuffer;
-
-		RHI::Buffer::Ref vertexUploadBuffer;
-		RHI::Buffer::Ref indexUploadBuffer;
 		
 		DirectX::XMMATRIX viewMatrix;
 		DirectX::XMMATRIX projectionMatrix;

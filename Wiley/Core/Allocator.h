@@ -72,6 +72,19 @@ namespace Wiley {
 			_init = false;
 		};
 
+		//This constructor is to be used to manager memory pools we have no control over allocation of. 
+		//Example GPU Upload Heap memory
+
+		LinearAllocator(uint32_t nElement, void* uploadHeapPtr)
+			:nElement(nElement), capacity(sizeof(T)* nElement), used(0),
+			elementSize(sizeof(T))
+		{
+			basePtr = uploadHeapPtr;
+			topPtr = uploadHeapPtr;
+
+			_init = true;
+		}
+
 		~LinearAllocator() {
 			Free();
 		}

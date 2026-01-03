@@ -15,8 +15,6 @@ local scene_copy_pass = RenderPass.new()
 	scene_copy_pass:set_type(render_pass_type.copy)
 	
 	--Input Resources
-	scene_copy_pass:read_buffer("UploadVertexBuffer",buffer_usage.copy)
-	scene_copy_pass:read_buffer("UploadIndexBuffer",buffer_usage.copy)
 
 	--Output Resources
 	scene_copy_pass:write_buffer("VertexBuffer",buffer_usage.vertex)

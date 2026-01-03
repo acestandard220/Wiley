@@ -23,13 +23,19 @@ namespace Wiley {
 	ResourceCache::ResourceCache(RHI::RenderContext::Ref rctx)
 		: rctx(rctx)
 	{
-		vertexPool = std::make_shared<LinearAllocator<Vertex>>(MAX_VERTEX_COUNT);
-		indexPool = std::make_shared<LinearAllocator<UINT>>(MAX_INDEX_COUNT);
+		vertexUploadBuffer = rctx->CreateUploadBuffer(MAX_VERTEX_COUNT * sizeof(Wiley::Vertex), sizeof(Wiley::Vertex), "VertexUploadBuffer");
+		indexUploadBuffer  = rctx->CreateUploadBuffer(MAX_INDEX_COUNT * sizeof(uint32_t), sizeof(uint32_t), "IndexUploadBuffer");
+		
+		Vertex* vertexBufferPtr = nullptr;
+		vertexUploadBuffer->Map(reinterpret_cast<void**>(&vertexBufferPtr), 0, 0);
+
+		UINT* indexBufferPtr = nullptr;
+		indexUploadBuffer->Map(reinterpret_cast<void**>(&indexBufferPtr), 0, 0);
+
+		vertexPool = std::make_shared<LinearAllocator<Vertex>>(MAX_VERTEX_COUNT, vertexBufferPtr);
+		indexPool  = std::make_shared<LinearAllocator<UINT>>(MAX_INDEX_COUNT, indexBufferPtr);
+
 		materialDataPool = std::make_shared<LinearAllocator<MaterialData>>(MAX_MATERIAL_COUNT);
-
-		vertexPool->Initialize();
-		indexPool->Initialize();
-
 		materialDataPool->Initialize();
 
 		meshLoader = new MeshLoader(this);
@@ -46,15 +52,17 @@ namespace Wiley {
 		armManager.descriptors = rctx->AllocateCBV_SRV_UAV(MAX_IMAGETEXTURE_COUNT * 2);
 		armManager.descriptorPtr = 0;
 
-		/*ResourceLoadDesc loadDesc{};
-		loadDesc.extension = FileExtension::TOML;
-		LoadResource<Material>("Material.toml", loadDesc);*/
-
 		LoadDefaultResources();
 	}
 
 	ResourceCache::~ResourceCache()
 	{
+		vertexUploadBuffer->Unmap(0, 0);
+		indexUploadBuffer->Unmap(0, 0);
+
+		vertexUploadBuffer->~Buffer();
+		indexUploadBuffer->~Buffer();
+
 		delete meshLoader;
 		delete materialLoader;
 		delete imageTextureLoader;

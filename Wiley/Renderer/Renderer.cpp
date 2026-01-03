@@ -12,8 +12,6 @@ namespace Renderer3D
 		//Importing needed external resources from C++ so they can be read via string name from Lua script
 		frameGraph->ImportBufferResource("VertexBuffer", vertexBuffer[0], RHI::BufferUsage::Vertex);
 		frameGraph->ImportBufferResource("IndexBuffer", indexBuffer[0], RHI::BufferUsage::Index);
-		frameGraph->ImportBufferResource("UploadVertexBuffer", vertexUploadBuffer, RHI::BufferUsage::Copy);
-		frameGraph->ImportBufferResource("UploadIndexBuffer", indexUploadBuffer, RHI::BufferUsage::Copy);
 
 		rendererScript.LoadScriptFile("P:/Projects/VS/Wiley/Wiley/framegraph.lua");
 		frameGraph->Compile();
@@ -56,9 +54,6 @@ namespace Renderer3D
 		uint32_t height = 0;
 		window->GetClientDimensions(width, height);
 		depthResource = std::make_shared<RHI::Texture>(rctx->GetDevice(), RHI::TextureFormat::D32, width, height, RHI::TextureUsage::DepthStencilTarget,rctx->GetDescriptorHeaps());
-
-		vertexUploadBuffer = rctx->CreateUploadBuffer(maxVertexCount * sizeof(Wiley::Vertex), sizeof(Wiley::Vertex), "VertexUploadBuffer");
-		indexUploadBuffer = rctx->CreateUploadBuffer(maxIndexCount * sizeof(uint32_t), sizeof(uint32_t), "IndexUploadBuffer");
 
 		for (int i = 0; i < FRAMES_IN_FLIGHT; i++)
 		{
