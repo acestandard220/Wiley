@@ -14,6 +14,7 @@
 namespace Wiley
 {
    
+    //Temporary. Remove Later
     struct
     {
         DirectX::XMFLOAT4X4 vp;
@@ -81,8 +82,8 @@ namespace Wiley
 
     struct Mesh final : public Resource
     {
-        MemoryBlock<Vertex> vertexBlock;
-        MemoryBlock<UINT> indexBlock;
+        UINT vertexOffset;
+        UINT indexOffset;
 
         std::vector<MemoryBlock<UINT>> lodIndexBlocks;
 

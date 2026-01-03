@@ -382,8 +382,11 @@ namespace Wiley {
         memcpy(vertexMemBlk.data(), vertices.data(), vertexMemBlk.size_bytes());
         memcpy(indexMemBlk.data(), indices.data(), indexMemBlk.size_bytes());
 
-        meshData.vertexBlock = vertexMemBlk;
-        meshData.indexBlock = indexMemBlk;
+       /* meshData.vertexBlock = vertexMemBlk;
+        meshData.indexBlock = indexMemBlk;*/
+
+        meshData.vertexOffset = resourceCache->vertexPool->GetIndex(vertexMemBlk);
+        meshData.indexOffset = resourceCache->indexPool->GetIndex(indexMemBlk);
 
         return meshRef;
     }
@@ -416,8 +419,11 @@ namespace Wiley {
         fileHeader.indexCount = meshResource->indexCount;
         fileHeader.vertexCount = meshResource->vertexCount;
 
+        MemoryBlock<Vertex> vertexBlock = MemoryBlock<Vertex>(resourceCache->vertexPool->GetPointerByIndex(meshResource->vertexOffset), meshResource->vertexCount);
+        MemoryBlock<UINT> indexBlock = MemoryBlock<UINT>(resourceCache->indexPool->GetPointerByIndex(meshResource->indexOffset), meshResource->indexCount);
+
         fileHeader.aabbOffset = WILEY_SIZEOF(_MeshFileHead) + (WILEY_SIZEOF(SubMesh) * fileHeader.nSubMeshes)
-            + meshResource->vertexBlock.size_bytes() + meshResource->indexBlock.size_bytes();
+            + vertexBlock.size_bytes() + indexBlock.size_bytes();
 
         fileHeader.nameTableOffset = fileHeader.aabbOffset + WILEY_SIZEOF(AABB)
             + (WILEY_SIZEOF(AABB) * fileHeader.nSubMeshes);
@@ -425,8 +431,7 @@ namespace Wiley {
         file.write(reinterpret_cast<char*>(&fileHeader), WILEY_SIZEOF(_MeshFileHead));
         file.write(reinterpret_cast<char*>(meshResource->subMeshes.data()), WILEY_SIZEOF(SubMesh) * fileHeader.nSubMeshes);
 
-        MemoryBlock<Vertex> vertexBlock = meshResource->vertexBlock;
-        MemoryBlock<UINT> indexBlock = meshResource->indexBlock;
+        
 
         file.write(reinterpret_cast<char*>(vertexBlock.data()), vertexBlock.size_bytes());
         file.write(reinterpret_cast<char*>(indexBlock.data()), indexBlock.size_bytes());
@@ -723,8 +728,8 @@ namespace Wiley {
         memcpy(vertexMemBlk.data(), vertices.data(), vertexMemBlk.size_bytes());
         memcpy(indexMemBlk.data(), indices.data(), indexMemBlk.size_bytes());
 
-        meshData.vertexBlock = vertexMemBlk;
-        meshData.indexBlock = indexMemBlk;
+        meshData.vertexOffset = resourceCache->vertexPool->GetIndex(vertexMemBlk);
+        meshData.indexOffset = resourceCache->indexPool->GetIndex(indexMemBlk);
 
         meshData.vertexCount = vertices.size();
         meshData.indexCount = indices.size();

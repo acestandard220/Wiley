@@ -162,8 +162,8 @@ namespace Renderer3D {
 
 				WILEY_MUSTBE_UINTSIZE(_meshres->instanceMeshFilterIndex.size());
 
-				UINT vertexStartLocation = static_cast<UINT>(_meshres->vertexBlock.data() - vertexPoolBase);
-				UINT indexStartLocation = static_cast<UINT>(_meshres->indexBlock.data() - indexPoolBase);
+				UINT vertexStartLocation = _meshres->vertexOffset;
+				UINT indexStartLocation = _meshres->indexOffset;
 
 				DrawCommand* drawCmd = &drawCommandCache[i];
 				drawCmd->drawID = i;
@@ -172,7 +172,7 @@ namespace Renderer3D {
 				drawCmd->instanceCount = _meshres->instanceMeshFilterIndex.size();
 				drawCmd->vertexStartLocation = vertexStartLocation;
 				drawCmd->instanceStartIndex = 0;
-			}
+			} 
 
 			readBackMeshInstanceBase->Unmap(0, 0);
 		}
