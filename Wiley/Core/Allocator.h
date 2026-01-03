@@ -19,6 +19,12 @@ namespace Wiley {
 	template<typename T>
 	using MemoryBlock = std::span<T>;
 
+	//This struct is a generic representation of a memory block and is used by the freelist to make it indepent of where the memory sits incase of reallocations.
+	struct MemoryBlockRaw {
+		uint32_t offset;
+		uint32_t size;
+	};
+
 	template<typename T>
 	class LinearAllocator {
 		class FreeList {
@@ -76,7 +82,7 @@ namespace Wiley {
 		//Example GPU Upload Heap memory
 
 		LinearAllocator(uint32_t nElement, void* uploadHeapPtr)
-			:nElement(nElement), capacity(sizeof(T)* nElement), used(0),
+			:nElement(nElement), capacity(sizeof(T) * nElement), used(0),
 			elementSize(sizeof(T))
 		{
 			basePtr = uploadHeapPtr;
@@ -108,6 +114,23 @@ namespace Wiley {
 			}
 
 			_init = true;
+			return true;
+		}
+
+		bool Reallocate(uint32_t nElement)
+		{
+			uint32_t oldTopPtrOffset = (T*)topPtr - (T*)basePtr;
+
+			void *newBasePtr = realloc(basePtr, elementSize * nElement);
+			if (!newBasePtr)
+				return false;
+
+			basePtr = newBasePtr;
+			topPtr = basePtr + oldTopPtrOffset;
+
+			this->nElement = nElement;
+			capacity(sizeof(T) * nElement);
+
 			return true;
 		}
 
