@@ -4,6 +4,8 @@
 #define WILEY_SAFE_DELETE(ptr) delete ptr
 #define WILEY_SAFE_DELETE_ARR(ptr) delete [] ptr
 #define WILEY_SIZEOF(type) sizeof(type)
+#define WILEY_BUFFER_SIZE_BYTES(type, count) ((count) * sizeof(type))
+
 
 #ifdef _DEBUG
     #define WILEY_NAME_D3D12_OBJECT(object, name) wchar_t lName_##object[512];            \

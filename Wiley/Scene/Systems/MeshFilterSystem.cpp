@@ -5,7 +5,7 @@ namespace Wiley
 {
 	void MeshFilterSystem::OnUpdate(float dt)
 	{
-		SubMeshData* subMeshDataHead = scene->GetSubMeshDataHead();
+		SubMeshData* subMeshDataHead = scene->GetSubMeshDataUploadBuffer()->GetBasePointer();
 		for (auto& entt : scene->GetComponentView<MeshFilterComponent>())
 		{
 			Entity entity(entt, scene);

@@ -116,13 +116,13 @@ namespace RHI
 	template<typename T>
 	inline T* UploadBuffer<T>::GetBasePointer()
 	{
-		return memoryManager->GetBasePtr();
+		return (T*)memoryManager->GetBasePtr();
 	}
 
 	template<typename T>
 	inline T* UploadBuffer<T>::GetTopPointer()
 	{
-		return memoryManager->GetTopPtr();
+		return (T*)memoryManager->GetTopPtr();
 	}
 
 	template<typename T>

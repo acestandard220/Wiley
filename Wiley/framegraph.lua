@@ -37,7 +37,6 @@ local compute_scene_draw_pass = RenderPass.new()
 	compute_scene_draw_pass:create_buffer("UploadMeshFilterBuffer", mesh_filter_size * max_mesh_count, mesh_filter_size, buffer_usage.copy, true, buffer_usage.copy)
 	compute_scene_draw_pass:create_buffer("MeshFilterBuffer", mesh_filter_size * max_mesh_count, mesh_filter_size, buffer_usage.compute_storage, false, buffer_usage.compute_storage)
 
-	compute_scene_draw_pass:create_buffer("UploadSubMeshDataBuffer", submesh_data_size * max_submesh_count, submesh_data_size,buffer_usage.copy, true, buffer_usage.copy)
 	compute_scene_draw_pass:create_buffer("SubMeshDataBuffer", submesh_data_size * max_submesh_count, submesh_data_size,buffer_usage.shader_resource, false, buffer_usage.shader_resource)
 
 	compute_scene_draw_pass:create_buffer("MeshCountBuffer", uint_size, uint_size, buffer_usage.compute_storage, true, buffer_usage.compute_storage)

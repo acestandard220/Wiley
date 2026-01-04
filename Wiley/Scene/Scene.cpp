@@ -32,8 +32,7 @@ namespace Wiley
 			environment.doIBL = false;
 		}
 
-		subMeshData = std::make_shared<LinearAllocator<SubMeshData>>(MAX_SUBMESH_COUNT);
-		subMeshData->Initialize();
+		subMeshDataBuffer = rctx->CreateUploadBuffer<SubMeshData>(WILEY_BUFFER_SIZE_BYTES(SubMeshData, MAX_SUBMESH_COUNT), WILEY_SIZEOF(SubMeshData), "SubMeshDataUploadBuffer");
 
 		{
 			systems.emplace_back(std::make_unique<TransformSystem>(this));
@@ -44,7 +43,6 @@ namespace Wiley
 
 		auto defaultMaterial = static_cast<Material*>(resourceCache->GetDefaultMaterial().get());
 		auto grayRockMaterial = static_cast<Material*>(resourceCache->GetDefaultRockMaterial().get());
-		auto subMeshBase = (SubMeshData*)subMeshData->GetBasePtr();
 
 		{
 			ZoneScopedN("Scene->TestLights");
@@ -128,7 +126,6 @@ namespace Wiley
 		camera.reset();
 		resourceCache.reset();
 
-		subMeshData.reset();
 		subMeshMaterialMap.clear();
 		registery.clear();
 	}
@@ -203,8 +200,8 @@ namespace Wiley
 		Material* defaultMaterial = static_cast<Material*>(defaultMaterialResource.get());
 		MaterialData* mtlDataPoolBasePtr = static_cast<MaterialData*>(resourceCache->GetMaterialDataPool()->GetBasePtr());
 
-		MemoryBlock<SubMeshData> memoryBlk = subMeshData->Allocate(meshFilter.subMeshCount);
-		meshFilter.subMeshDataOffset = memoryBlk.data() - (SubMeshData*)subMeshData->GetBasePtr();
+		MemoryBlock<SubMeshData> memoryBlk = subMeshDataBuffer->Allocate(meshFilter.subMeshCount);
+		meshFilter.subMeshDataOffset = memoryBlk.data() - (SubMeshData*)subMeshDataBuffer->GetBasePointer();
 
 		std::span<SubMeshData> subMeshDataSpan((SubMeshData*)memoryBlk.data(), meshFilter.subMeshCount);
 
@@ -262,7 +259,7 @@ namespace Wiley
 
 		const UINT materialDataIndex = materialDataPtr - materialDataBase;
 
-		auto subMeshDataBase = (SubMeshData*)subMeshData->GetBasePtr();
+		auto subMeshDataBase = (SubMeshData*)subMeshDataBuffer->GetBasePointer();
 
 		MeshFilterComponent meshFilter = entity.GetComponent<MeshFilterComponent>();
 		for (int i = 0; i < meshFilter.subMeshCount; i++)
@@ -296,7 +293,7 @@ namespace Wiley
 
 		const UINT materialDataIndex = materialDataPtr - materialDataBase;
 
-		auto subMeshDataBase = (SubMeshData*)subMeshData->GetBasePtr();
+		auto subMeshDataBase = (SubMeshData*)subMeshDataBuffer->GetBasePointer();
 
 		MeshFilterComponent meshFilter = entity.GetComponent<MeshFilterComponent>();
 		if (subMeshIndex >= meshFilter.subMeshCount)
@@ -327,6 +324,11 @@ namespace Wiley
 	Scene::Environment& Scene::GetEnvironment()
 	{
 		return environment;
+	}
+
+	RHI::UploadBuffer<SubMeshData>::Ref& Scene::GetSubMeshDataUploadBuffer()
+	{
+		return subMeshDataBuffer;
 	}
 
 }

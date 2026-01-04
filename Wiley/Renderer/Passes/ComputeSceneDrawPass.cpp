@@ -20,22 +20,22 @@ namespace Renderer3D {
 		RHI::Buffer::Ref _meshFilterBufferUp = frameGraph->GetOutputBufferResource(pass, 0);
 		RHI::Buffer::Ref _meshFilterBuffer = frameGraph->GetOutputBufferResource(pass, 1);
 
-		RHI::Buffer::Ref _uploadSubmeshData = frameGraph->GetOutputBufferResource(pass, 2);
-		RHI::Buffer::Ref subMeshDataBuffer = frameGraph->GetOutputBufferResource(pass, 3);
+		//RHI::Buffer::Ref _uploadSubmeshData = frameGraph->GetOutputBufferResource(pass, 2);
+		RHI::Buffer::Ref subMeshDataBuffer = frameGraph->GetOutputBufferResource(pass, 2);
 
-		RHI::Buffer::Ref meshFilterIndexPtr = frameGraph->GetOutputBufferResource(pass, 4);
-		RHI::Buffer::Ref readBackMeshCountBuffer = frameGraph->GetOutputBufferResource(pass, 5);
+		RHI::Buffer::Ref meshFilterIndexPtr = frameGraph->GetOutputBufferResource(pass, 3);
+		RHI::Buffer::Ref readBackMeshCountBuffer = frameGraph->GetOutputBufferResource(pass, 4);
 
-		RHI::Buffer::Ref uploadMeshInstanceBase = frameGraph->GetOutputBufferResource(pass, 6);
-		RHI::Buffer::Ref meshInstanceBase = frameGraph->GetOutputBufferResource(pass, 7);
+		RHI::Buffer::Ref uploadMeshInstanceBase = frameGraph->GetOutputBufferResource(pass, 5);
+		RHI::Buffer::Ref meshInstanceBase = frameGraph->GetOutputBufferResource(pass, 6);
 
-		RHI::Buffer::Ref uploadMeshFilterIndexBufferPreOcc = frameGraph->GetOutputBufferResource(pass, 8);
-		RHI::Buffer::Ref meshFilterIndexBufferPreOcc = frameGraph->GetOutputBufferResource(pass, 9);
+		RHI::Buffer::Ref uploadMeshFilterIndexBufferPreOcc = frameGraph->GetOutputBufferResource(pass, 7);
+		RHI::Buffer::Ref meshFilterIndexBufferPreOcc = frameGraph->GetOutputBufferResource(pass, 8);
 
-		RHI::Buffer::Ref meshFilterIndexBufferPostOcc = frameGraph->GetOutputBufferResource(pass, 10);
+		RHI::Buffer::Ref meshFilterIndexBufferPostOcc = frameGraph->GetOutputBufferResource(pass, 9);
 
-		RHI::Buffer::Ref readBackMeshFilterIndexBufferPostOcc = frameGraph->GetOutputBufferResource(pass, 11);
-		RHI::Buffer::Ref readBackMeshInstanceBase = frameGraph->GetOutputBufferResource(pass, 12);
+		RHI::Buffer::Ref readBackMeshFilterIndexBufferPostOcc = frameGraph->GetOutputBufferResource(pass, 10);
+		RHI::Buffer::Ref readBackMeshInstanceBase = frameGraph->GetOutputBufferResource(pass, 11);
 
 
 		std::shared_ptr<Wiley::ResourceCache> resourceCache = _scene->GetResourceCache();
@@ -87,16 +87,11 @@ namespace Renderer3D {
 			_meshFilterBufferUp->Unmap(0, 0);
 		}
 
-		UINT subMeshDataBufferSize = static_cast<UINT>((UINT8*)_scene->GetSubMeshDataTop() - (UINT8*)_scene->GetSubMeshDataHead());
-
+		const auto& subMeshDataUploadBuffer = _scene->GetSubMeshDataUploadBuffer();
+		UINT subMeshDataBufferSize = subMeshDataUploadBuffer->GetMemoryReach();
 		{
-			UINT* subMeshDataBufferPtr = nullptr;
-			_uploadSubmeshData->Map(reinterpret_cast<void**>(&subMeshDataBufferPtr), 0, 0);
-			_uploadSubmeshData->UploadPersistent(subMeshDataBufferPtr, _scene->GetSubMeshDataHead(), subMeshDataBufferSize);
-			_uploadSubmeshData->Unmap(0, 0);
-
 			computeCommandList->CopyBufferToBuffer(_meshFilterBufferUp, 0, _meshFilterBuffer, sizeof(Wiley::MeshFilterComponent) * meshFilterCompReach);
-			computeCommandList->CopyBufferToBuffer(_uploadSubmeshData, 0, subMeshDataBuffer, subMeshDataBufferSize);
+			computeCommandList->CopyBufferToBuffer(subMeshDataUploadBuffer, 0, subMeshDataBuffer, subMeshDataBufferSize, false);
 		}
 
 

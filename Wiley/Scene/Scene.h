@@ -109,8 +109,8 @@ namespace Wiley
 		Environment& GetEnvironment();
 
 		std::shared_ptr<ResourceCache> GetResourceCache()const { return resourceCache; }
-		SubMeshData* GetSubMeshDataHead()const { return (SubMeshData*)subMeshData->GetBasePtr(); }
-		const SubMeshData* GetSubMeshDataTop()const { return (SubMeshData*)subMeshData->GetTopPtr(); }
+
+		RHI::UploadBuffer<SubMeshData>::Ref& GetSubMeshDataUploadBuffer();
 
 		bool IsCameraDirty()const { return sceneFlags.isCameraDirty; }
 		bool IsWindowResize()const { return sceneFlags.isWindowResize; }
@@ -134,7 +134,8 @@ namespace Wiley
 		Environment environment;
 
 		std::shared_ptr<ResourceCache> resourceCache;
-		std::shared_ptr<LinearAllocator<SubMeshData>> subMeshData;
+		RHI::UploadBuffer<SubMeshData>::Ref subMeshDataBuffer;
+
 		std::unordered_map<UUID, std::vector<UUID>> subMeshMaterialMap;
 
 		struct SceneFlags {
