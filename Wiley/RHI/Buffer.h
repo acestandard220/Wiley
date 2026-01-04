@@ -49,12 +49,16 @@ namespace RHI
 			DescriptorHeap::Ref descriptor = nullptr);
 		~Buffer();
 
+		void Resize(size_t newSize);
+
 		void Map(void** data, size_t begin, size_t end);
 		void Unmap(size_t begin, size_t end);
 
+		//Slowly Removing...
 		void UploadData(void* data, size_t size, size_t start, size_t end);
 		void UploadPersistent(void* dst, const void* src, size_t size);
 
+		//Use these instead...
 		template<typename T> 
 		void UploadData(const std::span<T>& src) {
 #ifdef _DEBUG
@@ -99,16 +103,10 @@ namespace RHI
 			Unmap(0, 0);
 		}	
 
-		ID3D12Resource* GetResource() const{
-			return resource.Get();
-		}
-		ID3D12Resource** GetResourceAddress() {
-			return resource.GetAddressOf();
-		}
+		ID3D12Resource* GetResource() const;
+		ID3D12Resource** GetResourceAddress();
 
-		void SetState(D3D12_RESOURCE_STATES newState){
-			state = newState;
-		}
+		void SetState(D3D12_RESOURCE_STATES newState);
 
 		DescriptorHeap::Descriptor GetSRV() const;
 		DescriptorHeap::Descriptor GetCBV() const;
@@ -117,19 +115,26 @@ namespace RHI
 		D3D12_VERTEX_BUFFER_VIEW* GetVertexBufferView();
 		D3D12_INDEX_BUFFER_VIEW* GetIndexBufferView();
 
-		D3D12_RESOURCE_STATES GetState()const { return state; }
-		size_t GetSize()const { return size; }
-		BufferUsage GetUsage()const { return usage; }
+		D3D12_RESOURCE_STATES GetState()const;
 
-	private:
+		size_t GetSize()const;
+		uint32_t GetStride()const;
+		BufferUsage GetUsage()const;
+
+	protected:
+		Device::Ref _device;
 		ComPtr<ID3D12Resource> resource;
 
 		size_t size;
+		uint32_t stride;
+
 		BufferUsage usage;
 		D3D12_RESOURCE_STATES state;
 
+		DescriptorHeap::Ref parentHeap;
 		DescriptorHeap::Descriptor cbv_uav;
 		DescriptorHeap::Descriptor srv;
+
 		D3D12_CONSTANT_BUFFER_VIEW_DESC cBufferViewDesc;
 
 		D3D12_VERTEX_BUFFER_VIEW vertexBufferView;

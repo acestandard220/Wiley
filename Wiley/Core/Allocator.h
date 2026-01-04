@@ -22,7 +22,7 @@ namespace Wiley {
 	//This struct is a generic representation of a memory block and is used by the freelist to make it indepent of where the memory sits incase of reallocations.
 	struct MemoryBlockRaw {
 		uint32_t offset;
-		uint32_t size;
+		uint32_t size; //byte size
 	};
 
 	template<typename T>
@@ -30,22 +30,23 @@ namespace Wiley {
 		class FreeList {
 		public:
 			struct SpanCompare {
-				bool operator()(const MemoryBlock<T>& a, const MemoryBlock<T>& b) const {
-					return a.data() < b.data();
+				bool operator()(const MemoryBlockRaw& a, const MemoryBlockRaw& b) const {
+					return a.offset < b.offset;
 				}
 			};
+
 			void Optimize() {
 				if (freelist.size() < 2) return;
 
-				std::set<MemoryBlock<T>, SpanCompare> merged;
+				std::set<MemoryBlockRaw, SpanCompare> merged;
 				auto it = freelist.begin();
-				MemoryBlock<T> current = *it;
+				MemoryBlockRaw current = *it;
 				++it;
 				
 				while (it != freelist.end()) {
-					void* currentEnd = (uint8_t*)current.data() + current.size_bytes();
-					if (currentEnd == it->data()) {
-						current = MemoryBlock<T>(current.data(), current.size() + it->size());
+					uint32_t currentEnd = current.offset + current.size;
+					if (currentEnd == it->offset) {
+						current = MemoryBlockRaw(current.offset, current.size + it->size);
 					}
 					else {
 						merged.insert(current);
@@ -57,7 +58,7 @@ namespace Wiley {
 				freelist = std::move(merged);
 			}
 
-			std::set<MemoryBlock<T>, SpanCompare> freelist;
+			std::set<MemoryBlockRaw, SpanCompare> freelist;
 		};
 
 	public:
@@ -126,10 +127,10 @@ namespace Wiley {
 				return false;
 
 			basePtr = newBasePtr;
-			topPtr = basePtr + oldTopPtrOffset;
+			topPtr = (T*)basePtr + oldTopPtrOffset;
 
 			this->nElement = nElement;
-			capacity(sizeof(T) * nElement);
+			capacity = (sizeof(T) * nElement);
 
 			return true;
 		}
@@ -143,24 +144,26 @@ namespace Wiley {
 			size_t reqSize = nElement * elementSize;
 
 			for (auto it = freelist.freelist.begin(); it != freelist.freelist.end(); ++it) {
-				if (it->size_bytes() >= reqSize) {
-					void* ptr = it->data();
-					if (it->size_bytes() == reqSize) {
+				if (it->size >= reqSize) {
+					uint32_t ptr = it->offset;
+					if (it->size == reqSize) {
 						freelist.freelist.erase(it);
 					}
 					else {
-						MemoryBlock<T> modified = MemoryBlock<T>(it->data() + reqSize, it->size_bytes() - reqSize);
+						MemoryBlockRaw modified = MemoryBlockRaw(it->offset + reqSize, it->size - reqSize);
 						freelist.freelist.erase(it);
 						freelist.freelist.insert(modified);
 					}
-					return MemoryBlock<T>((T*)ptr, static_cast<uint32_t>(reqSize));
+					return MemoryBlock<T>((T*)basePtr + ptr, static_cast<uint32_t>(reqSize));
 				}
 			}
 
 			if (used + reqSize > capacity) {
-				WILEY_DEBUGBREAK;
-				std::cout << "Not enough memory for allocation." << std::endl;
-				return { (T*)topPtr, 0 };
+				if (!Reallocate(this->nElement + (2 * nElement))) {
+					WILEY_DEBUGBREAK;
+					std::cout << "Not enough memory for allocation." << std::endl;
+					return { (T*)topPtr, 0 };
+				}
 			}
 
 			void* returnPtr = topPtr;
@@ -199,7 +202,8 @@ namespace Wiley {
 				return true;
 			}
 
-			freelist.freelist.insert(block);
+			MemoryBlockRaw blkRaw(block.data() - basePtr, block.size_bytes());
+			freelist.freelist.insert(blkRaw);
 			freelist.Optimize();
 		}
 

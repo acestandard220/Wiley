@@ -110,14 +110,12 @@ namespace Wiley
 			///		A Resource::Ref that refers to the loaded resource (may be empty or a nullptr if loading fails).
 			///		It will return a reference to a resource if it has already been loaded.
 			/// </returns>
-			template<typename ResourceClass>
-				requires IsResourceType<ResourceClass>
+			template<IsResourceType ResourceClass>
 			Resource::Ref LoadResource(filespace::filepath path, ResourceLoadDesc& loadDesc);
 
 			void Cache(Resource::Ref resource, const ResourceDesc& resourceDesc, const UUID& id);
 
-			template<typename ResourceClass>
-				requires IsResourceType<ResourceClass>
+			template<IsResourceType ResourceClass>
 			std::shared_ptr<ResourceClass> GetResource(UUID id) {
 				if (resources.find(id) == resources.end())
 				{
@@ -127,8 +125,7 @@ namespace Wiley
 				return std::static_pointer_cast<ResourceClass>(resources[id]);
 			}
 
-			template<typename ResourceClass>
-				requires IsResourceType<ResourceClass>
+			template<IsResourceType ResourceClass>
 			filespace::filepath GetResourcePath(UUID id) {
 				auto resource = GetResource<ResourceClass>(id);
 				if (!resource) {
@@ -138,8 +135,7 @@ namespace Wiley
 				return resource->path;
 			}
 
-			template<typename ResourceClass>
-				requires IsResourceType<ResourceClass>
+			template<IsResourceType ResourceClass>
 			std::string GetResourceName(UUID id) {
 				auto resource = GetResource<ResourceClass>(id);
 				if (!resource) {
@@ -162,8 +158,7 @@ namespace Wiley
 				return GetResourceType(resourceID) == type;
 			}
 
-			template<typename ResourceClass>
-				requires IsResourceType<ResourceClass>
+			template<IsResourceType ResourceClass>
 			std::vector<std::shared_ptr<ResourceClass>> GetResourceOfType(ResourceType type)
 			{
 				auto filtered = resources
@@ -176,16 +171,14 @@ namespace Wiley
 				return { filtered.begin(), filtered.end() };
 			}
 
-			template<typename ResourceClass>
-				requires IsResourceType<ResourceClass>
+			template<IsResourceType ResourceClass>
 			void UseResource(UUID uuid, int n = 1) {
 				auto resource = GetResource<ResourceClass>(uuid);
 				if (!resource)return;
 				resource->refCount += n;
 			}
 
-			template<typename ResourceClass>
-				requires IsResourceType<ResourceClass>
+			template<IsResourceType ResourceClass>
 			void UnuseResource(UUID uuid, int n = 1) {
 				auto resource = GetResource<ResourceClass>(uuid);
 				if (!resource)return;

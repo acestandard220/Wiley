@@ -31,11 +31,11 @@ namespace RHI
 
     Buffer::Buffer(Device::Ref device, BufferUsage usage, bool persistent, size_t size, uint64_t stride,
         const std::string& name, DescriptorHeap::Ref heap)
-        : usage(usage), size(size), cBufferViewDesc({}), indexBufferView({}),vertexBufferView({})
+        : usage(usage), size(size), stride(stride), cBufferViewDesc({}), indexBufferView({}), vertexBufferView({}), _device(device), parentHeap(heap)
     {
         CD3DX12_RESOURCE_DESC desc = CD3DX12_RESOURCE_DESC::Buffer(size, GetResourceFlag(usage));
         CD3DX12_HEAP_PROPERTIES properties = CD3DX12_HEAP_PROPERTIES(GetHeapType(usage));
-
+        
         switch (usage)
         {
             case BufferUsage::Constant:
@@ -141,7 +141,126 @@ namespace RHI
 	Buffer::~Buffer()
 	{
 		resource.Reset();
+
+        if (cbv_uav.valid) {
+            parentHeap->Deallocate(cbv_uav.heapIndex);
+        }
+
+        if (srv.valid) {
+            parentHeap->Deallocate(srv.heapIndex);
+        }
 	}
+
+    void Buffer::Resize(size_t newSize)
+    {
+        if (newSize == size || newSize <= 0) {
+            return;
+        }
+
+        size = newSize;
+
+        D3D12_RESOURCE_DESC resourceDesc = resource->GetDesc();
+        
+        D3D12_HEAP_PROPERTIES heapProperties;
+        resource->GetHeapProperties(&heapProperties, nullptr);
+
+        resource.Reset();
+
+        HRESULT result = _device->GetNative()->CreateCommittedResource(&heapProperties, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_COMMON, nullptr, IID_PPV_ARGS(&resource));
+        if (FAILED(result)) {
+            std::cout << "Failed to resize buffer. Buffer is now invalid." << std::endl;
+            return;
+        }
+
+        if (usage == BufferUsage::Vertex) {
+            vertexBufferView.BufferLocation = resource->GetGPUVirtualAddress();
+            vertexBufferView.SizeInBytes = static_cast<UINT>(size);
+            vertexBufferView.StrideInBytes = static_cast<UINT>(stride);
+        }
+        else if (usage == BufferUsage::Index) {
+            indexBufferView.BufferLocation = resource->GetGPUVirtualAddress();
+            indexBufferView.Format = DXGI_FORMAT_R32_UINT;
+            indexBufferView.SizeInBytes = static_cast<UINT>(size);
+        }
+        else if (usage == BufferUsage::Constant) {
+            // Align to 256 bytes
+            UINT alignedSize = static_cast<UINT>((size + 255) & ~255);
+
+            cBufferViewDesc.BufferLocation = resource->GetGPUVirtualAddress();
+            cBufferViewDesc.SizeInBytes = alignedSize;
+
+            if (parentHeap)
+            {
+                parentHeap->Deallocate(cbv_uav.heapIndex);
+
+                cbv_uav = parentHeap->Allocate();
+                if (cbv_uav.valid)
+                {
+                    _device->GetNative()->CreateConstantBufferView(
+                        &cBufferViewDesc, cbv_uav.cpuHandle
+                    );
+                }
+                else {
+                    std::cout << "Invalid Descriptor Handle. Failed to create Constant Buffer View." << std::endl;
+                }
+            }
+        }
+        else if (usage == BufferUsage::ComputeStorage) {
+            D3D12_UNORDERED_ACCESS_VIEW_DESC desc{};
+            desc.Format = DXGI_FORMAT_UNKNOWN;
+            desc.ViewDimension = D3D12_UAV_DIMENSION_BUFFER;
+            desc.Buffer = {
+                .FirstElement = 0,
+                .NumElements = (stride) ? UINT(size / static_cast<size_t>(stride)) : UINT(size),
+                .StructureByteStride = UINT(stride),
+                .CounterOffsetInBytes = 0,
+                .Flags = D3D12_BUFFER_UAV_FLAG_NONE,
+            };
+
+            if (parentHeap)
+            {
+                parentHeap->Deallocate(cbv_uav.heapIndex);
+
+                cbv_uav = parentHeap->Allocate();
+                if (cbv_uav.valid)
+                {
+                    _device->GetNative()->CreateUnorderedAccessView(
+                        resource.Get(), nullptr, &desc, cbv_uav.cpuHandle
+                    );
+                }
+                else {
+                    std::cout << "Invalid Descriptor Handle. Failed to create Unordered Access View." << std::endl;
+                }
+            }
+        }
+
+        if (usage != BufferUsage::Constant)
+        {
+            D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+            srvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
+            srvDesc.Format = DXGI_FORMAT_UNKNOWN;
+            srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+
+            srvDesc.Buffer.NumElements = (stride) ? UINT(size / static_cast<size_t>(stride)) : UINT(size);
+            srvDesc.Buffer.StructureByteStride = static_cast<size_t>(stride);
+            srvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
+
+            if (parentHeap)
+            {
+                parentHeap->Deallocate(srv.heapIndex);
+
+                srv = parentHeap->Allocate();
+                if (!srv.valid)
+                {
+                    std::cout << "Failed to allocate space for Buffer Shader Resource View." << std::endl;
+                    return;
+                }
+                _device->GetNative()->CreateShaderResourceView(resource.Get(), &srvDesc, srv.cpuHandle);
+            }
+        }
+
+        //WILEY_NAME_D3D12_OBJECT(resource, name);
+    }
 
 	void Buffer::Map(void** data, size_t begin, size_t end)
 	{
@@ -188,6 +307,18 @@ namespace RHI
         memcpy(dst, src, size);
     }
     
+    ID3D12Resource* Buffer::GetResource() const {
+        return resource.Get();
+    }
+
+    ID3D12Resource** Buffer::GetResourceAddress() {
+        return resource.GetAddressOf();
+    }
+
+    void Buffer::SetState(D3D12_RESOURCE_STATES newState) {
+        state = newState;
+    }
+
     DescriptorHeap::Descriptor Buffer::GetSRV() const
     {
         if (usage == BufferUsage::Constant)
@@ -231,5 +362,24 @@ namespace RHI
         if (usage != BufferUsage::Index)
             return nullptr;
         return &indexBufferView;
+    }
+
+    D3D12_RESOURCE_STATES Buffer::GetState() const 
+    { 
+        return state; 
+    }
+    
+    size_t Buffer::GetSize() const 
+    { 
+        return size; 
+    }
+    
+    uint32_t Buffer::GetStride() const
+    {
+        return stride;
+    }
+    BufferUsage Buffer::GetUsage() const 
+    { 
+        return usage; 
     }
 }

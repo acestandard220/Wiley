@@ -13,6 +13,7 @@
 #include "ComputePipeline.h"
 #include "IndirectCommandBuffer.h"
 #include "CubeMap.h"
+#include "UploadBuffer.h"
 
 #include "../Core/Window.h"
 
@@ -52,6 +53,9 @@ namespace RHI
 
 		WILEY_NODISCARD Buffer::Ref CreateUploadBuffer(uint64_t size, uint64_t stride,const std::string& name = "UploadBuffer");
 		WILEY_NODISCARD Buffer::Ref CreateComputeStorageBuffer(uint64_t size, uint64_t stride, const std::string& name = "ComputeStorageBuffer");
+
+		template<typename T>
+		WILEY_NODISCARD UploadBuffer<T>::Ref CreateUploadBuffer(size_t size, uint32_t stride, const std::string& name);
 
 		WILEY_NODISCARD Buffer::Ref CreateVertexBuffer(uint64_t size, uint64_t stride, const std::string& name = "VertexBuffer");
 		WILEY_NODISCARD Buffer::Ref CreateIndexBuffer(uint64_t size, uint64_t stride, const std::string& name = "IndexBuffer");
@@ -141,5 +145,11 @@ namespace RHI
 		Sampler::Ref linearSampler;
 
 	};
+
+	template<typename T>
+	WILEY_NODISCARD UploadBuffer<T>::Ref RenderContext::CreateUploadBuffer(size_t size, uint32_t stride, const std::string& name)
+	{
+		return std::make_shared<UploadBuffer<T>>(device, size, stride, name);
+	}
 }
 

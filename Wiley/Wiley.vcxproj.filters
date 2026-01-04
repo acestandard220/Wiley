@@ -537,6 +537,9 @@
     <ClCompile Include="ext\ImGui\imgui_node_editor_api.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RHI\UploadBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RHI\SwapChain.h">
@@ -1548,6 +1551,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ext\ImGui\imgui_node_editor_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RHI\UploadBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

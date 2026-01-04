@@ -361,6 +361,7 @@
     <ClCompile Include="Scene\Systems\MeshFilterSystem.cpp" />
     <ClCompile Include="Scene\Systems\TransformSystem.cpp" />
     <ClCompile Include="Renderer\ShadowMapManager.cpp" />
+    <ClCompile Include="RHI\UploadBuffer.cpp" />
     <ClCompile Include="Wiley.cpp" />
     <ClCompile Include="Core\Window.cpp" />
   </ItemGroup>
@@ -702,6 +703,7 @@
     <ClInclude Include="Scene\Systems\MeshFilterSystem.h" />
     <ClInclude Include="Scene\Systems\TransformSystem.h" />
     <ClInclude Include="Renderer\ShadowMapManager.h" />
+    <ClInclude Include="RHI\UploadBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EM.toml" />
