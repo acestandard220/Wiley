@@ -154,9 +154,6 @@ namespace Renderer3D {
 			drawCommandCache.clear();
 			drawCommandCache.resize(meshInstanceBaseData.size());
 
-			auto vertexPoolBase = resourceCache->GetVertexPoolBasePtr();
-			auto indexPoolBase = resourceCache->GetIndexPoolBasePtr();
-
 			for (int i = 0; i < meshInstanceBaseData.size(); i++) {
 				Wiley::Mesh* _meshres = meshResources[i].get();
 

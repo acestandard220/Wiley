@@ -25,10 +25,11 @@ namespace Renderer3D {
 		RHI::CommandList::Ref copyCommandList = rctx->GetCopyCurrentCommandList();
 		copyCommandList->Begin({});
 
-		std::shared_ptr<Wiley::ResourceCache> resourceCache = _scene->GetResourceCache();
+		const auto resourceCache = _scene->GetResourceCache();
 
-		auto vertexPool = resourceCache->GetVertexPool();
-		auto indexPool = resourceCache->GetIndexPool();
+		const auto& vertexPool = resourceCache->GetVertexUploadBuffer();
+		const auto& indexPool = resourceCache->GetIndexUploadBuffer();
+
 		auto mtlDataPool = resourceCache->GetMaterialDataPool();
 
 		RHI::Buffer::Ref uploadMaterialData = frameGraph->GetOutputBufferResource(pass, 2);
@@ -47,8 +48,8 @@ namespace Renderer3D {
 
 		//Copy Data to default buffers.
 		{
-			copyCommandList->CopyBufferToBuffer(vertexUploadBuffer, 0, vertexBuffer[graphicsRingIndex], vertexPool->GetReach());
-			copyCommandList->CopyBufferToBuffer(indexUploadBuffer, 0, indexBuffer[graphicsRingIndex], indexPool->GetReach());
+			copyCommandList->CopyBufferToBuffer(vertexUploadBuffer, 0, vertexBuffer[graphicsRingIndex], vertexPool->GetMemoryReach());
+			copyCommandList->CopyBufferToBuffer(indexUploadBuffer, 0, indexBuffer[graphicsRingIndex], indexPool->GetMemoryReach());
 			copyCommandList->CopyBufferToBuffer(uploadMaterialData, 0, materialDataBuffer, mtlDataPool->GetReach());
 		}
 

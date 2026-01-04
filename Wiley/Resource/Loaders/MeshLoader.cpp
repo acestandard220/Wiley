@@ -171,7 +171,7 @@ namespace Wiley {
             std::cout << "[LOD] resourceCache is null, aborting LOD generation.\n";
             return;
         }
-        if (!resourceCache->indexPool) {
+        if (!resourceCache->indexUploadBuffer) {
             std::cout << "[LOD] indexPool is null, aborting LOD generation.\n";
             return;
         }
@@ -207,7 +207,7 @@ namespace Wiley {
 
             WILEY_MUSTBE_UINTSIZE(actualCount);
 
-            MemoryBlock<UINT> lodIndexBlock = resourceCache->indexPool->Allocate(static_cast<uint32_t>(actualCount));
+            MemoryBlock<UINT> lodIndexBlock = resourceCache->indexUploadBuffer->Allocate(static_cast<uint32_t>(actualCount));
 
             memcpy(lodIndexBlock.data(), lodIndices.data(), actualCount * sizeof(uint32_t));
 
@@ -376,8 +376,8 @@ namespace Wiley {
 
        //GenerateLevelOfDetail(loadDesc.desc.mesh.decayType, loadDesc.desc.mesh.lodCount, vertices, indices, meshData);
 
-        MemoryBlock<Vertex> vertexMemBlk = resourceCache->vertexPool->Allocate(vertices.size());
-        MemoryBlock<UINT> indexMemBlk = resourceCache->indexPool->Allocate(indices.size());
+        MemoryBlock<Vertex> vertexMemBlk = resourceCache->vertexUploadBuffer->Allocate(vertices.size());
+        MemoryBlock<UINT> indexMemBlk = resourceCache->indexUploadBuffer->Allocate(indices.size());
 
         memcpy(vertexMemBlk.data(), vertices.data(), vertexMemBlk.size_bytes());
         memcpy(indexMemBlk.data(), indices.data(), indexMemBlk.size_bytes());
@@ -385,8 +385,8 @@ namespace Wiley {
        /* meshData.vertexBlock = vertexMemBlk;
         meshData.indexBlock = indexMemBlk;*/
 
-        meshData.vertexOffset = resourceCache->vertexPool->GetIndex(vertexMemBlk);
-        meshData.indexOffset = resourceCache->indexPool->GetIndex(indexMemBlk);
+        meshData.vertexOffset = resourceCache->vertexUploadBuffer->GetIndexOffBasePointer(vertexMemBlk);
+        meshData.indexOffset = resourceCache->indexUploadBuffer->GetIndexOffBasePointer(indexMemBlk);
 
         return meshRef;
     }
@@ -419,8 +419,8 @@ namespace Wiley {
         fileHeader.indexCount = meshResource->indexCount;
         fileHeader.vertexCount = meshResource->vertexCount;
 
-        MemoryBlock<Vertex> vertexBlock = MemoryBlock<Vertex>(resourceCache->vertexPool->GetPointerByIndex(meshResource->vertexOffset), meshResource->vertexCount);
-        MemoryBlock<UINT> indexBlock = MemoryBlock<UINT>(resourceCache->indexPool->GetPointerByIndex(meshResource->indexOffset), meshResource->indexCount);
+        MemoryBlock<Vertex> vertexBlock = MemoryBlock<Vertex>(resourceCache->vertexUploadBuffer->GetPointerByIndex(meshResource->vertexOffset), meshResource->vertexCount);
+        MemoryBlock<UINT> indexBlock = MemoryBlock<UINT>(resourceCache->indexUploadBuffer->GetPointerByIndex(meshResource->indexOffset), meshResource->indexCount);
 
         fileHeader.aabbOffset = WILEY_SIZEOF(_MeshFileHead) + (WILEY_SIZEOF(SubMesh) * fileHeader.nSubMeshes)
             + vertexBlock.size_bytes() + indexBlock.size_bytes();
@@ -722,14 +722,14 @@ namespace Wiley {
 
         OptimizeMesh(vertices, indices);
 
-        MemoryBlock<Vertex> vertexMemBlk = resourceCache->vertexPool->Allocate(vertices.size());
-        MemoryBlock<UINT> indexMemBlk = resourceCache->indexPool->Allocate(indices.size());
+        MemoryBlock<Vertex> vertexMemBlk = resourceCache->vertexUploadBuffer->Allocate(vertices.size());
+        MemoryBlock<UINT> indexMemBlk = resourceCache->indexUploadBuffer->Allocate(indices.size());
 
         memcpy(vertexMemBlk.data(), vertices.data(), vertexMemBlk.size_bytes());
         memcpy(indexMemBlk.data(), indices.data(), indexMemBlk.size_bytes());
 
-        meshData.vertexOffset = resourceCache->vertexPool->GetIndex(vertexMemBlk);
-        meshData.indexOffset = resourceCache->indexPool->GetIndex(indexMemBlk);
+        meshData.vertexOffset = resourceCache->vertexUploadBuffer->GetIndexOffBasePointer(vertexMemBlk);
+        meshData.indexOffset = resourceCache->indexUploadBuffer->GetIndexOffBasePointer(indexMemBlk);
 
         meshData.vertexCount = vertices.size();
         meshData.indexCount = indices.size();

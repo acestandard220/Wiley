@@ -142,11 +142,11 @@ namespace RHI
 	{
 		resource.Reset();
 
-        if (cbv_uav.valid) {
+        if (cbv_uav.parentHeap) {
             parentHeap->Deallocate(cbv_uav.heapIndex);
         }
 
-        if (srv.valid) {
+        if (srv.parentHeap) {
             parentHeap->Deallocate(srv.heapIndex);
         }
 	}

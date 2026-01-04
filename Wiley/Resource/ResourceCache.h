@@ -208,21 +208,8 @@ namespace Wiley
 			/// </returns>
 			const ResourceCacheMeta& GetCacheMeta()const { return resourceCacheMeta; }
 			
-			WILEY_NODISCARD const Vertex* GetVertexPoolBasePtr()const {
-				return (Vertex*)vertexPool->GetBasePtr();
-			}
-
-			WILEY_NODISCARD const UINT* GetIndexPoolBasePtr()const {
-				return (UINT*)indexPool->GetBasePtr();
-			}
-
-			std::shared_ptr<LinearAllocator<Vertex>> GetVertexPool()const {
-				return vertexPool;
-			}
-
-			std::shared_ptr<LinearAllocator<UINT>> GetIndexPool()const {
-				return indexPool;
-			}
+			WILEY_NODISCARD const RHI::UploadBuffer<Vertex>::Ref& GetVertexUploadBuffer()const;
+			WILEY_NODISCARD const RHI::UploadBuffer<UINT>::Ref& GetIndexUploadBuffer()const;
 
 			WILEY_NODISCARD std::shared_ptr<LinearAllocator<MaterialData>> GetMaterialDataPool()const {
 				return materialDataPool;
@@ -232,8 +219,6 @@ namespace Wiley
 				return GetImageTextureDescriptorManager(type)->descriptors[0];
 			}
 
-			RHI::Buffer::Ref& GetVertexUploadBuffer() { return vertexUploadBuffer; }
-			RHI::Buffer::Ref& GetIndexUploadBuffer(){ return indexUploadBuffer; }
 
 			WILEY_NODISCARD bool IsVertexIndexDataDiry()const { return isVertexIndexDataDirty; }
 			void MakeVertexIndexDataDirty() { isVertexIndexDataDirty = true; }
@@ -255,14 +240,9 @@ namespace Wiley
 			std::unordered_map<UUID, Resource::Ref> resources;
 			std::unordered_map<filespace::filepath, UUID> pathMap;
 
-			//Resource Data Pools
 
-			//Vertex and index pool don't allocate any memory but only manager the GPU memory from the upload buffer below.
-			std::shared_ptr<LinearAllocator<Vertex>> vertexPool;
-			std::shared_ptr<LinearAllocator<UINT>> indexPool;
-
-			RHI::Buffer::Ref vertexUploadBuffer;
-			RHI::Buffer::Ref indexUploadBuffer;
+			RHI::UploadBuffer<Vertex>::Ref vertexUploadBuffer;
+			RHI::UploadBuffer<UINT>::Ref indexUploadBuffer;
 
 			std::shared_ptr<LinearAllocator<MaterialData>> materialDataPool;
 
