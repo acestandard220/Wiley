@@ -16,9 +16,7 @@ namespace Renderer3D {
 		arraySrv = rctx->AllocateCBV_SRV_UAV(MAX_LIGHTS);
 
 		//Tears in my eyes... 400KB...
-		lightViewProjections = std::make_unique<LinearAllocator<DirectX::XMFLOAT4X4>>(MAX_LIGHTS * 6);
-		lightViewProjections->Initialize();
-
+		lightViewProjectionUploadBuffer = rctx->CreateUploadBuffer<DirectX::XMFLOAT4X4>(WILEY_BUFFER_SIZE_BYTES(DirectX::XMFLOAT4X4, MAX_LIGHTS * 6), WILEY_SIZEOF(DirectX::XMFLOAT4X4), "LightViewProjectionUploadBuffer");
 	}
 
 	ShadowMapManager::~ShadowMapManager()
@@ -100,7 +98,7 @@ namespace Renderer3D {
 			}
 		}
 
-		lightViewProjections->Deallocate(data.vp, matrixAllocCount);
+		lightViewProjectionUploadBuffer->Deallocate(data.vp, matrixAllocCount);
 
 		return;
 	}
@@ -157,14 +155,9 @@ namespace Renderer3D {
 		return arraySrv[0];
 	}
 
-	WILEY_NODISCARD Span<DirectX::XMFLOAT4X4> ShadowMapManager::GetViewProjectionsHead() const
-	{
-		return Span<DirectX::XMFLOAT4X4>((DirectX::XMFLOAT4X4*)lightViewProjections->GetBasePtr(), MAX_LIGHTS * 6);
-	}
-
 	DirectX::XMFLOAT4X4* ShadowMapManager::GetLightProjection(uint32_t index) const
 	{
-		return lightViewProjections->GetPointerByIndex(index);
+		return lightViewProjectionUploadBuffer->GetPointerByIndex(index);
 	}
 
 	RHI::Texture::Ref& ShadowMapManager::GetDummyDepthTexture()
@@ -283,8 +276,8 @@ namespace Renderer3D {
 			}
 		}
 
-		auto memBlk = lightViewProjections->Allocate(allocCount);
-		return lightViewProjections->GetIndex(memBlk);
+		auto memBlk = lightViewProjectionUploadBuffer->Allocate(allocCount);
+		return lightViewProjectionUploadBuffer->GetIndexOffBasePointer(memBlk);
 	}
 
 }

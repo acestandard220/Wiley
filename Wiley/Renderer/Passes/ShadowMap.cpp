@@ -65,7 +65,7 @@ namespace Renderer3D {
 		RHI::Buffer::Ref meshInstanceIndex = frameGraph->GetInputBufferResource(pass, 2);
 		RHI::Buffer::Ref meshInstanceBaseBuffer = frameGraph->GetInputBufferResource(pass, 3);
 
-		RHI::Buffer::Ref uploadLightViewProjections = frameGraph->GetInputBufferResource(pass, 4);
+		//RHI::Buffer::Ref uploadLightViewProjections = frameGraph->GetInputBufferResource(pass, 4);
 		RHI::Buffer::Ref lightViewProjections = frameGraph->GetInputBufferResource(pass, 5);
 
 		UINT graphicsRingIndex = rctx->GetBackBufferIndex();
@@ -82,11 +82,10 @@ namespace Renderer3D {
 
 		if (shadowMapManager->GetDirtyEntities().size() || shadowMapManager->GetDirtyPointLight().size() || shadowMapManager->IsAllLightEntityDirty())
 		{
-			const auto span = shadowMapManager->GetViewProjectionsHead();
-			uploadLightViewProjections->UploadData<DirectX::XMFLOAT4X4>(span);
+			const auto& lightVPUploadBuffer = shadowMapManager->GetLightViewProjectionUploadBuffer();
 
 			commandList->BufferBarrier(lightViewProjections, D3D12_RESOURCE_STATE_COPY_DEST);
-			commandList->CopyBufferToBuffer(uploadLightViewProjections, 0, lightViewProjections, span.size_bytes(), false);
+			commandList->CopyBufferToBuffer(lightVPUploadBuffer, 0, lightViewProjections, lightVPUploadBuffer->GetMemoryReach(), false);
 			commandList->BufferBarrier(lightViewProjections, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE);
 		}
 

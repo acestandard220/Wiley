@@ -46,8 +46,8 @@ namespace Renderer3D
 			WILEY_NODISCARD RHI::Texture::Ref GetDepthMap(int index)const;
 			WILEY_NODISCARD RHI::DescriptorHeap::Descriptor GetCubeSRVHead()const;
 			WILEY_NODISCARD RHI::DescriptorHeap::Descriptor GetArraySRVHead()const;
-			WILEY_NODISCARD Span<DirectX::XMFLOAT4X4> GetViewProjectionsHead()const;
 
+			auto& GetLightViewProjectionUploadBuffer() { return lightViewProjectionUploadBuffer; }
 			DirectX::XMFLOAT4X4* GetLightProjection(uint32_t index)const;
 			RHI::Texture::Ref& GetDummyDepthTexture();
 
@@ -78,7 +78,8 @@ namespace Renderer3D
 			Queue<int> arrayfreelist;
 			int arrayPtr;
 
-			std::unique_ptr<Wiley::LinearAllocator<DirectX::XMFLOAT4X4>> lightViewProjections;
+			//std::unique_ptr<Wiley::LinearAllocator<DirectX::XMFLOAT4X4>> lightViewProjections;
+			RHI::UploadBuffer<DirectX::XMFLOAT4X4>::Ref lightViewProjectionUploadBuffer;
 
 			Queue<entt::entity> dirtyLightEntities;
 			Queue<entt::entity> dirtyPointLights;
