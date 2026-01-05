@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRTDBG_MAP_ALLOC;TRACY_ENABLE;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp23</LanguageStandard>
       <AdditionalIncludeDirectories>P:\DevTools\DX12 Helper;$(ProjectDir)ext\OpTick\src;$(ProjectDir)ext\ImGui;$(ProjectDir)ext;$(ProjectDir)ext\sol</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -126,7 +126,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>TRACY_ENABLE;_CRT_SECURE_NO_WARNINGS;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp23</LanguageStandard>
       <AdditionalIncludeDirectories>P:\DevTools\DX12 Helper;$(ProjectDir)ext\OpTick\src;$(ProjectDir)ext\ImGui;$(ProjectDir)ext;$(ProjectDir)ext\sol</AdditionalIncludeDirectories>
       <Optimization>MaxSpeed</Optimization>
       <TreatSpecificWarningsAsErrors>%(TreatSpecificWarningsAsErrors)</TreatSpecificWarningsAsErrors>
@@ -148,15 +148,11 @@
     <ClCompile Include="Editor\Panels\SceneProperties.cpp" />
     <ClCompile Include="Editor\Panels\Viewport.cpp" />
     <ClCompile Include="ext\DX12 Helper\DDSTextureLoader.cpp" />
-    <ClCompile Include="ext\ImGui\crude_json.cpp" />
     <ClCompile Include="ext\ImGui\imgui.cpp" />
-    <ClCompile Include="ext\ImGui\imgui_canvas.cpp" />
     <ClCompile Include="ext\ImGui\imgui_demo.cpp" />
     <ClCompile Include="ext\ImGui\imgui_draw.cpp" />
     <ClCompile Include="ext\ImGui\imgui_impl_dx12.cpp" />
     <ClCompile Include="ext\ImGui\imgui_impl_win32.cpp" />
-    <ClCompile Include="ext\ImGui\imgui_node_editor.cpp" />
-    <ClCompile Include="ext\ImGui\imgui_node_editor_api.cpp" />
     <ClCompile Include="ext\ImGui\imgui_tables.cpp" />
     <ClCompile Include="ext\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Editor\Panels\Panel.cpp" />
@@ -379,17 +375,11 @@
     <ClInclude Include="Editor\Panels\Inspector.h" />
     <ClInclude Include="Editor\Panels\SceneProperties.h" />
     <ClInclude Include="Editor\Panels\Viewport.h" />
-    <ClInclude Include="ext\ImGui\crude_json.h" />
     <ClInclude Include="ext\ImGui\imconfig.h" />
     <ClInclude Include="ext\ImGui\imgui.h" />
-    <ClInclude Include="ext\ImGui\imgui_bezier_math.h" />
-    <ClInclude Include="ext\ImGui\imgui_canvas.h" />
-    <ClInclude Include="ext\ImGui\imgui_extra_math.h" />
     <ClInclude Include="ext\ImGui\imgui_impl_dx12.h" />
     <ClInclude Include="ext\ImGui\imgui_impl_win32.h" />
     <ClInclude Include="ext\ImGui\imgui_internal.h" />
-    <ClInclude Include="ext\ImGui\imgui_node_editor.h" />
-    <ClInclude Include="ext\ImGui\imgui_node_editor_internal.h" />
     <ClInclude Include="ext\ImGui\imstb_rectpack.h" />
     <ClInclude Include="ext\ImGui\imstb_textedit.h" />
     <ClInclude Include="ext\ImGui\imstb_truetype.h" />
@@ -707,9 +697,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="EM.toml" />
-    <None Include="ext\ImGui\imgui_bezier_math.inl" />
-    <None Include="ext\ImGui\imgui_extra_math.inl" />
-    <None Include="ext\ImGui\imgui_node_editor_internal.inl" />
     <None Include="framegraph.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
