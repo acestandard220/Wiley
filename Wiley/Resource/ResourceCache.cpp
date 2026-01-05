@@ -11,11 +11,6 @@ namespace Wiley {
 	Resource::Ref defaultRoughnessMap = nullptr;
 
 	Material::Ref defaultMaterial = nullptr;
-	Material::Ref grayRockMaterial = nullptr;
-
-	Resource::Ref defaultCube = nullptr;
-	Resource::Ref defaultSphere = nullptr;
-	Resource::Ref defaultCylinder = nullptr;
 
 	Resource::Ref defaultEnvironmentMap = nullptr;
 
@@ -130,47 +125,6 @@ namespace Wiley {
 			Cache(defaultMaterial, { .type = ResourceType::Material, .path = "Material.toml", .state = ResourceState::NotOnDisk }, WILEY_INVALID_UUID);
 		}
 
-		defaultMaterial;
-		materialLoader->SaveToFile("Material.toml", static_cast<Material*>(defaultMaterial.get()));
-
-		//Default Rock Material
-		{
-			Resource::Ref grayRockDiff = LoadResource<ImageTexture>("P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/Gray Rocks/GrayRocksDiff_2k.png", albedoLoadDesc);
-			Resource::Ref grayRockNormal = LoadResource<ImageTexture>("P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/Gray Rocks/GrayRocksNorGl_2k.png", normalDesc);
-			Resource::Ref grayRockAO = LoadResource<ImageTexture>("P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/Gray Rocks/GrayRocksAO_2k.png", aoLoadDesc);
-			Resource::Ref grayRockRough = LoadResource<ImageTexture>("P:/Projects/VS/Wiley/Wiley/Assets/Default Textures/Gray Rocks/GrayRocksRough_2k.png", roughnessLoadDesc);
-
-			grayRockMaterial = materialLoader->CreateNew("Gray Rock Material.toml");
-			Material* grayRockMtl = static_cast<Material*>(grayRockMaterial.get());
-
-			grayRockMtl->albedoMap = grayRockDiff->GetUUID();
-			grayRockMtl->normalMap = grayRockNormal->GetUUID();
-			grayRockMtl->ambientOcclusionMap = grayRockAO->GetUUID();
-			grayRockMtl->roughnessMap = grayRockRough->GetUUID();
-			grayRockMtl->metaillicMap = defaultMetallicMap->GetUUID();
-
-			MaterialData* grayRockMtlData = grayRockMtl->dataPtr;
-			grayRockMtlData->albedo.mapIndex = static_cast<ImageTexture*>(grayRockDiff.get())->srvIndex;
-			grayRockMtlData->albedo.value = { 1.0f,1.0f,1.0f,1.0f };
-
-			grayRockMtlData->ambientOcclusion.mapIndex = static_cast<ImageTexture*>(grayRockAO.get())->srvIndex;
-			grayRockMtlData->ambientOcclusion.value = 1.0f;
-			grayRockMtlData->ambientOcclusion.valueChannel = TextureChannel::R;
-
-			grayRockMtlData->metallic.mapIndex = static_cast<ImageTexture*>(defaultMetallicMap.get())->srvIndex;
-			grayRockMtlData->metallic.value = 0.0f;
-			grayRockMtlData->metallic.valueChannel = TextureChannel::R;
-
-			grayRockMtlData->normal.mapIndex = static_cast<ImageTexture*>(grayRockNormal.get())->srvIndex;
-			grayRockMtlData->normal.strength = 1.0f;
-
-			grayRockMtlData->roughness.mapIndex = static_cast<ImageTexture*>(grayRockRough.get())->srvIndex;
-			grayRockMtlData->roughness.value = 1.0f;
-			grayRockMtlData->roughness.valueChannel = TextureChannel::R;
-
-			Cache(grayRockMaterial, { .type = ResourceType::Material, .path = "Gray Rock Material.toml", .state = ResourceState::NotOnDisk }, WILEY_INVALID_UUID);
-		}
-
 		{
 			ResourceLoadDesc loadDesc{};
 			loadDesc.extension = FileExtension::HDR;
@@ -179,21 +133,6 @@ namespace Wiley {
 			defaultEnvironmentMap = LoadResource<EnvironmentMap>("P:/Projects/VS/Wiley/Wiley/Assets/Environment Maps/spruit_sunrise_4k.hdr", loadDesc);
 		}
 
-		//Default Meshes
-		/*{
-			ResourceLoadDesc loadDesc{};
-			loadDesc.extension = FileExtension::OBJ;
-
-			defaultCube = LoadResource<Mesh>("Assets/Models/Cube.obj", loadDesc);
-			defaultSphere = LoadResource<Mesh>("Assets/Models/Sphere.obj", loadDesc);
-			defaultCylinder = LoadResource<Mesh>("Assets/Models/Cylinder.obj", loadDesc);
-
-			if (!defaultCube || !defaultCylinder || !defaultCylinder) {
-				std::cout << "Failed to load default meshes." << std::endl;
-				WILEY_DEBUGBREAK;
-			}
-			
-		}*/
 	}
 
 	UINT ResourceCache::GetFreeImageDescriptorIndex(ResourceCache::ImageTextureDescriptorManager* manager)
@@ -299,26 +238,6 @@ namespace Wiley {
 	Material::Ref ResourceCache::GetDefaultMaterial() const
 	{
 		return defaultMaterial;
-	}
-
-	Material::Ref ResourceCache::GetDefaultRockMaterial() const
-	{
-		return grayRockMaterial;
-	}
-
-	Resource::Ref ResourceCache::GetDefaultCube() const
-	{
-		return defaultCube;
-	}
-
-	Resource::Ref ResourceCache::GetDefaultCylinder() const
-	{
-		return defaultCylinder;
-	}
-
-	Resource::Ref ResourceCache::GetDefaultSphere() const
-	{
-		return defaultSphere;
 	}
 
 	Resource::Ref ResourceCache::GetDefaultEnvironmentMap() const

@@ -42,7 +42,6 @@ namespace Wiley
 
 
 		auto defaultMaterial = static_cast<Material*>(resourceCache->GetDefaultMaterial().get());
-		auto grayRockMaterial = static_cast<Material*>(resourceCache->GetDefaultRockMaterial().get());
 
 		{
 			ZoneScopedN("Scene->TestLights");
@@ -88,10 +87,8 @@ namespace Wiley
 			int _i_ = 0;
 			for (int x = 0; x < gridSizeX; ++x)
 			{
-
 				for (int y = 0; y < gridSizeY; ++y)
-				{
-					
+				{		
 					for (int z = 0; z < gridSizeZ; ++z)
 					{
 						Entity sphere = AddModel("P:/Projects/VS/Wiley/Wiley/Assets/Models/Cylinder.obj", loadDesc);
@@ -102,10 +99,7 @@ namespace Wiley
 							z * spacing - offsetZ
 						};
 
-						if (_i_ % 2 == 0)
-							AssignGlobalDefaultMaterial(sphere);
-						else
-							AssignGlobalMaterial(sphere, grayRockMaterial->GetUUID());
+						AssignGlobalDefaultMaterial(sphere);
 						
 						_i_++;
 					}
@@ -224,9 +218,9 @@ namespace Wiley
 		Entity& entity = AddEntity(name);
 
 		LightComponent& lightComponent = entity.AddComponent<LightComponent>();
-		lightComponent.color = { 255.0f, 255.0f, 255.0f };
-		lightComponent.innerRadius = 5.0f;
-		lightComponent.outerRadius = 30.0f;
+		lightComponent.color = { 1.0f, 1.0f, 1.0f};
+		lightComponent.innerRadius = 0.996f; //5.0f Degrees
+		lightComponent.outerRadius = 0.866f; //30.0f
 		lightComponent.position = { 0.0f,3.0f,1.0f };
 		lightComponent.spotDirection = { 0.0f,-1.0f,0.0f };
 		lightComponent.type = type;

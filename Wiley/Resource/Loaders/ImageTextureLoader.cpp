@@ -25,12 +25,12 @@ namespace Wiley {
         if (stbi_is_16_bit(path.string().c_str())) {
             imageTextureRef->bitPerChannel = 16;
 
-            data = stbi_load_16(path.string().c_str(), &width, &height, &nChannel, 0);
+            data = stbi_load_16(path.string().c_str(), &width, &height, &nChannel, 4);
             is16Bit = true;
         }
         else {
             imageTextureRef->bitPerChannel = 8;
-            data = stbi_load(path.string().c_str(), &width, &height, &nChannel, 0);
+            data = stbi_load(path.string().c_str(), &width, &height, &nChannel, 4);
             is16Bit = false;
         }
 
@@ -39,43 +39,16 @@ namespace Wiley {
             return nullptr;
         }
 
-        std::vector<UINT8> pixelData;
-        UINT nPixel = width * height;
-        const UINT desiredComponentCount = 4;
-
-        if (is16Bit) {
-            pixelData.resize(nPixel * desiredComponentCount * 2);
-            USHORT* dst = reinterpret_cast<USHORT*>(pixelData.data());
-            USHORT* src = reinterpret_cast<USHORT*>(data);
-            for (uint32_t i = 0; i < nPixel; i++) {
-                dst[i * 4 + 0] = src[i * nChannel + 0];
-                dst[i * 4 + 1] = src[i * nChannel + 1];
-                dst[i * 4 + 2] = src[i * nChannel + 2];
-                dst[i * 4 + 3] = (nChannel == 4) ? src[i * nChannel + 3] : USHRT_MAX;
-            }
-        }
-        else {
-            pixelData.resize(nPixel * desiredComponentCount * 1);
-            UCHAR* dst = reinterpret_cast<UCHAR*>(pixelData.data());
-            UCHAR* src = reinterpret_cast<UCHAR*>(data);
-            for (uint32_t i = 0; i < nPixel; i++) {
-                dst[i * 4 + 0] = src[i * nChannel + 0];
-                dst[i * 4 + 1] = src[i * nChannel + 1];
-                dst[i * 4 + 2] = src[i * nChannel + 2];
-                dst[i * 4 + 3] = (nChannel == 4) ? src[i * nChannel + 3] : 255;
-            }
-        }
-
         imageTextureRef->width = width;
         imageTextureRef->height = height;
         imageTextureRef->nChannels = 4;
         imageTextureRef->mapType = loadDesc.desc.imageTextureDesc.type;
         nChannel = 4;
 
-        stbi_image_free(data);
+        imageTextureRef->textureResource = resourceCache->rctx->CreateShaderResourceTexture(data, width, height, 
+            nChannel, imageTextureRef->bitPerChannel);
 
-        imageTextureRef->textureResource = resourceCache->rctx->CreateShaderResourceTexture(pixelData.data(),
-            width, height, nChannel, imageTextureRef->bitPerChannel);
+        stbi_image_free(data);
 
         auto descManager = resourceCache->GetImageTextureDescriptorManager(loadDesc.desc.imageTextureDesc.type);
         UINT descriptorIndex = resourceCache->GetFreeImageDescriptorIndex(descManager);

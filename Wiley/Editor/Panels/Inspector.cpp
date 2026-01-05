@@ -94,19 +94,22 @@ namespace Wiley
 				else
 					smm->MakeLightEntityDirty(static_cast<entt::entity>(entt));
 			}
-			
+
 
 			if (light.type == LightType::Spot) {
-				ImGui::Separator(); 
+				ImGui::Separator();
 				const static float _bias = 0.05f;
-				
-				const float orMin = light.innerRadius + _bias;
-				const float orMax = 0.0f;
-				const float irMax = orMin - _bias;
-				const float irMin = 1.0f;
 
-				ImGui::DragFloat("Inner Radius", &light.innerRadius, 0.5f, irMin, irMax);
-				ImGui::DragFloat("Outer Radius", &light.outerRadius, 0.5f, orMin, 0.0);
+				float innerRadius_degrees = DirectX::XMConvertToDegrees(acos(light.innerRadius));
+				float outerRadius_degrees = DirectX::XMConvertToDegrees(acos(light.outerRadius));
+
+				if (ImGui::DragFloat("Inner Radius", &innerRadius_degrees, 0.5f, 5.0f, 20.0f)) {
+					light.innerRadius = cos(DirectX::XMConvertToRadians(innerRadius_degrees));
+				}
+
+				if(ImGui::DragFloat("Outer Radius", &outerRadius_degrees, 0.5f, 25.0f, 50.0)) {
+					light.outerRadius = cos(DirectX::XMConvertToRadians(outerRadius_degrees));
+				}
 
 				if (ImGui::DragFloat3("Spot Direction", &light.spotDirection.x)) {
 					if (light.type == LightType::Point)

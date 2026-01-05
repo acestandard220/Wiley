@@ -191,11 +191,6 @@ namespace Wiley
 			Resource::Ref GetDefaultImageTexture(MapType type)const;
 
 			Material::Ref GetDefaultMaterial()const;
-			Material::Ref GetDefaultRockMaterial()const;
-
-			Resource::Ref GetDefaultCube()const;
-			Resource::Ref GetDefaultCylinder()const;
-			Resource::Ref GetDefaultSphere()const;
 
 			Resource::Ref GetDefaultEnvironmentMap()const;
 

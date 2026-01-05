@@ -1,5 +1,6 @@
 #include "LightComponentSystem.h"
 #include "../Entity.h"
+#include "../Core/MathConstants.h"
 
 //Todo: No need to run this every frame.
 
