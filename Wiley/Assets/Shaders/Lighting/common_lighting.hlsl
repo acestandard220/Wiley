@@ -78,15 +78,13 @@ float3 ComputeDirectionalLight(Light light, float3 position, float3 N, float3 al
     float roughness = arm.y;
     float metallic = arm.z;
     
-    float3 radiance = light.color.rgb;
+    float3 radiance = light.color.rgb * light.intensity;
     
     float3 V = normalize(cameraPosition.xyz - position);
     float3 L = normalize(-light.position);
     float3 H = normalize(V + L);
     
     float NdotL = max(dot(N, L), 0.0f);
-    float NdotV = max(dot(N, V), 0.0f);
-    float NdotH = max(dot(N, H), 0.0f);
     float VdotH = max(dot(V, H), 0.0f);
     
     float3 F0 = float3(0.04f, 0.04f, 0.04f);

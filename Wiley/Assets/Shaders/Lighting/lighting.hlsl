@@ -57,16 +57,22 @@ float4 PSmain(VertexOutput input) : SV_Target
     for (int i = 0; i < lightCompCount; i++)
     {
         Light light = lights[i];
-        
-        if(light.type == 0)
-            continue;
-        
-        float type = light.type - 1;
-        float isSpotLight = type;
-        float isPoint = 1.0f - isSpotLight;
-
-        Lo += (isPoint * ComputePointLight(light, position, N, albedo, arm.rgb))
-            + (isSpotLight * ComputeSpotLight(light, position, N, albedo, arm.rgb));
+                
+        switch (light.type)
+        {
+            case DIRECTIONAL_LIGHT:
+            {
+                Lo += ComputeDirectionalLight(light, position, N, albedo, arm.rgb);
+            }
+            case POINT_LIGHT:
+            {
+                Lo += ComputePointLight(light, position, N, albedo, arm.rgb);
+            }
+            case SPOT_LIGHT:
+            {
+                Lo += ComputeSpotLight(light, position, N, albedo, arm.rgb);
+            }
+        }
     }
     
     if (doIBL)

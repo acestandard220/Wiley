@@ -219,8 +219,8 @@ namespace Wiley
 
 		LightComponent& lightComponent = entity.AddComponent<LightComponent>();
 		lightComponent.color = { 1.0f, 1.0f, 1.0f};
-		lightComponent.innerRadius = 0.996f; //5.0f Degrees
-		lightComponent.outerRadius = 0.866f; //30.0f
+		lightComponent.innerRadius = 0.996f; //5.0f deg. -> radians -> cos(x)
+		lightComponent.outerRadius = 0.866f; //30.0f deg. -> radians -> cos(x)
 		lightComponent.position = { 0.0f,3.0f,1.0f };
 		lightComponent.spotDirection = { 0.0f,-1.0f,0.0f };
 		lightComponent.type = type;
