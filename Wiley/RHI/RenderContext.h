@@ -50,6 +50,7 @@ namespace RHI
 		WILEY_NODISCARD CubeMap::Ref CreateShaderResourceCubeMap(float* data, uint32_t width, uint32_t height, int nChannel, int bitPerChannel, const std::string& name);
 		WILEY_NODISCARD CubeMap::Ref ConvoluteCubeMap(CubeMap::Ref cubmap, uint32_t convSize, const std::string& name);
 		WILEY_NODISCARD CubeMap::Ref CreatePrefilteredMap(CubeMap::Ref cubemap, uint32_t prefilterSize, const std::string& name);
+		WILEY_NODISCARD Texture::Ref CreateBRDFLUT(uint32_t lutSize, const std::string& name);
 
 		WILEY_NODISCARD Texture::Ref CreateTexture(TextureFormat format, uint32_t width, uint32_t height, TextureUsage usage, const std::string& name = "Texture");
 
@@ -145,6 +146,7 @@ namespace RHI
 		ComputePipeline::Ref environmentMapCreationPSO;
 		ComputePipeline::Ref cubeMapConvolutePSO;
 		ComputePipeline::Ref prefilterCreationPSO;
+		ComputePipeline::Ref brdfLUTCreationPSO;
 
 		Sampler::Ref linearSampler;
 

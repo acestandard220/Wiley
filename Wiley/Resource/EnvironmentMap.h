@@ -13,9 +13,14 @@ namespace Wiley {
 
 	enum PrefilterSize : uint32_t {
 		PrefilterSize_128x128 = 128,
-		PrefilterSize_256x256 = 256,
+		PrefilterSize_256x256 = 256, //Default
 		PrefilterSize_512x512 = 512,
 		PrefilterSize_1024x102 = 1024
+	};
+
+	enum BRDFLUTSize :uint32_t {
+		BRDFLUTSize_512x512 = 512,
+		BRDFLUTSize_1024x1024 = 1024
 	};
 
 	struct EnvironmentMap final : public Resource{
@@ -30,6 +35,6 @@ namespace Wiley {
 		RHI::CubeMap::Ref irradianceMap; //32x32 or 64x64
 
 		RHI::CubeMap::Ref prefilteredMap;
-
+		RHI::Texture::Ref brdfLUT;
 	};
 }

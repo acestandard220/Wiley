@@ -47,9 +47,11 @@ namespace Wiley {
 		emResource->height = height;
 		
 		nChannel = 4;
+		
 		emResource->cubeMap = resourceCache->rctx->CreateShaderResourceCubeMap(data, width, height, nChannel, 32, fileName);
 		emResource->irradianceMap = resourceCache->rctx->ConvoluteCubeMap(emResource->cubeMap, loadDesc.desc.emDesc.convSize, fileName + "_Irrandiance");
-		emResource->prefilteredMap = resourceCache->rctx->CreatePrefilteredMap(emResource->cubeMap, 128, "PreFilterMap");
+		emResource->prefilteredMap = resourceCache->rctx->CreatePrefilteredMap(emResource->cubeMap, PrefilterSize_128x128, "PreFilterMap");
+		emResource->brdfLUT = resourceCache->rctx->CreateBRDFLUT(BRDFLUTSize_512x512, "BRDFLUT");
 
 		stbi_image_free(data);
 		return emResource;

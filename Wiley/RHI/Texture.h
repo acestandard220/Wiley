@@ -105,7 +105,7 @@ namespace RHI
 		const DescriptorHeap::Descriptor& GetRTVDescriptor()const { return rtv; }
 		const DescriptorHeap::Descriptor& GetDSVDescriptor()const { return dsv; }
 		const DescriptorHeap::Descriptor& GetSRV()const { return srv; }
-		const DescriptorHeap::Descriptor& GetUAVDescriptor()const { return uav; }
+		const DescriptorHeap::Descriptor& GetUAV()const { return uav; }
 
 		const DescriptorHeap::Descriptor& GetDepthMapDSV(uint32_t index)const;
 		const DescriptorHeap::Descriptor& GetDepthMapRTV(uint32_t index)const;

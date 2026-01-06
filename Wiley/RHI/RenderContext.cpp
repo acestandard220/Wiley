@@ -85,6 +85,19 @@ namespace RHI
 
                 prefilterCreationPSO = RHI::ComputePipeline::CreateComputePipeline(device, cSpecs, "PrefilteredPSO");
             }
+            {
+
+                RHI::ShaderByteCode computeByteCode = RHI::ShaderCompiler::CompileShader(RHI::ShaderType::Compute,
+                    L"P:/Projects/VS/Wiley/Wiley/Assets/Shaders/brdf_lut.hlsl", L"main", nullptr);
+
+                RHI::ComputePipelineSpecs cSpecs{};
+                cSpecs.computeByteCode = computeByteCode;
+
+                cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::Constant, 0, 2, 0, RHI::ShaderVisibility::Compute });
+                cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::UAVRange, 1, 1, 0, RHI::ShaderVisibility::Compute });
+
+                brdfLUTCreationPSO = RHI::ComputePipeline::CreateComputePipeline(device, cSpecs, "BRDFLUTPSO");
+            }
 
         }
     }
@@ -388,6 +401,45 @@ namespace RHI
         dynamicResourceFence->Signal(computeCommandQueue.get());
         dynamicResourceFence->BlockCPU();
         return prefilterMap;
+    }
+
+    WILEY_NODISCARD Texture::Ref RenderContext::CreateBRDFLUT(uint32_t lutSize, const std::string& name)
+    {
+        Texture::Ref brdfLUT = CreateTexture(TextureFormat::RG16, lutSize, lutSize, TextureUsage::ComputeStorage, name);
+
+        dynamicResourceFence->BlockCPU();
+        dynamicResourceCommandList->Begin({ heaps.cbv_srv_uav,heaps.sampler });
+
+        {
+
+            dynamicResourceCommandList->SetComputePipeline(brdfLUTCreationPSO);
+            dynamicResourceCommandList->SetComputeRootSignature(brdfLUTCreationPSO->GetRootSignature());
+
+            dynamicResourceCommandList->ImageBarrier(brdfLUT, TextureUsage::ComputeStorage);
+
+            struct LUTParams {
+                uint32_t lutSize;
+                uint32_t sampleCount;
+            };
+
+            LUTParams lutParams{
+                .lutSize = lutSize,
+                .sampleCount = 1024
+            };
+
+            dynamicResourceCommandList->PushComputeConstant(&lutParams, WILEY_SIZEOF(LUTParams), 0);
+            dynamicResourceCommandList->BindComputeShaderResource(brdfLUT->GetUAV(), 1);
+
+            dynamicResourceCommandList->Dispatch(lutSize / 8, lutSize / 8, 1);
+
+            dynamicResourceCommandList->ImageBarrier(brdfLUT, TextureUsage::Common);
+        }
+
+        dynamicResourceCommandList->End();
+        computeCommandQueue->Submit({ dynamicResourceCommandList });
+        dynamicResourceFence->Signal(computeCommandQueue.get());
+        dynamicResourceFence->BlockCPU();
+        return brdfLUT;
     }
 
     Texture::Ref RenderContext::CreateTexture(TextureFormat format, uint32_t width, uint32_t height, TextureUsage usage,const std::string& name)
