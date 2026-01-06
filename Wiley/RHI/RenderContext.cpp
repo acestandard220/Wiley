@@ -42,31 +42,50 @@ namespace RHI
         linearSampler = CreateSampler(SamplerAddress::Wrap, SamplerFilter::Linear, RHI::SamplerComparisonFunc::Never, 1);
 
         {
-            RHI::ShaderByteCode computeByteCode = RHI::ShaderCompiler::CompileShader(RHI::ShaderType::Compute,
-                L"P:/Projects/VS/Wiley/Wiley/Assets/Shaders/equirec_to_cubemap.hlsl", L"CSmain", nullptr);
+            {
+                RHI::ShaderByteCode computeByteCode = RHI::ShaderCompiler::CompileShader(RHI::ShaderType::Compute,
+                    L"P:/Projects/VS/Wiley/Wiley/Assets/Shaders/equirec_to_cubemap.hlsl", L"CSmain", nullptr);
 
-            RHI::ComputePipelineSpecs cSpecs{};
-            cSpecs.computeByteCode = computeByteCode;
+                RHI::ComputePipelineSpecs cSpecs{};
+                cSpecs.computeByteCode = computeByteCode;
 
-            cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::UAVRange, 0, 1, 0, RHI::ShaderVisibility::Compute });
-            cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 1, 1, 0, RHI::ShaderVisibility::Compute });
-            cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::SamplerRange, 2, 1, 0, RHI::ShaderVisibility::Compute });
+                cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::UAVRange, 0, 1, 0, RHI::ShaderVisibility::Compute });
+                cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 1, 1, 0, RHI::ShaderVisibility::Compute });
+                cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::SamplerRange, 2, 1, 0, RHI::ShaderVisibility::Compute });
 
-            environmentMapCreationPSO = RHI::ComputePipeline::CreateComputePipeline(device, cSpecs, "EquiRecToCubeMapPSO");
-        }
+                environmentMapCreationPSO = RHI::ComputePipeline::CreateComputePipeline(device, cSpecs, "EquiRecToCubeMapPSO");
+            }
 
-        {
-            RHI::ShaderByteCode computeByteCode = RHI::ShaderCompiler::CompileShader(RHI::ShaderType::Compute,
-                L"P:/Projects/VS/Wiley/Wiley/Assets/Shaders/hdri_convolute.hlsl", L"Convolute", nullptr);
+            {
+                RHI::ShaderByteCode computeByteCode = RHI::ShaderCompiler::CompileShader(RHI::ShaderType::Compute,
+                    L"P:/Projects/VS/Wiley/Wiley/Assets/Shaders/hdri_convolute.hlsl", L"Convolute", nullptr);
 
-            RHI::ComputePipelineSpecs cSpecs{};
-            cSpecs.computeByteCode = computeByteCode;
+                RHI::ComputePipelineSpecs cSpecs{};
+                cSpecs.computeByteCode = computeByteCode;
 
-            cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::UAVRange, 0, 1, 0, RHI::ShaderVisibility::Compute });
-            cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 1, 1, 0, RHI::ShaderVisibility::Compute });
-            cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::SamplerRange, 2, 1, 0, RHI::ShaderVisibility::Compute });
+                cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::UAVRange, 0, 1, 0, RHI::ShaderVisibility::Compute });
+                cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 1, 1, 0, RHI::ShaderVisibility::Compute });
+                cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::SamplerRange, 2, 1, 0, RHI::ShaderVisibility::Compute });
 
-            cubeMapConvolutePSO = RHI::ComputePipeline::CreateComputePipeline(device, cSpecs, "CubeMapConvolutePSO");
+                cubeMapConvolutePSO = RHI::ComputePipeline::CreateComputePipeline(device, cSpecs, "CubeMapConvolutePSO");
+            }
+
+            {
+
+                RHI::ShaderByteCode computeByteCode = RHI::ShaderCompiler::CompileShader(RHI::ShaderType::Compute,
+                    L"P:/Projects/VS/Wiley/Wiley/Assets/Shaders/prefiltered_map.hlsl", L"main", nullptr);
+
+                RHI::ComputePipelineSpecs cSpecs{};
+                cSpecs.computeByteCode = computeByteCode;
+
+                cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::Constant, 0, 4, 0, RHI::ShaderVisibility::Compute });
+                cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 1, 1, 0, RHI::ShaderVisibility::Compute });
+                cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::UAVRange, 2, 1, 0, RHI::ShaderVisibility::Compute });
+                cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::SamplerRange, 3, 1, 0, RHI::ShaderVisibility::Compute });
+
+                prefilterCreationPSO = RHI::ComputePipeline::CreateComputePipeline(device, cSpecs, "PrefilteredPSO");
+            }
+
         }
     }
 
@@ -243,7 +262,7 @@ namespace RHI
 
         const UINT cubeFaceSize = width / 4;
 
-        RHI::CubeMap::Ref cubeMap = CreateCubeMap(cubeFaceSize, cubeFaceSize, Texture::GetTextureFormat(bitPerChannel), name);
+        RHI::CubeMap::Ref cubeMap = CreateCubeMap(cubeFaceSize, 1,Texture::GetTextureFormat(bitPerChannel), name);
         RHI::Texture::Ref texture = CreateShaderResourceTexture(data, width, height, nChannel, 32);
         RHI::DescriptorHeap::Descriptor textureSRV = heaps.cbv_srv_uav->Allocate();
         if (!textureSRV.valid) {
@@ -284,7 +303,7 @@ namespace RHI
         uint32_t width = convSize;
         uint32_t height = convSize;
 
-        CubeMap::Ref convoluteMap = CreateCubeMap(width, height, TextureFormat::RGBA32, name);
+        CubeMap::Ref convoluteMap = CreateCubeMap(convSize, 1, TextureFormat::RGBA32, name);
 
         dynamicResourceFence->BlockCPU();
         dynamicResourceCommandList->Begin({ heaps.cbv_srv_uav,heaps.sampler });
@@ -311,6 +330,64 @@ namespace RHI
         dynamicResourceFence->Signal(computeCommandQueue.get());
         dynamicResourceFence->BlockCPU();
         return convoluteMap;
+    }
+
+    WILEY_NODISCARD CubeMap::Ref RenderContext::CreatePrefilteredMap(CubeMap::Ref cubemap, uint32_t prefilterSize, const std::string& name)
+    {
+        const uint32_t width = prefilterSize;
+        const uint32_t height = prefilterSize;
+        const uint32_t mipLevels = 5;
+
+        CubeMap::Ref prefilterMap = CreateCubeMap(prefilterSize, mipLevels, TextureFormat::RGBA32, name);
+
+        dynamicResourceFence->BlockCPU();
+        dynamicResourceCommandList->Begin({ heaps.cbv_srv_uav,heaps.sampler });
+
+        {
+
+            dynamicResourceCommandList->SetComputePipeline(prefilterCreationPSO);
+            dynamicResourceCommandList->SetComputeRootSignature(prefilterCreationPSO->GetRootSignature());
+
+            dynamicResourceCommandList->CubeMapBarrier(prefilterMap, D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+
+            dynamicResourceCommandList->BindComputeShaderResource(cubemap->GetSRV(), 1);
+            dynamicResourceCommandList->BindComputeSamplerResource(linearSampler->GetDescriptor(), 3);
+
+            const auto baseMipSize = prefilterMap->GetMapSize();
+
+            struct PrefilterParams
+            {
+                float roughness;
+                uint32_t outputSize;
+                uint32_t sampleCount;
+                uint32_t currentMip;
+            };
+
+            for (int mipLv = 0; mipLv < mipLevels; mipLv++)
+            {
+                const auto roughness = (float)mipLv / (float)(mipLevels - 1);
+                const auto currentMipSize = baseMipSize >> mipLv;
+
+                PrefilterParams pushParams{
+                    .roughness = roughness,
+                    .outputSize = currentMipSize,
+                    .sampleCount = 1024,
+                    .currentMip = static_cast<uint32_t>(mipLv)
+                };
+
+                dynamicResourceCommandList->PushComputeConstant(&pushParams, WILEY_SIZEOF(PrefilterParams), 0);
+                dynamicResourceCommandList->BindComputeShaderResource(prefilterMap->GetUAV(mipLv), 2);
+                dynamicResourceCommandList->Dispatch((currentMipSize + 7) / 8, (currentMipSize + 7) / 8, 6);
+            }
+
+            dynamicResourceCommandList->CubeMapBarrier(prefilterMap, D3D12_RESOURCE_STATE_COMMON);
+        }
+
+        dynamicResourceCommandList->End();
+        computeCommandQueue->Submit({ dynamicResourceCommandList });
+        dynamicResourceFence->Signal(computeCommandQueue.get());
+        dynamicResourceFence->BlockCPU();
+        return prefilterMap;
     }
 
     Texture::Ref RenderContext::CreateTexture(TextureFormat format, uint32_t width, uint32_t height, TextureUsage usage,const std::string& name)
@@ -358,8 +435,8 @@ namespace RHI
         return std::make_shared<Sampler>(device, address, filter, compFunc, maxAni, heaps);
     }
 
-    WILEY_NODISCARD CubeMap::Ref RenderContext::CreateCubeMap(uint32_t width, uint32_t height, TextureFormat formate, const std::string& name) {
-        return std::make_shared<CubeMap>(device, formate, width, height, heaps, name);
+    WILEY_NODISCARD CubeMap::Ref RenderContext::CreateCubeMap(uint32_t mapSize, int mip, TextureFormat formate, const std::string& name) {
+        return std::make_shared<CubeMap>(device, formate, mapSize, mip, heaps, name);
     }
 
     void RenderContext::BindGraphicsPipeline(GraphicsPipeline::Ref graphicsPipeline)

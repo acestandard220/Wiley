@@ -3,42 +3,6 @@
 
 namespace RHI
 {
-    void Device::CollectDebugMessages()
-    {
-#ifdef _DEBUG
-        ComPtr<ID3D12InfoQueue> infoQueue;
-        if (FAILED(device.As(&infoQueue)))
-            return;
-
-        UINT64 count = infoQueue->GetNumStoredMessages();
-
-        for (UINT64 i = 0; i < count; i++)
-        {
-            SIZE_T size = 0;
-            infoQueue->GetMessage(i, nullptr, &size); // Get required size
-
-            std::vector<char> buffer(size);
-            auto* msg = reinterpret_cast<D3D12_MESSAGE*>(buffer.data());
-
-            infoQueue->GetMessage(i, msg, &size);
-
-            debugMessage += msg->pDescription;
-            debugMessage += "\n";
-
-            std::ofstream file("log.txt");
-            if (!file.is_open())
-            {
-                std::cout << "Failed to open log file." << std::endl;
-                return;
-            }
-
-            file << debugMessage;
-
-        }
-
-        infoQueue->ClearStoredMessages();
-#endif
-    }
 
     Device::Device()
     {
@@ -86,12 +50,13 @@ namespace RHI
 #endif
 
         device->SetName(L"DirectX 12 Device");
+
+        CheckHDRSupport();
     }
 
     Device::~Device()
     {
         GetRemoveReason();
-        CollectDebugMessages();
     }
 
    
@@ -99,6 +64,24 @@ namespace RHI
     {
         return std::make_shared<Device>();
     }
+
+    bool Device::CheckHDRSupport()
+    {
+        
+        ComPtr<IDXGIOutput> output;
+        if (adapter->EnumOutputs(0, &output) == DXGI_ERROR_NOT_FOUND) {
+            return false;
+        }
+
+        ComPtr<IDXGIOutput6> output6;
+        ThrowIfFailed(output.As(&output6));
+
+        DXGI_OUTPUT_DESC1 desc{};
+        output6->GetDesc1(&desc);
+
+        return (desc.ColorSpace == DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020);
+    }
+    
     void Device::GetRemoveReason()
     {
         device->GetDeviceRemovedReason();

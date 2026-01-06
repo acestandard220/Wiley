@@ -22,9 +22,10 @@ namespace Renderer3D {
 
 		RHI::Fence::Ref computeFence = rctx->GetComputeFence();
 
-		RHI::Buffer::Ref dispatchConstants = frameGraph->GetOutputBufferResource(pass, 0);
+		//RHI::Buffer::Ref dispatchConstants = frameGraph->GetOutputBufferResource(pass, 0);
 		RHI::Buffer::Ref clusterBuffer = frameGraph->GetOutputBufferResource(pass, 1);
 
+		//RootConstantPush Values
 		struct ClusterDispatchParams
 		{
 			DirectX::XMUINT4 clusterCount;      
@@ -34,8 +35,7 @@ namespace Renderer3D {
 			float nearPlane = 0.1f;              
 			float farPlane = 1000.0f;
 
-			DirectX::XMFLOAT3 cameraPosition;      
-			float _padding0;               
+			DirectX::XMFLOAT3 cameraPosition;    
 
 			DirectX::XMFLOAT4X4 inverseProjection;  
 		}constantBufferData;
@@ -62,8 +62,6 @@ namespace Renderer3D {
 			constantBufferData.screenDimension[1] = screenHeight;
 			constantBufferData.tileSize[0] = TILE_GRID_SIZE;
 			constantBufferData.tileSize[1] = TILE_GRID_SIZE;
-
-			dispatchConstants->UploadData(&constantBufferData, WILEY_SIZEOF(ClusterDispatchParams), 0, 0);
 		}
 
 		{
@@ -74,7 +72,7 @@ namespace Renderer3D {
 		}
 
 		{
-			computeCommandList->BindComputeShaderResource(dispatchConstants->GetCBV(), 0);
+			computeCommandList->PushComputeConstant(&constantBufferData, WILEY_SIZEOF(ClusterDispatchParams), 0);
 			computeCommandList->BindComputeShaderResource(clusterBuffer->GetUAV(), 1);
 		}
 

@@ -46,8 +46,10 @@ namespace RHI
 		WILEY_NODISCARD Texture::Ref CreateShaderResourceTexture(void* data, int width, int height, int nChannel, int bitPerChannel);
 		WILEY_NODISCARD Texture::Ref CreateShaderResourceTextureFromFile(const std::wstring& name, int& width, int& height, int& nChannel, int& bitPerChannel);
 		WILEY_NODISCARD std::vector<uint8_t> GetTextureBytes(RHI::Texture::Ref texture);
+
 		WILEY_NODISCARD CubeMap::Ref CreateShaderResourceCubeMap(float* data, uint32_t width, uint32_t height, int nChannel, int bitPerChannel, const std::string& name);
 		WILEY_NODISCARD CubeMap::Ref ConvoluteCubeMap(CubeMap::Ref cubmap, uint32_t convSize, const std::string& name);
+		WILEY_NODISCARD CubeMap::Ref CreatePrefilteredMap(CubeMap::Ref cubemap, uint32_t prefilterSize, const std::string& name);
 
 		WILEY_NODISCARD Texture::Ref CreateTexture(TextureFormat format, uint32_t width, uint32_t height, TextureUsage usage, const std::string& name = "Texture");
 
@@ -65,7 +67,7 @@ namespace RHI
 		WILEY_NODISCARD RootSignature::Ref CreateRootSignature(RootSignatureSpecs specs, const std::string& name = "Root_Signature");
 		WILEY_NODISCARD Sampler::Ref CreateSampler(SamplerAddress address, SamplerFilter filter, SamplerComparisonFunc compFunc, float maxAni);
 
-		WILEY_NODISCARD CubeMap::Ref CreateCubeMap(uint32_t width, uint32_t height,TextureFormat formate,const std::string& name = "CubeMap");
+		WILEY_NODISCARD CubeMap::Ref CreateCubeMap(uint32_t mapSize, int mips, TextureFormat formate, const std::string& name = "CubeMap");
 
 		void BindGraphicsPipeline(GraphicsPipeline::Ref graphicsPipeline);
 
@@ -142,6 +144,8 @@ namespace RHI
 
 		ComputePipeline::Ref environmentMapCreationPSO;
 		ComputePipeline::Ref cubeMapConvolutePSO;
+		ComputePipeline::Ref prefilterCreationPSO;
+
 		Sampler::Ref linearSampler;
 
 	};

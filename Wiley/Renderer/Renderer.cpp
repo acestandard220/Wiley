@@ -71,8 +71,6 @@ namespace Renderer3D
 		constantBuffer->Map(reinterpret_cast<void**>(&cPtr), 0, 0);
 		constantLightBuffer->Map(reinterpret_cast<void**>(&cLightPtr), 0, 0);
 		
-		auto vg = rctx->CreateCubeMap(100, 100, RHI::TextureFormat::RGBA16);
-
 		CompileFrameGraph();
 		frameGraph->GetPassOrder();		
 	}

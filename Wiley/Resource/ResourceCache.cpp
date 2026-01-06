@@ -130,7 +130,7 @@ namespace Wiley {
 			loadDesc.extension = FileExtension::HDR;
 			loadDesc.desc.emDesc.convSize = Convolute_64x64;
 			loadDesc.flipUV = true;
-			defaultEnvironmentMap = LoadResource<EnvironmentMap>("P:/Projects/VS/Wiley/Wiley/Assets/Environment Maps/spruit_sunrise_4k.hdr", loadDesc);
+			defaultEnvironmentMap = LoadResource<EnvironmentMap>("P:/Projects/VS/Wiley/Wiley/Assets/Environment Maps/studio_small_09_4k.hdr", loadDesc);
 		}
 
 	}

@@ -65,8 +65,7 @@ namespace Renderer3D {
 		RHI::Buffer::Ref meshInstanceIndex = frameGraph->GetInputBufferResource(pass, 2);
 		RHI::Buffer::Ref meshInstanceBaseBuffer = frameGraph->GetInputBufferResource(pass, 3);
 
-		//RHI::Buffer::Ref uploadLightViewProjections = frameGraph->GetInputBufferResource(pass, 4);
-		RHI::Buffer::Ref lightViewProjections = frameGraph->GetInputBufferResource(pass, 5);
+		RHI::Buffer::Ref lightViewProjections = frameGraph->GetInputBufferResource(pass, 4);
 
 		UINT graphicsRingIndex = rctx->GetBackBufferIndex();
 		auto commandList = rctx->GetCurrentCommandList();
@@ -127,7 +126,6 @@ namespace Renderer3D {
 			}
 			shadowMapManager->CleanAllLightEntity();
 		}
-
 
 
 		auto dirtyPointLights = shadowMapManager->GetDirtyPointLight();

@@ -567,10 +567,10 @@ namespace RHI
 		srcLocation.PlacedFootprint.Offset = 0;
 		srcLocation.PlacedFootprint.Footprint = {
 			.Format = (DXGI_FORMAT)cubeMap->GetFormat(),
-			.Width = cubeMap->GetWidth(),
-			.Height = cubeMap->GetHeight(),
+			.Width = cubeMap->GetMapSize(),
+			.Height = cubeMap->GetMapSize(),
 			.Depth = 1,
-			.RowPitch = cubeMap->GetWidth() * Texture::GetPixelSize(cubeMap->GetFormat()),
+			.RowPitch = cubeMap->GetMapSize() * Texture::GetPixelSize(cubeMap->GetFormat()),
 		};
 
 		D3D12_TEXTURE_COPY_LOCATION dstLocation{};

@@ -127,7 +127,8 @@ float4 ScreenToViewSpace(float4x4 inverseProjectionMatrix, float4 screen, float2
 
     //View space transform
     float4 view = mul(inverseProjectionMatrix, clip);
-
+    
+    view.w = 1.0f;
     //Perspective projection
     view = view / view.w;
 

@@ -164,6 +164,8 @@ namespace Wiley
 	/// </summary>
 	Entity& Wiley::Scene::AddEntity(const std::string name)
 	{
+		ZoneScopedN("Scene::AddEntity");
+
 		entities.push_back({ registery.create(), this });
 		Entity& entity = entities.back();
 
@@ -175,6 +177,8 @@ namespace Wiley
 
 	Entity& Scene::AddModel(std::filesystem::path path, ResourceLoadDesc& loadDesc)
 	{
+		ZoneScopedN("Scene::AddModel");
+
 		Resource::Ref resource = resourceCache->LoadResource<Mesh>(path, loadDesc);
 		Mesh& mesh = *(static_cast<Mesh*>(resource.get()));
 		Entity& entity = AddEntity(path.filename().string());
@@ -215,6 +219,8 @@ namespace Wiley
 
 	Entity& Scene::AddLight(const std::string name, LightType type)
 	{
+		ZoneScopedN("Scene::AddLight");
+
 		Entity& entity = AddEntity(name);
 
 		LightComponent& lightComponent = entity.AddComponent<LightComponent>();
@@ -242,6 +248,9 @@ namespace Wiley
 
 	void Scene::AssignGlobalMaterial(Entity entity, UUID materialUUID)
 	{
+		ZoneScopedN("Scene::AssignGlobalMaterial");
+
+
 		auto materialResource = resourceCache->GetResource<Material>(materialUUID);
 		if (!materialResource) {
 			std::cout << "Invalid material id." << std::endl;
@@ -277,6 +286,8 @@ namespace Wiley
 
 	void Scene::AssignMaterial(Entity entity, UUID materialUUID, int subMeshIndex)
 	{
+		ZoneScopedN("Scene::AssignMaterial");
+
 		auto materialResource = resourceCache->GetResource<Material>(materialUUID);
 		if (!materialResource) {
 			return;

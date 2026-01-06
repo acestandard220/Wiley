@@ -2,18 +2,18 @@
 
 namespace RHI {
 
-	CubeMap::CubeMap(Device::Ref device, TextureFormat format, uint32_t width, uint32_t height, DescriptorHeap::Heap& heap, const std::string& name)
-		:_device(device), format(format), width(width), height(height), usage(TextureUsage::Common), creationState(TextureUsage::Common)
+	CubeMap::CubeMap(Device::Ref device, TextureFormat format, uint32_t mapSize, int mips, DescriptorHeap::Heap& heap, const std::string& name)
+		:_device(device), format(format), mapSize(mapSize), usage(TextureUsage::Common), creationState(TextureUsage::Common)
 	{
 
 		D3D12_RESOURCE_DESC desc{};
 		desc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 		desc.Alignment = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
-		desc.Height = height; 
-		desc.Width = width;
+		desc.Height = mapSize; 
+		desc.Width = mapSize;
 		desc.DepthOrArraySize = 6;
 		desc.Flags = D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS | D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
-		desc.MipLevels = 1;
+		desc.MipLevels = mips;
 		desc.Format = DXGI_FORMAT(format);
 		desc.SampleDesc.Count = 1;
 		desc.SampleDesc.Quality = 0;
@@ -32,7 +32,8 @@ namespace RHI {
 		{
 			D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 			srvDesc.Format = DXGI_FORMAT(format);
-			srvDesc.Texture2D.MipLevels = 1;
+			srvDesc.Texture2D.MipLevels = mips;
+			srvDesc.Texture2D.MostDetailedMip = 0;
 			srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURECUBE;
 			srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 
@@ -43,15 +44,18 @@ namespace RHI {
 			}
 		}
 
+		uavs.resize(mips);
+		for (int i = 0; i < mips; i++)
 		{
 			D3D12_UNORDERED_ACCESS_VIEW_DESC uavDesc = {};
 			uavDesc.Format = DXGI_FORMAT(format);
 			uavDesc.ViewDimension = D3D12_UAV_DIMENSION_TEXTURE2DARRAY;
 			uavDesc.Texture2DArray.ArraySize = 6;
+			uavDesc.Texture2DArray.MipSlice = i;
 
-			uav = heap.cbv_srv_uav->Allocate();
-			if (uav.valid) {
-				device->GetNative()->CreateUnorderedAccessView(resource.Get(), nullptr, &uavDesc, uav.cpuHandle);
+			uavs[i] = heap.cbv_srv_uav->Allocate();
+			if (uavs[i].valid) {
+				device->GetNative()->CreateUnorderedAccessView(resource.Get(), nullptr, &uavDesc, uavs[i].cpuHandle);
 			}
 		}
 
@@ -68,6 +72,20 @@ namespace RHI {
 	{
 		resource.Reset();
 		_device.reset();
+	}
+
+	uint32_t CubeMap::GetMapSize(int mip) const
+	{
+		if (mip >= uavs.size())
+			return mapSize;
+		return mapSize >> mip;
+	}
+
+	DescriptorHeap::Descriptor CubeMap::GetUAV(int mip) const {
+		if (mip >= uavs.size()) {
+			return uavs[0];
+		}
+		return uavs[mip]; 
 	}
 
 }

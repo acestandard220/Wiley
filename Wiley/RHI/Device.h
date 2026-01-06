@@ -10,7 +10,7 @@
 #include <d3d.h>
 #include <d3d12.h>
 #include <wrl.h> //ComPtr stuff
-#include <dxgi1_4.h> //DXGI stuff
+#include <dxgi1_6.h> //DXGI stuff
 #include <d3dx12.h>
 #include <DirectXMath.h> //Math stuff
 #include <d3dcompiler.h> //Compile shaders
@@ -31,12 +31,15 @@ using namespace Microsoft::WRL;
 
 namespace RHI
 {
+	enum class FeaturesSupported 
+	{
+		FeatureSupported_HDR
+	};
+
 	class Device
 	{
 	public:
 		using Ref = std::shared_ptr<Device>;
-
-		void CollectDebugMessages();
 
 		Device();
 		~Device();
@@ -46,7 +49,10 @@ namespace RHI
 		ID3D12Device6* GetNative() { return device.Get(); }
 		IDXGIFactory4* GetFactory() { return dxgiFactory.Get(); }
 
+		bool CheckHDRSupport();
+
 		void GetRemoveReason();
+
 
 		bool CheckSupport()
 		{
@@ -68,8 +74,6 @@ namespace RHI
 		ComPtr<ID3D12Debug> debugControl;
 		ComPtr<IDXGIDebug1> dxgiDebugControl;
 		ComPtr<IDXGIAdapter> adapter;
-
-		std::string debugMessage;
 	};
 
 }

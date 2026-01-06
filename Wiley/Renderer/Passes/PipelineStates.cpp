@@ -18,7 +18,7 @@ namespace Renderer3D {
 			RHI::ComputePipelineSpecs cSpecs{};
 			cSpecs.computeByteCode = computeByteCode;
 
-			cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::CBVRange,0,1,0,RHI::ShaderVisibility::Compute});
+			cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::Constant,0,29,0,RHI::ShaderVisibility::Compute});
 			cSpecs.rootSpecs.entries.push_back({ RHI::RootSignatureEntryType::UAVRange,0,1,1,RHI::ShaderVisibility::Compute});
 
 			auto pso = RHI::ComputePipeline::CreateComputePipeline(rctx->GetDevice(), cSpecs, "GenClusterPipeline");
