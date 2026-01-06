@@ -35,7 +35,10 @@ Texture2D normalMap : register(t1);
 Texture2D colorMap : register(t2);
 Texture2D armMap : register(t3);
 SamplerState samplerState : register(s4);
+
 TextureCube irrandiance : register(t5);
+TextureCube prefiltered : register(t6);
+Texture2D brdfLUT : register(t7);
 
 StructuredBuffer<Light> lights : register(t1, space1);
 
@@ -75,6 +78,7 @@ float4 PSmain(VertexOutput input) : SV_Target
         }
     }
     
+    const int maxReflectionLod = 4;
     if (doIBL)
     {
         float3 V = normalize(cameraPosition.xyz - position);
@@ -86,7 +90,17 @@ float4 PSmain(VertexOutput input) : SV_Target
 
         float3 irradiance = irrandiance.Sample(depthSampler, N).rgb;
         float3 diffuse = irradiance * albedo;
-        float3 ambient = kD * diffuse * ambientOcclustion;
+        
+        float3 R = reflect(-V, N); 
+        
+        float3 prefilteredColor = prefiltered.SampleLevel(depthSampler, R, roughness * maxReflectionLod).rgb;
+        
+        float NdotV = max(dot(N, V), 0.0);
+        float2 brdf = brdfLUT.Sample(samplerState, float2(NdotV, roughness)).rg;
+        
+        float3 specular = prefilteredColor * (F0 * brdf.x + brdf.y);
+        
+        float3 ambient = (kD * diffuse + specular) * ambientOcclustion;
     
         float3 _color = ambient + Lo;
         return float4(_color, 1.0f);

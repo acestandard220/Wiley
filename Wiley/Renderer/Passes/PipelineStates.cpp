@@ -343,6 +343,9 @@ namespace Renderer3D {
 			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 4, 1,4,RHI::ShaderVisibility::Pixel }); //LightVPs
 			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::SamplerRange, 5,1,5,RHI::ShaderVisibility::Pixel }); //DepthSamplerNoComp
 
+			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 6,1,0,RHI::ShaderVisibility::Pixel });
+			specs.rootSignatureSpecs.entries.push_back({ RHI::RootSignatureEntryType::SRVRange, 7,1,0,RHI::ShaderVisibility::Pixel });
+
 			specs.byteCodes = shaders;
 			gfxPsoCache[RenderPassSemantic::LightingPass] = rctx->CreateGraphicsPipeline(specs);
 		}

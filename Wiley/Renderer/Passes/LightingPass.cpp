@@ -71,6 +71,8 @@ namespace Renderer3D {
 
 			commandList->BindShaderResource(postProcessSampler->GetDescriptor(), 11);
 
+			commandList->BindShaderResource(em->prefilteredMap->GetSRV(), 12);
+			commandList->BindShaderResource(em->brdfLUT->GetSRV(), 13);
 		}
 		
 		{
